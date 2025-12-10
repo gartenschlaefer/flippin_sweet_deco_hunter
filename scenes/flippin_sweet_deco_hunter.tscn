@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbj0651rvyjij"]
+
+[ext_resource type="Script" uid="uid://dpyn6v0r0se8i" path="res://scripts/flippin_sweet_deco_hunter.gd" id="1_hoy5o"]
+
+[node name="flippin_sweet_deco_hunter" type="Node"]
+script = ExtResource("1_hoy5o")
+
+[node name="world" type="Node" parent="."]
