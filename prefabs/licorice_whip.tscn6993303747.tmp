@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://bp324u76hfyw3"]
+
+[ext_resource type="Script" uid="uid://6xccrw1o6ey2" path="res://scripts/licorice_whip.gd" id="1_qtq0k"]
+[ext_resource type="PackedScene" uid="uid://d6vk0v4n0sby" path="res://models/licorice_whip_end.glb" id="2_g50mx"]
+[ext_resource type="PackedScene" uid="uid://1wc82f1yjpqg" path="res://models/licorice_whip_mid.glb" id="3_2xv4a"]
+[ext_resource type="PackedScene" uid="uid://54ufeowlmrwl" path="res://models/licorice_whip_start.glb" id="4_vpl0j"]
+
+[node name="LicoriceWhip" type="Node3D"]
+
+[node name="Skeleton3D" type="Skeleton3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+script = ExtResource("1_qtq0k")
+skeleton_path = NodePath("../Skeleton3D")
+start_scene = ExtResource("2_g50mx")
+mid_scene = ExtResource("3_2xv4a")
+end_scene = ExtResource("4_vpl0j")
+twist_degrees = null
+max_bend_degrees = null
+bone_count = null

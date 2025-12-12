@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3a8qsy3ho4yp"]
+
+[ext_resource type="Script" uid="uid://ka2ltwbdyluq" path="res://scripts/camera_movement_test.gd" id="1_0eqk4"]
+[ext_resource type="PackedScene" uid="uid://bp324u76hfyw3" path="res://prefabs/licorice_whip.tscn" id="1_yq521"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2rdx1"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_yq521"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[node name="DecoHuntWorld" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("PlaneMesh_2rdx1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_yq521")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.8532597, 0.5214863, 0, -0.5214863, 0.8532597, 0, 0.5638957, 0.57848036)
+script = ExtResource("1_0eqk4")
+
+[node name="LicoriceWhip" parent="Camera3D" instance=ExtResource("1_yq521")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.64520437, 0.76401, 0, -0.76401, 0.64520437, 0, 1.3002834, 0)
+
+[node name="LicorishWhip" parent="." instance=ExtResource("1_yq521")]
+transform = Transform3D(1, 0, 0, 0, 100, 0, 0, 0, 1, 0, 0, -5.9604645e-08)
