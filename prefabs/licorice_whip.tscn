@@ -8,15 +8,17 @@ radius = 0.087890625
 height = 0.28814697
 
 [node name="LicoriceWhip" type="Node3D"]
+script = ExtResource("1_qtq0k")
+
+[node name="Licorice_Whip" parent="." instance=ExtResource("1_7nti1")]
 
 [node name="Physics" type="Node3D" parent="."]
-script = ExtResource("1_qtq0k")
-whip_scene = ExtResource("1_7nti1")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mass = 0.2
 can_sleep = false
+freeze = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
@@ -115,7 +117,7 @@ node_b = NodePath("..")
 
 [node name="RigidBody3D9" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
-mass = 0.1
+mass = 0.2
 can_sleep = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D9"]
