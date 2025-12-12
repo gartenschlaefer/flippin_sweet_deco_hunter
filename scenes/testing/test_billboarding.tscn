@@ -1,0 +1,110 @@
+[gd_scene load_steps=18 format=3 uid="uid://5r062dd2110r"]
+
+[ext_resource type="Texture2D" uid="uid://qk7v22a5wifd" path="res://art/bubaba_boss.png" id="1_ac5ne"]
+[ext_resource type="Texture2D" uid="uid://lo82ex7pt7r4" path="res://art/brent-minehan-candyland.jpg" id="1_lv0s1"]
+[ext_resource type="Script" uid="uid://dm21mbk7i7sp5" path="res://scripts/test_billboarding.gd" id="1_ravi7"]
+[ext_resource type="Script" uid="uid://jvafnwu6wliy" path="res://scripts/billboarding.gd" id="2_5rrt6"]
+[ext_resource type="Shader" uid="uid://b57cre0cvtyhd" path="res://shader/billboard.gdshader" id="3_cftx8"]
+[ext_resource type="Material" uid="uid://b6ncbnox5ob0h" path="res://materials/raster_texture.tres" id="3_ravi7"]
+[ext_resource type="PackedScene" uid="uid://cs6jw26dvr3ym" path="res://prefabs/fp_player.tscn" id="7_ravi7"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_lv0s1"]
+panorama = ExtResource("1_lv0s1")
+
+[sub_resource type="Sky" id="Sky_ig1s7"]
+sky_material = SubResource("PanoramaSkyMaterial_lv0s1")
+
+[sub_resource type="Environment" id="Environment_ravi7"]
+background_mode = 2
+sky = SubResource("Sky_ig1s7")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1kaft"]
+size = Vector2(50, 50)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1kaft"]
+data = PackedVector3Array(25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0, -25, 25, 0, -25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ac5ne"]
+albedo_color = Color(0.46666667, 0.41960785, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5rrt6"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ravi7"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lv0s1"]
+render_priority = 0
+shader = ExtResource("3_cftx8")
+shader_parameter/texture_albedo = ExtResource("1_ac5ne")
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5rrt6"]
+size = Vector2(1.5, 2.4)
+orientation = 2
+
+[node name="test_billboarding" type="Node3D"]
+script = ExtResource("1_ravi7")
+
+[node name="env" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="env"]
+transform = Transform3D(-0.28918627, 0.2802713, 0.9153247, -0.12372255, -0.95910275, 0.25458732, 0.9492439, -0.039623145, 0.31203523, 6.849233, 3.079902, 1.0250096)
+light_color = Color(1, 0.8494006, 0.7956167, 1)
+light_energy = 0.5
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="env"]
+environment = SubResource("Environment_ravi7")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="env"]
+transform = Transform3D(0.136632, 0.75684506, -0.6391536, 0, 0.6452044, 0.7640101, 0.99062186, -0.10438822, 0.08815556, -3.7533355, 3.079902, 0)
+shadow_enabled = true
+
+[node name="static_objects" type="StaticBody3D" parent="."]
+
+[node name="ground" type="MeshInstance3D" parent="static_objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012206078, -0.043151736, 0.009400606)
+material_override = ExtResource("3_ravi7")
+mesh = SubResource("PlaneMesh_1kaft")
+
+[node name="ground_collision" type="CollisionShape3D" parent="static_objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012206078, -0.043151736, 0.009400606)
+shape = SubResource("ConcavePolygonShape3D_1kaft")
+
+[node name="cube" type="MeshInstance3D" parent="static_objects"]
+transform = Transform3D(0.7631084, 0, -0.6462705, 0, 1, 0, 0.6462705, 0, 0.7631084, 0, 0.5206969, 0)
+material_override = SubResource("StandardMaterial3D_ac5ne")
+mesh = SubResource("BoxMesh_5rrt6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="static_objects/cube"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="static_objects/cube/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ravi7")
+
+[node name="billboards" type="Node3D" parent="."]
+
+[node name="sprite_billboard" type="Sprite3D" parent="billboards"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2046943, 1.2854984, 0)
+billboard = 1
+texture = ExtResource("1_ac5ne")
+
+[node name="sprite_billboard_y_billboard" type="Sprite3D" parent="billboards"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4559326, 1.2854984, -1.6373925)
+billboard = 2
+texture = ExtResource("1_ac5ne")
+
+[node name="sprite_billboard_scripted" type="Sprite3D" parent="billboards"]
+transform = Transform3D(0.8069088, -5.831467e-09, -0.59067607, -0.16255476, 0.9613866, -0.2220622, 0.5678681, 0.27520114, 0.7757513, -1.1593745, 1.2854984, -2.394898)
+texture = ExtResource("1_ac5ne")
+script = ExtResource("2_5rrt6")
+
+[node name="mesh_billboard_shaded" type="MeshInstance3D" parent="billboards"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.62434244, 1.235928, -3.0955198)
+material_override = SubResource("ShaderMaterial_lv0s1")
+mesh = SubResource("PlaneMesh_5rrt6")
+skeleton = NodePath("../..")
+
+[node name="fp_player" parent="." instance=ExtResource("7_ravi7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5233545)
