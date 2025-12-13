@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://w1uqnm545mln"]
+
+[ext_resource type="Texture2D" uid="uid://qswo5olyog4i" path="res://art/bubaba_boss_sprite_sheet.png" id="1_iexy6"]
+[ext_resource type="Script" uid="uid://dxmws7ppsutq5" path="res://scripts/bubaba.gd" id="1_t54ac"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t54ac"]
+atlas = ExtResource("1_iexy6")
+region = Rect2(0, 0, 150, 240)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j32dc"]
+atlas = ExtResource("1_iexy6")
+region = Rect2(150, 0, 150, 240)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eb3nx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t54ac")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j32dc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_akbmi"]
+
+[node name="bubaba" type="CharacterBody3D" groups=["enemies"]]
+script = ExtResource("1_t54ac")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2254322, 0)
+billboard = 1
+sprite_frames = SubResource("SpriteFrames_eb3nx")
+autoplay = "default"
+frame = 1
+frame_progress = 0.44522244
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_akbmi")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
