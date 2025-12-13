@@ -1,9 +1,12 @@
+# --
+# camera slide
+
 extends Path3D
 
 # refs
 @export var target_object: Node
 @onready var path_follow = $path_follow
-@onready var camera = $path_follow/camera
+@onready var camera_stand = $path_follow/camera_stand
 
 
 func _ready():
@@ -14,13 +17,23 @@ func _ready():
 
 func _process(_delta):
 
-	# transforms
-	var target_transform = target_object.get_global_transform()
+	# skips
+	if path_follow.get_progress_ratio() >= 1.0: return
 
-	# billboarding computations
-	var basis_y = target_transform.basis.y
-	var basis_z = (camera.global_transform.origin - target_transform.origin).normalized()
-	var basis_x = basis_y.cross(basis_z).normalized()
+	# look at target
+	self._look_at_target()
+
+
+func _look_at_target():
+
+	# skips
+	if target_object == null: return
+
+	# look at target computation
+	var target_direction: Vector3 = (camera_stand.global_transform.origin - target_object.get_global_transform().origin).normalized()
+
+	# look at target direction
+	var new_basis = Basis.looking_at(target_direction, Vector3.UP, true)
 
 	# change transform
-	camera.global_transform = Transform3D(basis_x, basis_y, basis_z, camera.global_transform.origin)
+	camera_stand.global_transform = Transform3D(new_basis, camera_stand.global_transform.origin)

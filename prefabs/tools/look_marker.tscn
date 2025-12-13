@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://ctstwaj7v085k"]
+
+[ext_resource type="Script" uid="uid://b173t8j5dw5o6" path="res://scripts/look_marker.gd" id="1_1p2nb"]
+
+[sub_resource type="BoxMesh" id="1"]
+
+[sub_resource type="StandardMaterial3D" id="2"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="3"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="4"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="5"]
+albedo_color = Color(0, 0, 1, 1)
+
+[node name="look_marker" type="Node3D"]
+script = ExtResource("1_1p2nb")
+
+[node name="Origin" type="Node" parent="."]
+
+[node name="Holder" type="Node3D" parent="Origin"]
+
+[node name="Cube" type="MeshInstance3D" parent="Origin/Holder"]
+transform = Transform3D(0.0001, 0, 0, 0, 0.0001, 0, 0, 0, 0.0001, 0, 0, 0)
+mesh = SubResource("1")
+surface_material_override/0 = SubResource("2")
+
+[node name="Center" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = SubResource("1")
+surface_material_override/0 = SubResource("2")
+
+[node name="X" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.55, 0, 0)
+mesh = SubResource("1")
+surface_material_override/0 = SubResource("3")
+
+[node name="Y" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 1, 0, 0, 0, 0.1, 0, 0.55, 0)
+mesh = SubResource("1")
+surface_material_override/0 = SubResource("4")
+
+[node name="Z" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0.55)
+mesh = SubResource("1")
+surface_material_override/0 = SubResource("5")
