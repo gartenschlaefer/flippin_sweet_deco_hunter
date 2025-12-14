@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://cge5ol25fqrex"]
+
+[ext_resource type="Shader" uid="uid://cwryplfbpp6s0" path="res://shader/ocean.gdshader" id="1_7i2eo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fiuhb"]
+render_priority = 0
+shader = ExtResource("1_7i2eo")
+shader_parameter/color = Color(0.36862746, 0.9098039, 1, 1)
+shader_parameter/amount = 0.26200000592523
+shader_parameter/metallic = 0.58800002793
+shader_parameter/specular = 1.0
+shader_parameter/roughness = 0.5
+shader_parameter/alpha = 0.94000004465
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_mn261"]
+material = SubResource("ShaderMaterial_fiuhb")
+size = Vector2(100, 100)
+subdivide_width = 80
+subdivide_depth = 80
+
+[node name="Ocean" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.033569336, 0.042037964, -0.023075104)
+mesh = SubResource("PlaneMesh_mn261")

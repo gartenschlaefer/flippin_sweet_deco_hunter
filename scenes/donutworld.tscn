@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://cwg5hosq5uu7g"]
+
+[ext_resource type="PackedScene" uid="uid://dpcj2dk7ix1ru" path="res://scenes/donutisland.tscn" id="1_o3kro"]
+[ext_resource type="Texture2D" uid="uid://bmxetnj4ffiud" path="res://art/sky2.exr" id="2_d2h07"]
+[ext_resource type="PackedScene" uid="uid://bq51wb1qevq5r" path="res://scenes/killzone.tscn" id="3_g1vmp"]
+[ext_resource type="PackedScene" uid="uid://cge5ol25fqrex" path="res://scenes/ocean.tscn" id="5_d103j"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_d2h07"]
+panorama = ExtResource("2_d2h07")
+
+[sub_resource type="Sky" id="Sky_o3kro"]
+sky_material = SubResource("PanoramaSkyMaterial_d2h07")
+
+[sub_resource type="Environment" id="Environment_g1vmp"]
+background_mode = 2
+sky = SubResource("Sky_o3kro")
+ambient_light_sky_contribution = 0.17
+reflected_light_source = 2
+tonemap_mode = 2
+
+[node name="donutworld" type="Node3D"]
+
+[node name="donutisland" parent="." instance=ExtResource("1_o3kro")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15254974, -3.8146973e-06, 0.04232788)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.9666602, 0.07728187, 0.24412201, -0.21990591, -0.23787364, 0.9460748, 0.13118462, -0.9682168, -0.21294825, 0.36515093, 50.193943, -0.16069603)
+light_energy = 0.677
+shadow_enabled = true
+sky_mode = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_g1vmp")
+
+[node name="Killzone" parent="." instance=ExtResource("3_g1vmp")]
+
+[node name="Ocean" parent="." instance=ExtResource("5_d103j")]
+transform = Transform3D(11.7, 0, 0, 0, 11.7, 0, 0, 0, 11.7, 0, -2.925228, 0)
