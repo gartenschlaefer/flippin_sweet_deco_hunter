@@ -15,3 +15,6 @@ shape = SubResource("CapsuleShape3D_ba8i8")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 
 [node name="Camera3D" type="Camera3D" parent="head"]
+
+[node name="WeaponSocket" type="Node3D" parent="head/Camera3D"]
+transform = Transform3D(0.9659258, 0.25881904, 0, -0.10856218, 0.40515956, 0.9077775, 0.2349501, -0.8768457, 0.41945204, 0.15984178, -0.33606267, -0.65757656)

@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://c3a8qsy3ho4yp"]
+[gd_scene load_steps=5 format=3 uid="uid://c3a8qsy3ho4yp"]
 
 [ext_resource type="Material" uid="uid://b6ncbnox5ob0h" path="res://materials/raster_texture.tres" id="1_hypvu"]
 [ext_resource type="PackedScene" uid="uid://cs6jw26dvr3ym" path="res://prefabs/fp_player.tscn" id="1_yq521"]
-[ext_resource type="PackedScene" uid="uid://bp324u76hfyw3" path="res://prefabs/licorice_whip.tscn" id="3_i0axm"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_2rdx1"]
 material = ExtResource("1_hypvu")
@@ -26,6 +25,3 @@ transform = Transform3D(1, 0, 0, 0, 0.64520437, 0.76401, 0, -0.76401, 0.64520437
 
 [node name="fp_player" parent="." instance=ExtResource("1_yq521")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5390434, 6.353165)
-
-[node name="LicoriceWhip" parent="fp_player" instance=ExtResource("3_i0axm")]
-transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 1.2650576, -1.6241736)

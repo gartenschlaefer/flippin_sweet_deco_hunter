@@ -1,9 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cwg5hosq5uu7g"]
+[gd_scene load_steps=8 format=3 uid="uid://bcsjhmh4u64pj"]
 
-[ext_resource type="PackedScene" uid="uid://dpcj2dk7ix1ru" path="res://scenes/donutisland.tscn" id="1_o3kro"]
+[ext_resource type="PackedScene" path="res://scenes/donutisland.tscn" id="1_o3kro"]
 [ext_resource type="Texture2D" uid="uid://bmxetnj4ffiud" path="res://art/sky2.exr" id="2_d2h07"]
-[ext_resource type="PackedScene" uid="uid://bq51wb1qevq5r" path="res://scenes/killzone.tscn" id="3_g1vmp"]
-[ext_resource type="PackedScene" uid="uid://cge5ol25fqrex" path="res://scenes/ocean.tscn" id="5_d103j"]
+[ext_resource type="PackedScene" path="res://scenes/killzone.tscn" id="3_g1vmp"]
+[ext_resource type="PackedScene" path="res://scenes/ocean.tscn" id="5_d103j"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_d2h07"]
 panorama = ExtResource("2_d2h07")

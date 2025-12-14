@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://nxoqxn1w4a35"]
-
-[ext_resource type="Script" uid="uid://k7llwc7sumpa" path="res://scripts/licorice_whip_mesh.gd" id="1_knq1g"]
-
-[node name="LicorishWhipMesh" type="MeshInstance3D"]
-script = ExtResource("1_knq1g")

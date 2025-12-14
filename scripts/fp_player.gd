@@ -2,6 +2,7 @@
 # first person player
 
 extends CharacterBody3D
+class_name  Player
 
 # refs
 @onready var head = $head
@@ -11,14 +12,34 @@ const speed = 5.0
 const jump_velocity = 4.5
 const mouse_sensitivity = 0.01
 
+@onready var weapon_socket: Node3D = $head/Camera3D/WeaponSocket
+
+var _weapon: WeaponBase = null
+
+var weapon: WeaponBase:
+	set(value):
+		if _weapon:
+			_weapon.on_unequip()
+			_weapon.queue_free()
+
+		_weapon = value
+
+		if _weapon:
+			weapon_socket.add_child(_weapon)
+			_weapon.transform = Transform3D.IDENTITY
+			_weapon.on_equip(self)
+
 
 func _ready():
-
+	weapon = preload("res://prefabs/licorice_whip.tscn").instantiate()
 	# hide mouse and lock at center
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
 func _input(event):
+	
+	if _weapon and Input.is_action_just_pressed("attack"):
+		_weapon.attack()
 
 	# only mouse input
 	if not event is InputEventMouseMotion: return

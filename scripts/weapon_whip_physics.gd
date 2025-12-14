@@ -1,21 +1,36 @@
 extends Node3D
+class_name WhipPhysics
 
 @onready var skeleton: Skeleton3D = $Licorice_Whip/Armature/Skeleton3D
 @onready var mesh: MeshInstance3D = _find_mesh($Licorice_Whip)
 @onready var physics: Node3D = $Physics
+@onready var cam : Camera3D = get_viewport().get_camera_3d() 
 @export var physics_allow_segment_x: float = 15.0
-@export var physics_allow_segment_y: float = 50.0
+@export var physics_allow_segment_y: float = 15.0
 @export var physics_allow_segment_z: float = 15.0
 @export var chain_stiffness := 1.0
+@export var swing_force := 10.0
+@export var snap_force := -100.0
+@export var snap_duration := 0.55
+@export var swing_duration := 0.90
+@export var camera_direction_distance := 5.0
 
+enum DrivePhase {
+	NONE,
+	SWING_OUT,
+	TARGET   
+}
 
-var whip_instance: Node3D
+var drive_phase : DrivePhase = DrivePhase.NONE
+var drive_time : float = 0.0
+
 var segs: Array[RigidBody3D] = []
 var rest_lengths: Array[float] = []
 var rest_dirs_local: Array[Vector3] = []
-
-
 var offsets := []
+var snap_time := 0.0
+var is_swinging : bool
+var is_snapping : bool
 
 func _ready():
 	segs.clear()
@@ -45,7 +60,16 @@ func _ready():
 	_cache_rest_data()
 
 
-func _physics_process(delta):
+func _physics_process(_delta):	
+	if snap_time > 0.0:
+		if is_snapping:
+			apply_torque(snap_force)
+		if is_swinging: 
+			apply_torque(swing_force)
+		snap_time -= _delta
+	else:
+		is_snapping = false
+		is_swinging = false
 	stabilize_chain_angles()
 
 	skeleton.clear_bones_global_pose_override()
@@ -72,11 +96,11 @@ func stabilize_chain_angles():
 		var b := segs[i]
 
 		var dir := b.global_position - a.global_position
-		var len := dir.length()
-		if len == 0.0:
+		var length := dir.length()
+		if length == 0.0:
 			continue
 
-		var n := dir / len
+		var n := dir / length
 		var target := rest_lengths[i - 1]
 
 		var forward: Vector3 = a.global_transform.basis * rest_dirs_local[i - 1]
@@ -86,7 +110,7 @@ func stabilize_chain_angles():
 		var angle := acos(dotv)
 
 		if angle <= max_x:
-			if abs(len - target) > 0.0001:
+			if abs(length - target) > 0.0001:
 				b.global_position = a.global_position + n * target
 			continue
 
@@ -120,16 +144,15 @@ func _cache_rest_data():
 		var b := segs[i]
 
 		var d := b.global_position - a.global_position
-		var len := d.length()
-		rest_lengths.append(len)
+		var length := d.length()
+		rest_lengths.append(length)
 
 		var n := Vector3.ZERO
-		if len > 0.0:
-			n = d / len
+		if length > 0.0:
+			n = d / length
 
 		var a_inv: Basis = a.global_transform.basis.inverse()
 		rest_dirs_local.append(a_inv * n)
-
 
 
 func _create_joint(a: RigidBody3D, b: RigidBody3D) -> Generic6DOFJoint3D:
@@ -183,3 +206,57 @@ func _find_mesh(n: Node) -> MeshInstance3D:
 		if m:
 			return m
 	return null
+
+func start_swing():
+	snap_time = swing_duration
+	is_swinging = true
+	is_snapping = false
+
+
+func trigger_snapback():
+	snap_time = snap_duration
+	is_swinging = false
+	is_snapping = true
+
+
+func get_target_point() -> Vector3:
+	return cam.global_position - cam.global_transform.basis.z * camera_direction_distance
+
+func get_swing_out_point() -> Vector3:
+	return (
+		cam.global_position
+		- cam.global_transform.basis.z * camera_direction_distance
+		- cam.global_transform.basis.y * 2.0
+	)
+
+func apply_torque(force):
+	if cam == null:
+		return
+
+	var target_point := cam.global_position - cam.global_transform.basis.z * camera_direction_distance
+
+	var count := segs.size()
+	for i in range(count):
+		#if i < 1:
+			#break
+		var seg := segs[i]
+
+		var tip_pos := seg.global_position
+		var desired_dir := (target_point - tip_pos).normalized()
+
+		# ACHTUNG: Achse prüfen (z/y/x je nach Modell)
+		var current_dir := -seg.global_transform.basis.y
+
+		var axis := current_dir.cross(desired_dir)
+		var axis_len := axis.length()
+		if axis_len < 0.0001:
+			continue
+
+		axis /= axis_len
+		var angle := current_dir.angle_to(desired_dir)
+
+		# Gewichtung: hintere Segmente stärker
+		var t := float(i) / float(count - 1)
+		var strength :float = -force * t * t
+
+		seg.apply_torque(axis * angle * strength)
