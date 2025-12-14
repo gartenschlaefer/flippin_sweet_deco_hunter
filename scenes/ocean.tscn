@@ -1,15 +1,39 @@
-[gd_scene load_steps=4 format=3 uid="uid://cge5ol25fqrex"]
+[gd_scene load_steps=8 format=3 uid="uid://cge5ol25fqrex"]
 
 [ext_resource type="Shader" uid="uid://cwryplfbpp6s0" path="res://shader/ocean.gdshader" id="1_7i2eo"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7i2eo"]
+noise_type = 3
+seed = 10
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fiuhb"]
+noise = SubResource("FastNoiseLite_7i2eo")
+seamless = true
+as_normal_map = true
+bump_strength = 1.5
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mn261"]
+noise_type = 3
+seed = 10
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_a1ohp"]
+noise = SubResource("FastNoiseLite_mn261")
+seamless = true
+as_normal_map = true
+bump_strength = 1.5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fiuhb"]
 render_priority = 0
 shader = ExtResource("1_7i2eo")
-shader_parameter/color = Color(0.36862746, 0.9098039, 1, 1)
+shader_parameter/color = Color(0.13480452, 0.6528965, 0.69645125, 1)
+shader_parameter/watertexture_normal1 = SubResource("NoiseTexture2D_fiuhb")
+shader_parameter/watertexture_normal2 = SubResource("NoiseTexture2D_a1ohp")
 shader_parameter/amount = 0.26200000592523
 shader_parameter/metallic = 0.58800002793
-shader_parameter/specular = 1.0
-shader_parameter/roughness = 0.5
+shader_parameter/specular = 0.55200002622
+shader_parameter/roughness = 0.6390000303525
 shader_parameter/alpha = 0.94000004465
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_mn261"]
@@ -21,5 +45,5 @@ subdivide_depth = 80
 [node name="Ocean" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.033569336, 0.042037964, -0.023075104)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.040611267, 0.042037964, -0.028307915)
 mesh = SubResource("PlaneMesh_mn261")
