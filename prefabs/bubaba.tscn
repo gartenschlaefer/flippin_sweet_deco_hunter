@@ -1,27 +1,46 @@
-[gd_scene load_steps=7 format=3 uid="uid://w1uqnm545mln"]
+[gd_scene load_steps=9 format=3 uid="uid://w1uqnm545mln"]
 
-[ext_resource type="Texture2D" uid="uid://qswo5olyog4i" path="res://art/bubaba_boss_sprite_sheet.png" id="1_iexy6"]
 [ext_resource type="Script" uid="uid://dxmws7ppsutq5" path="res://scripts/bubaba.gd" id="1_t54ac"]
+[ext_resource type="Texture2D" uid="uid://dvj1k0g8823uu" path="res://art/bubaba_mockup_sprite_sheet.png" id="2_t54ac"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_t54ac"]
-atlas = ExtResource("1_iexy6")
-region = Rect2(0, 0, 150, 240)
+[sub_resource type="AtlasTexture" id="AtlasTexture_akbmi"]
+atlas = ExtResource("2_t54ac")
+region = Rect2(0, 500, 200, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4l2d8"]
+atlas = ExtResource("2_t54ac")
+region = Rect2(200, 500, 200, 500)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j32dc"]
-atlas = ExtResource("1_iexy6")
-region = Rect2(150, 0, 150, 240)
+atlas = ExtResource("2_t54ac")
+region = Rect2(0, 0, 200, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eb3nx"]
+atlas = ExtResource("2_t54ac")
+region = Rect2(200, 0, 200, 500)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_eb3nx"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_t54ac")
+"texture": SubResource("AtlasTexture_akbmi")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_j32dc")
+"texture": SubResource("AtlasTexture_4l2d8")
 }],
 "loop": true,
-"name": &"default",
+"name": &"evil_idle",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j32dc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eb3nx")
+}],
+"loop": true,
+"name": &"normal_idle",
 "speed": 2.0
 }]
 
@@ -30,16 +49,22 @@ animations = [{
 [node name="bubaba" type="CharacterBody3D" groups=["enemies"]]
 script = ExtResource("1_t54ac")
 
-[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2254322, 0)
+[node name="anim" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05269, 0)
 billboard = 1
 sprite_frames = SubResource("SpriteFrames_eb3nx")
-autoplay = "default"
-frame = 1
-frame_progress = 0.44522244
+animation = &"normal_idle"
+autoplay = "normal_idle"
+frame_progress = 0.36325064
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_akbmi")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+target_desired_distance = 3.0
+avoidance_enabled = true
+debug_enabled = true
+
+[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
