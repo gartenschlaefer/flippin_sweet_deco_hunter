@@ -8,7 +8,7 @@ var sweet_timer := 0.0
 var sweet_window := 0.15
 var sweet_source := SweetSource.NONE
 var hit_pending := false
-@onready var whip_physics: WhipPhysics = $WhipPhysics
+@onready var whip_physics: WhipPhysics = $Physics
 
 func attack():
 	if state == State.ATTACKING and not sweet_active:

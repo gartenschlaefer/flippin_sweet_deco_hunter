@@ -3,7 +3,7 @@ class_name WhipPhysics
 
 @onready var skeleton: Skeleton3D = $Licorice_Whip/Armature/Skeleton3D
 @onready var mesh: MeshInstance3D = _find_mesh($Licorice_Whip)
-@onready var physics: Node3D = $Physics
+@onready var physics: Node3D = self
 @onready var cam : Camera3D = get_viewport().get_camera_3d() 
 @export var physics_allow_segment_x: float = 15.0
 @export var physics_allow_segment_y: float = 15.0
@@ -198,9 +198,7 @@ func _find_skeleton(n: Node) -> Skeleton3D:
 	return null
 
 
-func _find_mesh(n: Node) -> MeshInstance3D:
-	if n is MeshInstance3D and n.skin:
-		return n
+func _find_mesh(n: Node3D) -> MeshInstance3D:
 	for c in n.get_children():
 		var m = _find_mesh(c)
 		if m:

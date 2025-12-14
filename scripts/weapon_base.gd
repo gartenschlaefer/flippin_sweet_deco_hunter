@@ -51,7 +51,7 @@ func _start_attack(pose):
 
 func _physics_process(delta): 
 	if weapon_physics:
-		weapon_physics.physics_process(delta)
+		weapon_physics._physics_process(delta)
 	match state: 
 		State.ATTACKING: 
 			attack_time += delta / attack_duration 
