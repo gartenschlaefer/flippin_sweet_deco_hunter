@@ -4,6 +4,12 @@ extends Node3D
 @export var target_object: Node3D
 
 
+func _input(event):
+
+	# end game
+	if event.is_action_pressed("escape"): get_tree().quit()
+
+
 func _physics_process(_delta):
 
 	# skip
