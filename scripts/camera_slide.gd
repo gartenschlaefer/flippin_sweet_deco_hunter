@@ -3,6 +3,9 @@
 
 extends Path3D
 
+# settings
+@export var slide_time: float = 10.0
+
 # refs
 @export var target_object: Node
 @onready var path_follow = $path_follow
@@ -12,7 +15,7 @@ extends Path3D
 func _ready():
 
 	# tween, obj, prop, final, time
-	create_tween().tween_property(path_follow, "progress_ratio", 1.0, 5)
+	create_tween().tween_property(path_follow, "progress_ratio", 1.0, slide_time)
 
 
 func _process(_delta):

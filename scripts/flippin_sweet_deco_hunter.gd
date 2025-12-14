@@ -5,8 +5,9 @@ extends Node
 
 # refs
 @onready var world = $world
-# @onready var title_canvas = $title_canvas
-# @onready var credits_canvas = $credits_canvas
+@onready var title_canvas = $title_canvas
+@onready var credits_canvas = $credits_canvas
+@onready var win_canvas = $win_canvas
 
 # preloads
 var deco_hunt_world: PackedScene = preload("uid://c3a8qsy3ho4yp")
@@ -21,14 +22,15 @@ func _ready() -> void:
 	print("flippin sweet deco hunter started!")
 
 	# signal connections
-	# title_canvas.start_game.connect(self.start_new_game)
-	# title_canvas.credits.connect(self.title_to_credits)
-	# title_canvas.end_game.connect(self.end_game)
-	# credits_canvas.end_credits.connect(self.credits_to_title)
+	title_canvas.start_game.connect(self.start_new_game)
+	title_canvas.credits.connect(self.title_to_credits)
+	title_canvas.end_game.connect(self.end_game)
+	credits_canvas.end_credits.connect(self.credits_to_title)
 
 	# canvas handling
-	# title_canvas.show()
-	# credits_canvas.hide()
+	title_canvas.show()
+	credits_canvas.hide()
+	win_canvas.hide()
 
 	# is playing
 	is_playing = false

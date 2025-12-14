@@ -1,3 +1,13 @@
-[gd_scene format=3 uid="uid://dv5matfbes4r6"]
+[gd_scene load_steps=4 format=3 uid="uid://dv5matfbes4r6"]
 
-[node name="TestHunt" type="Node3D"]
+[ext_resource type="PackedScene" uid="uid://cwg5hosq5uu7g" path="res://scenes/donutworld.tscn" id="1_ghnoi"]
+[ext_resource type="Script" uid="uid://dw0ag7hqw43lb" path="res://scripts/test_hunt.gd" id="1_xeojj"]
+[ext_resource type="PackedScene" uid="uid://cs6jw26dvr3ym" path="res://prefabs/fp_player.tscn" id="2_xeojj"]
+
+[node name="test_hunt" type="Node3D"]
+script = ExtResource("1_xeojj")
+
+[node name="donutworld" parent="." instance=ExtResource("1_ghnoi")]
+
+[node name="fp_player" parent="donutworld" instance=ExtResource("2_xeojj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0614948, 0)

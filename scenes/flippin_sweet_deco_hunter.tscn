@@ -1,8 +1,97 @@
-[gd_scene load_steps=2 format=3 uid="uid://bbj0651rvyjij"]
+[gd_scene load_steps=7 format=3 uid="uid://bbj0651rvyjij"]
 
 [ext_resource type="Script" uid="uid://dpyn6v0r0se8i" path="res://scripts/flippin_sweet_deco_hunter.gd" id="1_hoy5o"]
+[ext_resource type="Script" uid="uid://do0t8iow283gg" path="res://scripts/win_canvas.gd" id="2_7u0gn"]
+[ext_resource type="LabelSettings" uid="uid://cff5xvfywayei" path="res://themes/label_settings_big.tres" id="3_pkej6"]
+[ext_resource type="Script" uid="uid://c305fvdob2b2r" path="res://scripts/credits_canvas.gd" id="4_yxh6q"]
+[ext_resource type="Script" uid="uid://cm7ckvqvve7ke" path="res://scripts/title_canvas.gd" id="5_0up4q"]
+[ext_resource type="LabelSettings" uid="uid://cfsifqexxkeh7" path="res://themes/label_settings_title.tres" id="6_kwxsw"]
 
 [node name="flippin_sweet_deco_hunter" type="Node"]
 script = ExtResource("1_hoy5o")
 
 [node name="world" type="Node" parent="."]
+
+[node name="win_canvas" type="CanvasLayer" parent="."]
+visible = false
+script = ExtResource("2_7u0gn")
+
+[node name="background" type="ColorRect" parent="win_canvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.83137256, 1, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="win_canvas"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -146.5
+offset_right = 146.5
+offset_bottom = 288.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 200
+
+[node name="Label" type="Label" parent="win_canvas/MarginContainer"]
+layout_mode = 2
+text = "You Won!"
+label_settings = ExtResource("3_pkej6")
+
+[node name="credits_canvas" type="CanvasLayer" parent="."]
+visible = false
+script = ExtResource("4_yxh6q")
+
+[node name="background" type="ColorRect" parent="credits_canvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.83137256, 1, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="credits_canvas"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -109.5
+offset_right = 109.5
+offset_bottom = 379.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 200
+
+[node name="Label" type="Label" parent="credits_canvas/MarginContainer"]
+layout_mode = 2
+text = "Credits
+"
+label_settings = ExtResource("3_pkej6")
+
+[node name="title_canvas" type="CanvasLayer" parent="."]
+script = ExtResource("5_0up4q")
+
+[node name="MarginContainer" type="MarginContainer" parent="title_canvas"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -459.0
+offset_right = 459.0
+offset_bottom = 108.0
+grow_horizontal = 2
+
+[node name="Panel" type="PanelContainer" parent="title_canvas/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="title_canvas/MarginContainer/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="title_canvas/MarginContainer/Panel/MarginContainer"]
+layout_mode = 2
+text = "Flippin Sweet Deco Hunter"
+label_settings = ExtResource("6_kwxsw")

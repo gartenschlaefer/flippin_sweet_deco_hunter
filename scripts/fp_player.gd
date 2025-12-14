@@ -7,10 +7,14 @@ class_name  Player
 # refs
 @onready var head = $head
 
+# vars
+var direction: Vector3
+
 # const
 const speed = 5.0
 const jump_velocity = 4.5
-const mouse_sensitivity = 0.01
+const mouse_sensitivity = 0.005
+const lerp_speed = 7.0
 
 @onready var weapon_socket: Node3D = $head/Camera3D/WeaponSocket
 
@@ -46,6 +50,8 @@ func _input(event):
 
 	# rotate by mouse
 	rotate_y(-event.relative.x * mouse_sensitivity)
+	head.rotate_x(-event.relative.y * mouse_sensitivity)
+	head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
 
 
 func _physics_process(delta: float) -> void:
@@ -60,7 +66,7 @@ func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 
 	# direction
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	direction = lerp(direction, (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized(), delta * lerp_speed)
 	
 	# speed
 	if direction:
