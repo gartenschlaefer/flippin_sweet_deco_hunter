@@ -34,11 +34,11 @@ func _ready():
 
 	for i in range(1, segs.size()):
 		_create_joint(segs[i], segs[i - 1])
-		var rest_lengths: Array[float] = []
+		rest_lengths = []
 	_cache_rest_lengths()
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 
 	skeleton.clear_bones_global_pose_override()
 	var skel_inv := skeleton.global_transform.affine_inverse()
@@ -58,17 +58,17 @@ func stabilize_chain():
 		var b := segs[i]
 
 		var dir := b.global_position - a.global_position
-		var len := dir.length()
-		if len == 0.0:
+		var chain_len := dir.length()
+		if chain_len == 0.0:
 			continue
 
 		var target := rest_lengths[i - 1]
-		var error := len - target
+		var error := chain_len - target
 
 		if abs(error) < 0.0001:
 			continue
 
-		var n := dir / len
+		var n := dir / chain_len
 		var correction := -n * error * chain_stiffness
 
 		b.global_position += correction

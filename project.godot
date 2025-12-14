@@ -18,6 +18,7 @@ config/icon="uid://qk7v22a5wifd"
 [global_group]
 
 enemies="all enemies"
+weapon_part=""
 
 [input]
 

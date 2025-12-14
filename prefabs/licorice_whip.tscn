@@ -63,7 +63,7 @@ shape = SubResource("CapsuleShape3D_xkyhg")
 node_a = NodePath("../../RigidBody3D3")
 node_b = NodePath("..")
 
-[node name="RigidBody3D5" type="RigidBody3D" parent="Physics"]
+[node name="RigidBody3D5" type="RigidBody3D" parent="Physics" groups=["weapon_part"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 mass = 0.2
 can_sleep = false
@@ -76,7 +76,7 @@ shape = SubResource("CapsuleShape3D_xkyhg")
 node_a = NodePath("../../RigidBody3D4")
 node_b = NodePath("..")
 
-[node name="RigidBody3D6" type="RigidBody3D" parent="Physics"]
+[node name="RigidBody3D6" type="RigidBody3D" parent="Physics" groups=["weapon_part"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 mass = 0.2
 can_sleep = false
@@ -89,7 +89,7 @@ shape = SubResource("CapsuleShape3D_xkyhg")
 node_a = NodePath("../../RigidBody3D5")
 node_b = NodePath("..")
 
-[node name="RigidBody3D7" type="RigidBody3D" parent="Physics"]
+[node name="RigidBody3D7" type="RigidBody3D" parent="Physics" groups=["weapon_part"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
 mass = 0.2
 can_sleep = false
@@ -102,7 +102,7 @@ shape = SubResource("CapsuleShape3D_xkyhg")
 node_a = NodePath("../../RigidBody3D6")
 node_b = NodePath("..")
 
-[node name="RigidBody3D8" type="RigidBody3D" parent="Physics"]
+[node name="RigidBody3D8" type="RigidBody3D" parent="Physics" groups=["weapon_part"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
 mass = 0.2
 can_sleep = false
@@ -115,7 +115,7 @@ shape = SubResource("CapsuleShape3D_xkyhg")
 node_a = NodePath("../../RigidBody3D7")
 node_b = NodePath("..")
 
-[node name="RigidBody3D9" type="RigidBody3D" parent="Physics"]
+[node name="RigidBody3D9" type="RigidBody3D" parent="Physics" groups=["weapon_part"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
 mass = 0.2
 can_sleep = false

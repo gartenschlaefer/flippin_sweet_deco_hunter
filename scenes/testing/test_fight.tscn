@@ -1,0 +1,127 @@
+[gd_scene load_steps=20 format=3 uid="uid://db57cwqsyrrgh"]
+
+[ext_resource type="Script" uid="uid://dns54tk8vh73o" path="res://scripts/test_camera_slide.gd" id="1_px7tl"]
+[ext_resource type="Texture2D" uid="uid://lo82ex7pt7r4" path="res://art/brent-minehan-candyland.jpg" id="2_8sifd"]
+[ext_resource type="PackedScene" uid="uid://cs6jw26dvr3ym" path="res://prefabs/fp_player.tscn" id="5_wbnfk"]
+[ext_resource type="PackedScene" uid="uid://bp324u76hfyw3" path="res://prefabs/licorice_whip.tscn" id="6_x5myt"]
+[ext_resource type="Texture2D" uid="uid://cdj3wfayh7nda" path="res://art/raster_dark.png" id="8_60scx"]
+[ext_resource type="PackedScene" uid="uid://w1uqnm545mln" path="res://prefabs/bubaba.tscn" id="9_y5mb3"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_lv0s1"]
+panorama = ExtResource("2_8sifd")
+
+[sub_resource type="Sky" id="Sky_ig1s7"]
+sky_material = SubResource("PanoramaSkyMaterial_lv0s1")
+
+[sub_resource type="Environment" id="Environment_ravi7"]
+background_mode = 2
+sky = SubResource("Sky_ig1s7")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_5334d"]
+vertices = PackedVector3Array(-24.5, 0.5, 0, -1.25, 0.5, 0, -1.25, 0.5, -0.5, 0, 0.5, -1.25, 0, 0.5, -24.5, -24.5, 0.5, -24.5, 0.5, 0.5, -1.25, 1.25, 0.5, 0, 24.5, 0.5, 0, 24.5, 0.5, -24.5, -1.25, 0.5, 0.5, 0, 0.5, 24.5, 0, 0.5, 1.25, -24.5, 0.5, 24.5, 0.5, 0.5, 1.25, 24.5, 0.5, 24.5)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(3, 2, 4), PackedInt32Array(4, 2, 0), PackedInt32Array(4, 0, 5), PackedInt32Array(6, 3, 4), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 6, 4), PackedInt32Array(8, 4, 9), PackedInt32Array(0, 1, 10), PackedInt32Array(12, 11, 10), PackedInt32Array(10, 11, 0), PackedInt32Array(0, 11, 13), PackedInt32Array(11, 12, 14), PackedInt32Array(7, 8, 14), PackedInt32Array(14, 8, 11), PackedInt32Array(11, 8, 15)]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fago0"]
+albedo_texture = ExtResource("8_60scx")
+uv1_scale = Vector3(5, 5, 5)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1kaft"]
+size = Vector2(50, 50)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1kaft"]
+data = PackedVector3Array(25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0, -25, 25, 0, -25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ac5ne"]
+albedo_color = Color(0.46666667, 0.41960785, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5rrt6"]
+
+[sub_resource type="Animation" id="Animation_0ihmi"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0.5, 0)
+
+[sub_resource type="Animation" id="Animation_5334d"]
+resource_name = "move_cube"
+length = 10.0
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0.5, 0, 1.0333333, 1, 0, 0.5, 4.4346404, 3.0333333, 1, -5.08438, 1.604068, -5.093565, 6.0333333, 1, 5.7379303, 4.095164, -9.601345, 9.5, 1, 0, 0.5, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0ihmi"]
+_data = {
+&"RESET": SubResource("Animation_0ihmi"),
+&"move_cube": SubResource("Animation_5334d")
+}
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_wbnfk"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[node name="test_fight" type="Node3D" node_paths=PackedStringArray("target_object")]
+script = ExtResource("1_px7tl")
+target_object = NodePath("NavigationRegion3D/static_objects/moving_cube")
+
+[node name="env" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="env"]
+transform = Transform3D(-0.28918627, 0.2802713, 0.9153247, -0.12372255, -0.95910275, 0.25458732, 0.9492439, -0.039623145, 0.31203523, 6.849233, 3.079902, 1.0250096)
+light_color = Color(1, 0.8494006, 0.7956167, 1)
+light_energy = 0.5
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="env"]
+environment = SubResource("Environment_ravi7")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="env"]
+transform = Transform3D(0.136632, 0.75684506, -0.6391536, 0, 0.6452044, 0.7640101, 0.99062186, -0.10438822, 0.08815556, -3.7533355, 3.079902, 0)
+shadow_enabled = true
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_5334d")
+
+[node name="static_objects" type="StaticBody3D" parent="NavigationRegion3D"]
+
+[node name="ground" type="MeshInstance3D" parent="NavigationRegion3D/static_objects"]
+material_override = SubResource("StandardMaterial3D_fago0")
+mesh = SubResource("PlaneMesh_1kaft")
+
+[node name="ground_collision" type="CollisionShape3D" parent="NavigationRegion3D/static_objects"]
+shape = SubResource("ConcavePolygonShape3D_1kaft")
+
+[node name="moving_cube" type="MeshInstance3D" parent="NavigationRegion3D/static_objects"]
+transform = Transform3D(0.7631084, 0, -0.6462705, 0, 1, 0, 0.6462705, 0, 0.7631084, 0, 0.5, 0)
+material_override = SubResource("StandardMaterial3D_ac5ne")
+mesh = SubResource("BoxMesh_5rrt6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="NavigationRegion3D/static_objects/moving_cube"]
+libraries = {
+&"": SubResource("AnimationLibrary_0ihmi")
+}
+autoplay = "move_cube"
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/static_objects/moving_cube"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/static_objects/moving_cube/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_wbnfk")
+
+[node name="bubaba" parent="." instance=ExtResource("9_y5mb3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.983145, 0.08557606, 0)
+
+[node name="bubaba2" parent="." instance=ExtResource("9_y5mb3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.983145, 0.08557606, -1.1091893)
+
+[node name="fp_player" parent="." instance=ExtResource("5_wbnfk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4.496806)
+
+[node name="LicoriceWhip" parent="fp_player" instance=ExtResource("6_x5myt")]
+transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 1.2650576, -1.6241736)
