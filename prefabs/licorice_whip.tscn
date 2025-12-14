@@ -9,6 +9,10 @@ height = 0.28814697
 
 [node name="LicoriceWhip" type="Node3D"]
 script = ExtResource("1_qtq0k")
+physics_allow_segment_x = null
+physics_allow_segment_y = null
+physics_allow_segment_z = null
+chain_stiffness = null
 
 [node name="Licorice_Whip" parent="." instance=ExtResource("1_7nti1")]
 
