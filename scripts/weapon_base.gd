@@ -17,6 +17,7 @@ var drag_rot := Vector3.ZERO
 
 @export var drag_pos_sensitivity := 0.1
 @export var drag_rot_sensitivity := 0.003
+@export var cam_speed_while_attacking := 1.0
 const DRAG_ROT_MAX_Z := deg_to_rad(45.0)
 const DRAG_ROT_MAX_X := deg_to_rad(90.0)
 
@@ -139,9 +140,6 @@ func _apply_drag(mouse_delta: Vector2):
 		drag_rot.x = -DRAG_ROT_MAX_Z
 	else:
 		drag_pos.y -= mouse_delta.y * drag_pos_sensitivity
-	#if (drag_rot.z < DRAG_ROT_MAX) && (drag_rot.z > -DRAG_ROT_MAX):
-	#	drag_pos.y -= mouse_delta.y * drag_pos_sensitivity
-
 
 	set_weapon_pose(drag_pos, drag_rot)
 

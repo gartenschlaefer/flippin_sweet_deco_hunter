@@ -9,6 +9,9 @@ var offsets: Array = []
 
 var _initialized := false
 
+func _physics_process(_delta: float) -> void:
+	pass
+
 func setup(_skeleton: Skeleton3D, _mesh: MeshInstance3D):
 	if _initialized:
 		return
@@ -17,7 +20,6 @@ func setup(_skeleton: Skeleton3D, _mesh: MeshInstance3D):
 	mesh = _mesh
 
 	_collect_segments()
-	_cache_offsets()
 	_init_physics_chain()
 	skeleton.reset_bone_poses()
 	_initialized = true
@@ -34,20 +36,6 @@ func _collect_segments():
 	if segs.is_empty():
 		push_error("WeaponPhysicsBase: no RigidBody3D segments found")
 
-
-func _cache_offsets():
-	offsets.resize(segs.size())
-
-	for i in segs.size():
-		var bone := i + 1
-		var bone_pose := (
-			skeleton.global_transform
-			* skeleton.get_bone_global_pose(bone)
-		)
-		var seg_pose := segs[i].global_transform
-		offsets[i] = seg_pose.affine_inverse() * bone_pose
-
-	segs[0].freeze = true
 
 func _init_physics_chain():
 	pass

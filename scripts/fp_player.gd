@@ -52,11 +52,11 @@ func _input(event):
 	if not event is InputEventMouseMotion: return
 
 	# rotate by mouse	
-	rotate_y(-event.relative.x * mouse_sensitivity)
-	head.rotate_x(-event.relative.y * mouse_sensitivity)
-	head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
-	if _weapon:
+	if _weapon and _weapon.state == _weapon.State.ATTACKING:
 		_weapon.handle_mouse_motion(event.relative)
+		handle_mouse_motion(event.relative * _weapon.cam_speed_while_attacking)
+	else:
+		handle_mouse_motion(event.relative)
 
 
 func _physics_process(delta: float) -> void:
@@ -83,3 +83,9 @@ func _physics_process(delta: float) -> void:
 
 	# move and slide
 	move_and_slide()
+
+
+func handle_mouse_motion(delta: Vector2):
+	rotate_y(-delta.x * mouse_sensitivity)
+	head.rotate_x(-delta.y * mouse_sensitivity)
+	head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
