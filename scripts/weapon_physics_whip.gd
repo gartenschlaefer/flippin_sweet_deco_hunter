@@ -226,7 +226,6 @@ func apply_centrifugal_force():
 
 	var root := segs[0]	
 	var whip_start := segs[1]
-	var tip := segs[segs.size() - 1]
 
 	var whip_root_speed := whip_start.linear_velocity.length()
 
