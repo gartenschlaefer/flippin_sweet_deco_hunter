@@ -1,0 +1,152 @@
+[gd_scene load_steps=24 format=3 uid="uid://cq4lncecf1h10"]
+
+[ext_resource type="Script" uid="uid://55fb0suofs58" path="res://scripts/test_deco.gd" id="1_rldlp"]
+[ext_resource type="Texture2D" uid="uid://lo82ex7pt7r4" path="res://art/brent-minehan-candyland.jpg" id="1_saww7"]
+[ext_resource type="Material" uid="uid://b6ncbnox5ob0h" path="res://materials/raster_texture.tres" id="2_67i2j"]
+[ext_resource type="PackedScene" uid="uid://cs6jw26dvr3ym" path="res://prefabs/fp_player.tscn" id="3_rldlp"]
+[ext_resource type="Script" uid="uid://d3kl87rwaov15" path="res://scripts/christmas_tree.gd" id="4_67i2j"]
+[ext_resource type="Texture2D" uid="uid://cx60boovqgg14" path="res://art/christmas_tree.png" id="4_vnriv"]
+[ext_resource type="Texture2D" uid="uid://d0unaeg410xxw" path="res://art/bubaba_boss_new.png" id="7_vnriv"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_htlnx"]
+panorama = ExtResource("1_saww7")
+
+[sub_resource type="Sky" id="Sky_ig1s7"]
+sky_material = SubResource("PanoramaSkyMaterial_htlnx")
+
+[sub_resource type="Environment" id="Environment_8ywur"]
+background_mode = 2
+sky = SubResource("Sky_ig1s7")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_toria"]
+size = Vector2(50, 50)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_wtcmb"]
+data = PackedVector3Array(25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0, -25, 25, 0, -25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rldlp"]
+albedo_color = Color(0.46666667, 0.41960785, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vnriv"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_htlnx"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8giq"]
+atlas = ExtResource("4_vnriv")
+region = Rect2(0, 0, 654, 911)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7cn1i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8giq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_67i2j"]
+height = 6.0
+radius = 2.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rldlp"]
+radius = 5.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vnriv"]
+albedo_color = Color(0.7647059, 0.8, 0.77254903, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_htlnx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_htlnx"]
+atlas = ExtResource("7_vnriv")
+region = Rect2(0, 0, 708, 768)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8ywur"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_htlnx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="test_deco" type="Node3D"]
+script = ExtResource("1_rldlp")
+
+[node name="env" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="env"]
+transform = Transform3D(-0.28918627, 0.2802713, 0.9153247, -0.12372255, -0.95910275, 0.25458732, 0.9492439, -0.039623145, 0.31203523, 6.849233, 3.079902, 1.0250096)
+light_color = Color(1, 0.8494006, 0.7956167, 1)
+light_energy = 0.5
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="env"]
+environment = SubResource("Environment_8ywur")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="env"]
+transform = Transform3D(0.136632, 0.75684506, -0.6391536, 0, 0.6452044, 0.7640101, 0.99062186, -0.10438822, 0.08815556, -3.7533355, 3.079902, 0)
+shadow_enabled = true
+
+[node name="static_objects" type="StaticBody3D" parent="."]
+
+[node name="ground" type="MeshInstance3D" parent="static_objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012206078, -0.043151736, 0.009400606)
+material_override = ExtResource("2_67i2j")
+mesh = SubResource("PlaneMesh_toria")
+
+[node name="ground_collision" type="CollisionShape3D" parent="static_objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012206078, -0.043151736, 0.009400606)
+shape = SubResource("ConcavePolygonShape3D_wtcmb")
+
+[node name="cube" type="MeshInstance3D" parent="static_objects"]
+transform = Transform3D(0.7631084, 0, -0.6462705, 0, 1, 0, 0.6462705, 0, 0.7631084, -3.575788, 0.5206969, 3.009308)
+material_override = SubResource("StandardMaterial3D_rldlp")
+mesh = SubResource("BoxMesh_vnriv")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="static_objects/cube"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="static_objects/cube/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_htlnx")
+
+[node name="fp_player" parent="." instance=ExtResource("3_rldlp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.0255527)
+
+[node name="christmas_tree" type="Node3D" parent="."]
+script = ExtResource("4_67i2j")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="christmas_tree"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.017766, 0)
+billboard = 2
+sprite_frames = SubResource("SpriteFrames_7cn1i")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="christmas_tree"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="christmas_tree/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+shape = SubResource("CylinderShape3D_67i2j")
+
+[node name="hang_deco_area" type="Area3D" parent="christmas_tree"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="christmas_tree/hang_deco_area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_rldlp")
+
+[node name="debug_cube" type="MeshInstance3D" parent="christmas_tree"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48328996, 0)
+material_override = SubResource("StandardMaterial3D_vnriv")
+mesh = SubResource("BoxMesh_htlnx")
+
+[node name="bubaba_boss" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.725)
+
+[node name="bubaba_boss" type="AnimatedSprite3D" parent="bubaba_boss"]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -9.117514, 2.702044, 0)
+billboard = 1
+sprite_frames = SubResource("SpriteFrames_8ywur")

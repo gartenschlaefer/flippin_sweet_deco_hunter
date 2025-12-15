@@ -71,8 +71,9 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 expand_margin_bottom = 2.0
 
-[node name="bubaba" type="CharacterBody3D" groups=["enemies"]]
+[node name="bubaba" type="CharacterBody3D" node_paths=PackedStringArray("health_bar") groups=["enemies"]]
 script = ExtResource("1_t54ac")
+health_bar = NodePath("healthbar_view/SubViewport/healthbar_panel/healthbar")
 
 [node name="anim" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05269, 0)

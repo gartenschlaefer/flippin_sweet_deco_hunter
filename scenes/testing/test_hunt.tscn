@@ -7,7 +7,7 @@
 [node name="test_hunt" type="Node3D"]
 script = ExtResource("1_xeojj")
 
-[node name="donutworld" parent="." instance=ExtResource("1_ghnoi")]
-
-[node name="fp_player" parent="donutworld" instance=ExtResource("2_xeojj")]
+[node name="fp_player" parent="." instance=ExtResource("2_xeojj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0614948, 0)
+
+[node name="donutworld" parent="." instance=ExtResource("1_ghnoi")]

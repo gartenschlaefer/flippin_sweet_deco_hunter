@@ -1,9 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://db57cwqsyrrgh"]
+[gd_scene load_steps=19 format=3 uid="uid://db57cwqsyrrgh"]
 
 [ext_resource type="Script" uid="uid://dns54tk8vh73o" path="res://scripts/test_camera_slide.gd" id="1_px7tl"]
 [ext_resource type="Texture2D" uid="uid://lo82ex7pt7r4" path="res://art/brent-minehan-candyland.jpg" id="2_8sifd"]
 [ext_resource type="PackedScene" uid="uid://cs6jw26dvr3ym" path="res://prefabs/fp_player.tscn" id="5_wbnfk"]
-[ext_resource type="PackedScene" uid="uid://bp324u76hfyw3" path="res://prefabs/licorice_whip.tscn" id="6_x5myt"]
 [ext_resource type="Texture2D" uid="uid://cdj3wfayh7nda" path="res://art/raster_dark.png" id="8_60scx"]
 [ext_resource type="PackedScene" uid="uid://w1uqnm545mln" path="res://prefabs/bubaba.tscn" id="9_y5mb3"]
 
@@ -122,6 +121,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.983145, 0.08557606, -1.109
 
 [node name="fp_player" parent="." instance=ExtResource("5_wbnfk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4.496806)
-
-[node name="LicoriceWhip" parent="fp_player" instance=ExtResource("6_x5myt")]
-transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 1.2650576, -1.6241736)
