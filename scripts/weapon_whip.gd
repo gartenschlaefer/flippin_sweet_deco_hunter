@@ -8,14 +8,13 @@ var sweet_timer := 0.0
 var sweet_window := 0.15
 var sweet_source := SweetSource.NONE
 var hit_pending := false
-@onready var whip_physics: WhipPhysics = $Physics
+
 
 func attack():
 	if state == State.ATTACKING and not sweet_active:
 		_start_sweetspot(SweetSource.INPUT)
 	else:
 		super.attack()
-		whip_physics.start_swing()
 
 func _physics_process(delta):
 	super._physics_process(delta)
@@ -60,7 +59,7 @@ func _whipcrack():
 func _trigger_snapback():
 	var snap := Vector3(0, 0,-15)
 	set_weapon_pose(get_current_pos()+snap, rotation)
-	whip_physics.trigger_snapback()
+	weapon_physics.trigger_snapback()
 
 
 func _play_whip_sound():

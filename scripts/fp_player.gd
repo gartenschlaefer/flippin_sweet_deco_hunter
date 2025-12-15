@@ -35,23 +35,28 @@ var weapon: WeaponBase:
 
 
 func _ready():
-	weapon = preload("res://prefabs/licorice_whip.tscn").instantiate()
+	weapon = preload("res://prefabs/weapon_whip.tscn").instantiate()
 	# hide mouse and lock at center
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
 func _input(event):
 	
-	if _weapon and Input.is_action_just_pressed("attack"):
-		_weapon.attack()
+	if _weapon:
+		if Input.is_action_just_pressed("attack"):
+			_weapon.attack_pressed()
+		elif Input.is_action_just_released("attack"):
+			_weapon.attack_released()
 
 	# only mouse input
 	if not event is InputEventMouseMotion: return
 
-	# rotate by mouse
+	# rotate by mouse	
 	rotate_y(-event.relative.x * mouse_sensitivity)
 	head.rotate_x(-event.relative.y * mouse_sensitivity)
 	head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
+	if _weapon:
+		_weapon.handle_mouse_motion(event.relative)
 
 
 func _physics_process(delta: float) -> void:

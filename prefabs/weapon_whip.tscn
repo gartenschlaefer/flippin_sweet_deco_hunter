@@ -1,24 +1,28 @@
 [gd_scene load_steps=5 format=3 uid="uid://bp324u76hfyw3"]
 
-[ext_resource type="PackedScene" uid="uid://cyfh7n71pk55x" path="res://models/Licorice_Whip.glb" id="1_7nti1"]
-[ext_resource type="Script" uid="uid://yrpvp67e5mf7" path="res://scripts/weapon_whip_physics.gd" id="1_xkyhg"]
-[ext_resource type="Script" uid="uid://bwocj662q5fga" path="res://scripts/weapon_whip.gd" id="3_qtq0k"]
+[ext_resource type="Script" uid="uid://bwocj662q5fga" path="res://scripts/weapon_whip.gd" id="1_ckfqr"]
+[ext_resource type="Script" uid="uid://bdxjbc5y1tp7i" path="res://scripts/weapon_physics_whip.gd" id="2_ckfqr"]
+[ext_resource type="PackedScene" uid="uid://cyfh7n71pk55x" path="res://models/Licorice_Whip.glb" id="3_w18wj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xkyhg"]
 radius = 0.087890625
 height = 0.28814697
 
-[node name="LicoriceWhip" type="Node3D"]
-script = ExtResource("3_qtq0k")
+[node name="LicoriceWhip" type="Node3D" node_paths=PackedStringArray("weapon_model", "weapon_physics")]
+script = ExtResource("1_ckfqr")
+weapon_model = NodePath("Weapon_Mesh")
+weapon_physics = NodePath("Physics")
 
-[node name="Physics" type="Node3D" parent="."]
-script = ExtResource("1_xkyhg")
+[node name="Physics" type="Node3D" parent="." node_paths=PackedStringArray("weapon")]
+script = ExtResource("2_ckfqr")
+weapon = NodePath("..")
+segment_root_path = NodePath(".")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mass = 0.2
-can_sleep = false
-freeze = true
+collision_layer = 0
+collision_mask = 0
+mass = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
@@ -26,108 +30,72 @@ shape = SubResource("CapsuleShape3D_xkyhg")
 
 [node name="RigidBody3D2" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
-mass = 0.2
-can_sleep = false
+collision_layer = 0
+collision_mask = 0
+mass = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 shape = SubResource("CapsuleShape3D_xkyhg")
 
-[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="Physics/RigidBody3D2"]
-node_a = NodePath("../../RigidBody3D")
-node_b = NodePath("..")
-
 [node name="RigidBody3D3" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
-mass = 0.2
-can_sleep = false
+collision_layer = 0
+collision_mask = 0
+mass = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 shape = SubResource("CapsuleShape3D_xkyhg")
 
-[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="Physics/RigidBody3D3"]
-node_a = NodePath("../../RigidBody3D2")
-node_b = NodePath("..")
-
 [node name="RigidBody3D4" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
-mass = 0.2
-can_sleep = false
+collision_layer = 0
+collision_mask = 0
+mass = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 shape = SubResource("CapsuleShape3D_xkyhg")
 
-[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="Physics/RigidBody3D4"]
-node_a = NodePath("../../RigidBody3D3")
-node_b = NodePath("..")
-
 [node name="RigidBody3D5" type="RigidBody3D" parent="Physics" groups=["weapon_part"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
-mass = 0.2
-can_sleep = false
+mass = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 shape = SubResource("CapsuleShape3D_xkyhg")
 
-[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="Physics/RigidBody3D5"]
-node_a = NodePath("../../RigidBody3D4")
-node_b = NodePath("..")
-
 [node name="RigidBody3D6" type="RigidBody3D" parent="Physics" groups=["weapon_part"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-mass = 0.2
-can_sleep = false
+mass = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 shape = SubResource("CapsuleShape3D_xkyhg")
 
-[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="Physics/RigidBody3D6"]
-node_a = NodePath("../../RigidBody3D5")
-node_b = NodePath("..")
-
 [node name="RigidBody3D7" type="RigidBody3D" parent="Physics" groups=["weapon_part"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
-mass = 0.2
-can_sleep = false
+mass = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 shape = SubResource("CapsuleShape3D_xkyhg")
 
-[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="Physics/RigidBody3D7"]
-node_a = NodePath("../../RigidBody3D6")
-node_b = NodePath("..")
-
 [node name="RigidBody3D8" type="RigidBody3D" parent="Physics" groups=["weapon_part"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
-mass = 0.2
-can_sleep = false
+mass = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 shape = SubResource("CapsuleShape3D_xkyhg")
 
-[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="Physics/RigidBody3D8"]
-node_a = NodePath("../../RigidBody3D7")
-node_b = NodePath("..")
-
 [node name="RigidBody3D9" type="RigidBody3D" parent="Physics" groups=["weapon_part"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
-mass = 0.2
-can_sleep = false
+mass = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D9"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 shape = SubResource("CapsuleShape3D_xkyhg")
 
-[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="Physics/RigidBody3D9"]
-node_a = NodePath("../../RigidBody3D8")
-node_b = NodePath("..")
-
-[node name="Licorice_Whip" parent="Physics" instance=ExtResource("1_7nti1")]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Weapon_Mesh" parent="." instance=ExtResource("3_w18wj")]

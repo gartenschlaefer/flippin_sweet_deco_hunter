@@ -1,40 +1,36 @@
-extends Node3D
-class_name WhipPhysics
+extends WeaponPhysicsBase
+class_name WeaponPhysicsWhip
 
-@onready var skeleton: Skeleton3D = $Licorice_Whip/Armature/Skeleton3D
-@onready var mesh: MeshInstance3D = _find_mesh($Licorice_Whip)
-@onready var physics: Node3D = self
-@onready var cam : Camera3D = get_viewport().get_camera_3d() 
+@export var weapon: WeaponBase
+@export var segment_root_path: NodePath
+@onready var segment_root: Node = get_node_or_null(segment_root_path)
 @export var physics_allow_segment_x: float = 15.0
 @export var physics_allow_segment_y: float = 15.0
 @export var physics_allow_segment_z: float = 15.0
 @export var chain_stiffness := 1.0
-@export var swing_force := 10.0
-@export var snap_force := -100.0
 @export var snap_duration := 0.55
 @export var swing_duration := 0.90
-@export var camera_direction_distance := 5.0
+@export var speed_threshold := 0.5
+@export var force_min := 2.0
+@export var force_max := 5.0
+@export var force_gain := 1.2
+@export var force_strength := 2.0
+@export var force_frames := 30
+@export var force_offset_distance := 5.0
 
-enum DrivePhase {
-	NONE,
-	SWING_OUT,
-	TARGET   
-}
-
-var drive_phase : DrivePhase = DrivePhase.NONE
-var drive_time : float = 0.0
-
-var segs: Array[RigidBody3D] = []
+var force_frames_left := 0
+var burst_armed := true
 var rest_lengths: Array[float] = []
 var rest_dirs_local: Array[Vector3] = []
-var offsets := []
+
 var snap_time := 0.0
 var is_swinging : bool
 var is_snapping : bool
 
-func _ready():
+
+func _init_physics_chain():
 	segs.clear()
-	for c in physics.get_children():
+	for c in segment_root.get_children():
 		if c is RigidBody3D:
 			segs.append(c as RigidBody3D)
 
@@ -51,88 +47,106 @@ func _ready():
 		var bone_pose: Transform3D = skeleton.global_transform * skeleton.get_bone_global_pose(bone)
 		var seg_pose: Transform3D = segs[i].global_transform
 		offsets[i] = seg_pose.affine_inverse() * bone_pose
-
-	segs[0].freeze = true
-
+	
 	for i in range(1, segs.size()):
 		_create_joint(segs[i], segs[i - 1])
+
+	segs[0].freeze = true
 
 	_cache_rest_data()
 
 
-func _physics_process(_delta):	
+func _physics_process(delta):
+	if is_swinging:
+		apply_centrifugal_force()
+	elif is_snapping:
+		apply_centrifugal_force()
+
 	if snap_time > 0.0:
-		if is_snapping:
-			apply_torque(snap_force)
-		if is_swinging: 
-			apply_torque(swing_force)
-		snap_time -= _delta
+		snap_time -= delta
 	else:
 		is_snapping = false
 		is_swinging = false
+
+	if weapon and weapon.state == weapon.State.ATTACKING:
+		apply_centrifugal_force()
+
 	stabilize_chain_angles()
+	apply_bone_pose()
 
-	skeleton.clear_bones_global_pose_override()
-	var skel_inv: Transform3D = skeleton.global_transform.affine_inverse()
 
-	for i in segs.size():
+func stabilize_chain_angles():
+	var count := segs.size()
+	if rest_lengths.size() != count - 1:
+		return
+	if rest_dirs_local.size() != count - 1:
+		return
+
+	var max_angle := deg_to_rad(physics_allow_segment_x)
+	var cos_max := cos(max_angle)
+	var stiffness : float = clamp(chain_stiffness, 0.0, 1.0)
+
+	for i in range(1, count):
+		var a := segs[i - 1]
+		var b := segs[i]
+
+		var a_pos := a.global_position
+		var b_pos := b.global_position
+
+		var dir := b_pos - a_pos
+		var len_sq := dir.length_squared()
+		if len_sq <= 1e-12:
+			continue
+
+		var inv_len := 1.0 / sqrt(len_sq)
+		var n := dir * inv_len
+		var target := rest_lengths[i - 1]
+
+		var forward := a.global_transform.basis * rest_dirs_local[i - 1]
+		var dotv : float = clamp(forward.dot(n), -1.0, 1.0)
+
+		if dotv >= cos_max:
+			var seg_len := len_sq * inv_len
+			if abs(seg_len - target) > 0.0001:
+				b.global_position = a_pos + n * target
+			continue
+
+		var axis := forward.cross(n)
+		var axis_len_sq := axis.length_squared()
+		if axis_len_sq <= 1e-12:
+			b.global_position = a_pos + forward * target
+			continue
+
+		axis *= 1.0 / sqrt(axis_len_sq)
+
+		var angle := acos(dotv)
+		var corr := (angle - max_angle) * stiffness
+
+		var q := Quaternion(axis, -corr)
+		var new_dir := q * n
+
+		b.global_position = a_pos + new_dir * target
+
+		var v := b.linear_velocity
+		b.linear_velocity = v - new_dir * v.dot(new_dir)
+
+
+func apply_bone_pose():
+	var skel_inv := skeleton.global_transform.affine_inverse()
+	var count := segs.size()
+
+	for i in range(count):
 		var bone := i + 1
 		var seg_pose: Transform3D = segs[i].global_transform
 		var world_t: Transform3D = seg_pose * offsets[i]
 		var bone_t: Transform3D = skel_inv * world_t
-		skeleton.set_bone_global_pose_override(bone, bone_t, 1.0, true)
+		skeleton.set_bone_global_pose(bone, bone_t)
 
 
-func stabilize_chain_angles():
-	if rest_lengths.size() != segs.size() - 1:
-		return
-	if rest_dirs_local.size() != segs.size() - 1:
-		return
+func get_segment_stiffness(i: int) -> float:
+	var t := float(i - 1) / float(segs.size() - 3)
+	return clamp(1.0 - t * t, 0.15, 1.0)
 
-	var max_x := deg_to_rad(physics_allow_segment_x)
-
-	for i in range(1, segs.size()):
-		var a := segs[i - 1]
-		var b := segs[i]
-
-		var dir := b.global_position - a.global_position
-		var length := dir.length()
-		if length == 0.0:
-			continue
-
-		var n := dir / length
-		var target := rest_lengths[i - 1]
-
-		var forward: Vector3 = a.global_transform.basis * rest_dirs_local[i - 1]
-		forward = forward.normalized()
-
-		var dotv : float = clamp(forward.dot(n), -1.0, 1.0)
-		var angle := acos(dotv)
-
-		if angle <= max_x:
-			if abs(length - target) > 0.0001:
-				b.global_position = a.global_position + n * target
-			continue
-
-		var axis := forward.cross(n)
-		var axis_len := axis.length()
-		if axis_len == 0.0:
-			b.global_position = a.global_position + forward * target
-			continue
-
-		axis /= axis_len
-
-		var excess := angle - max_x
-		var corr: float = excess * clamp(chain_stiffness, 0.0, 1.0)
-
-		var q := Quaternion(axis, -corr)
-		var new_dir := (q * n).normalized()
-
-		b.global_position = a.global_position + new_dir * target
-
-		var v := b.linear_velocity
-		var radial := new_dir * v.dot(new_dir)
-		b.linear_velocity = v - radial
 
 
 func _cache_rest_data():
@@ -157,10 +171,16 @@ func _cache_rest_data():
 
 func _create_joint(a: RigidBody3D, b: RigidBody3D) -> Generic6DOFJoint3D:
 	var j := Generic6DOFJoint3D.new()
-	add_child(j)
+	a.add_child(j)
 
 	j.node_a = a.get_path()
 	j.node_b = b.get_path()
+	
+	var pj := PinJoint3D.new()
+	#a.add_child(pj)
+
+	pj.node_a = a.get_path()
+	pj.node_b = b.get_path()
 
 	j.set_param_x(Generic6DOFJoint3D.PARAM_LINEAR_LOWER_LIMIT, 0.0)
 	j.set_param_x(Generic6DOFJoint3D.PARAM_LINEAR_UPPER_LIMIT, 0.0)
@@ -188,23 +208,6 @@ func _create_joint(a: RigidBody3D, b: RigidBody3D) -> Generic6DOFJoint3D:
 	return j
 
 
-func _find_skeleton(n: Node) -> Skeleton3D:
-	if n is Skeleton3D:
-		return n
-	for c in n.get_children():
-		var s = _find_skeleton(c)
-		if s:
-			return s
-	return null
-
-
-func _find_mesh(n: Node3D) -> MeshInstance3D:
-	for c in n.get_children():
-		var m = _find_mesh(c)
-		if m:
-			return m
-	return null
-
 func start_swing():
 	snap_time = swing_duration
 	is_swinging = true
@@ -217,44 +220,36 @@ func trigger_snapback():
 	is_snapping = true
 
 
-func get_target_point() -> Vector3:
-	return cam.global_position - cam.global_transform.basis.z * camera_direction_distance
-
-func get_swing_out_point() -> Vector3:
-	return (
-		cam.global_position
-		- cam.global_transform.basis.z * camera_direction_distance
-		- cam.global_transform.basis.y * 2.0
-	)
-
-func apply_torque(force):
-	if cam == null:
+func apply_centrifugal_force():
+	if segs.size() < 2:
 		return
 
-	var target_point := cam.global_position - cam.global_transform.basis.z * camera_direction_distance
+	var root := segs[0]	
+	var whip_start := segs[1]
+	var tip := segs[segs.size() - 1]
 
+	var whip_root_speed := whip_start.linear_velocity.length()
+
+	var force_value := 0.0
+
+	if whip_root_speed >= speed_threshold:
+		var raw := (whip_root_speed - speed_threshold) * force_gain
+		force_value = clamp(raw, force_min, force_max)
+
+		# refresh grace window while above threshold
+		force_frames_left = force_frames
+
+	elif force_frames_left > 0:
+		# speed dropped, but keep minimum force alive
+		force_value = force_min
+		force_frames_left -= 1
+
+	else:
+		return
+
+	var spin_axis := root.global_transform.basis.y.normalized()
+	var application_point := root.global_position + spin_axis * force_offset_distance
+	var force := spin_axis * force_value
 	var count := segs.size()
-	for i in range(count):
-		#if i < 1:
-			#break
-		var seg := segs[i]
-
-		var tip_pos := seg.global_position
-		var desired_dir := (target_point - tip_pos).normalized()
-
-		# ACHTUNG: Achse prüfen (z/y/x je nach Modell)
-		var current_dir := -seg.global_transform.basis.y
-
-		var axis := current_dir.cross(desired_dir)
-		var axis_len := axis.length()
-		if axis_len < 0.0001:
-			continue
-
-		axis /= axis_len
-		var angle := current_dir.angle_to(desired_dir)
-
-		# Gewichtung: hintere Segmente stärker
-		var t := float(i) / float(count - 1)
-		var strength :float = -force * t * t
-
-		seg.apply_torque(axis * angle * strength)
+	for i in range(count): 
+		segs[i].apply_force(force, application_point - segs[i].global_position)
