@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cq4lncecf1h10"]
+[gd_scene load_steps=26 format=3 uid="uid://cq4lncecf1h10"]
 
 [ext_resource type="Script" uid="uid://55fb0suofs58" path="res://scripts/test_deco.gd" id="1_rldlp"]
 [ext_resource type="Texture2D" uid="uid://lo82ex7pt7r4" path="res://art/brent-minehan-candyland.jpg" id="1_saww7"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cx60boovqgg14" path="res://art/christmas_tree.png" id="4_vnriv"]
 [ext_resource type="Texture2D" uid="uid://d0unaeg410xxw" path="res://art/bubaba_boss_new.png" id="7_vnriv"]
 [ext_resource type="PackedScene" uid="uid://qdfw3qsr5x8o" path="res://prefabs/sticker.tscn" id="8_htlnx"]
+[ext_resource type="Resource" uid="uid://pm11x0q0cu7n" path="res://prefabs/resources/test_sticker_whip.tres" id="9_8ywur"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_htlnx"]
 panorama = ExtResource("1_saww7")
@@ -155,7 +156,11 @@ transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -9.117514, 2.702044, 0)
 billboard = 1
 sprite_frames = SubResource("SpriteFrames_8ywur")
 
-[node name="sticker" parent="." instance=ExtResource("8_htlnx")]
+[node name="sticker_whip" parent="." instance=ExtResource("8_htlnx")]
+transform = Transform3D(0.9999892, 0.004642559, 0, -0.004642559, 0.9999892, 0, 0, 0, 1, 5.562973, 0, 11.7752905)
+sticker_resource = ExtResource("9_8ywur")
+
+[node name="sticker_oneeye" parent="." instance=ExtResource("8_htlnx")]
 transform = Transform3D(0.9999892, 0.004642559, 0, -0.004642559, 0.9999892, 0, 0, 0, 1, 5.562973, 0, 7.863282)
 
 [connection signal="area_entered" from="christmas_tree/hang_deco_area" to="christmas_tree" method="_on_hang_deco_area_area_entered"]

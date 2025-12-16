@@ -29,6 +29,14 @@ func _on_hang_deco_area_area_entered(area: Area3D) -> void:
 
 	# safety
 	if not area.get_parent() is Player: return
+
+	# player
+	var player = area.get_parent()
+
+	# no bubaba sticker skip
+	if not player.get_player_has_bubaba_sticker(): return
+
+	# debug
 	self.debug_cube_set_active()
 
 

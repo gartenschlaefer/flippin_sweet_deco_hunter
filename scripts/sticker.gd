@@ -3,11 +3,18 @@
 
 class_name Sticker extends Node3D
 
+# refs
 @export var sticker_resource: StickerResource = null
+@onready var sprite: Sprite3D = $sprite
 
 
 func _ready():
-	pass
+		
+	# sticker resource skip
+	if sticker_resource == null: return
+
+	# set texture
+	sprite.set_texture(sticker_resource.get_texture())
 
 
 func _on_area_3d_area_entered(area: Area3D) -> void:

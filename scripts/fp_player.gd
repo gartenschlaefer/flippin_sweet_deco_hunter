@@ -97,3 +97,15 @@ func add_sticker(sticker: StickerResource):
 	# add sticker
 	collected_sticker.append(sticker)
 	print("sticker collected!")
+
+
+# --
+# setter and getter
+
+func get_player_has_bubaba_sticker():
+
+	# quick has bubaba sticker evaluation
+	for sticker in collected_sticker:
+		if sticker.get_sticker_type_is_bubaba(): return true
+
+	return false

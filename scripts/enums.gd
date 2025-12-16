@@ -4,4 +4,4 @@
 extends Node
 
 # sticker type
-enum StickerType { BUBABA, OTHER_STICKER }
+enum StickerType { bubaba, other_sticker }
