@@ -25,9 +25,15 @@ func debug_cube_set_inactive(): debug_cube.get_active_material(0).set_albedo(Col
 # --
 # private functions
 
-func _on_hang_deco_area_area_entered(_area: Area3D) -> void:
+func _on_hang_deco_area_area_entered(area: Area3D) -> void:
+
+	# safety
+	if not area.get_parent() is Player: return
 	self.debug_cube_set_active()
 
 
-func _on_hang_deco_area_area_exited(_area: Area3D) -> void:
+func _on_hang_deco_area_area_exited(area: Area3D) -> void:
+
+	# safety
+	if not area.get_parent() is Player: return
 	self.debug_cube_set_inactive()

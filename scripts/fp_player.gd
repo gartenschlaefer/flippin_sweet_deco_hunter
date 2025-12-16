@@ -9,6 +9,7 @@ class_name  Player
 
 # vars
 var direction: Vector3
+var collected_sticker: Array[StickerResource] = []
 
 # const
 const speed = 5.0
@@ -89,3 +90,10 @@ func handle_mouse_motion(delta: Vector2):
 	rotate_y(-delta.x * mouse_sensitivity)
 	head.rotate_x(-delta.y * mouse_sensitivity)
 	head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
+
+
+func add_sticker(sticker: StickerResource):
+
+	# add sticker
+	collected_sticker.append(sticker)
+	print("sticker collected!")
