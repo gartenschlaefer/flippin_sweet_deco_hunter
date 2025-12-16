@@ -12,6 +12,7 @@ height = 0.28814697
 script = ExtResource("1_ckfqr")
 weapon_model = NodePath("Weapon_Mesh")
 weapon_physics = NodePath("Physics")
+cam_speed_while_attacking = 0.1
 
 [node name="Physics" type="Node3D" parent="." node_paths=PackedStringArray("weapon")]
 script = ExtResource("2_ckfqr")

@@ -1,7 +1,7 @@
 [gd_scene load_steps=26 format=3 uid="uid://cq4lncecf1h10"]
 
 [ext_resource type="Script" uid="uid://55fb0suofs58" path="res://scripts/test_deco.gd" id="1_rldlp"]
-[ext_resource type="Texture2D" uid="uid://lo82ex7pt7r4" path="res://art/brent-minehan-candyland.jpg" id="1_saww7"]
+[ext_resource type="Texture2D" uid="uid://bmxetnj4ffiud" path="res://art/sky2.exr" id="2_8ywur"]
 [ext_resource type="Material" uid="uid://b6ncbnox5ob0h" path="res://materials/raster_texture.tres" id="2_67i2j"]
 [ext_resource type="PackedScene" uid="uid://cs6jw26dvr3ym" path="res://prefabs/fp_player.tscn" id="3_rldlp"]
 [ext_resource type="Script" uid="uid://d3kl87rwaov15" path="res://scripts/christmas_tree.gd" id="4_67i2j"]
@@ -11,7 +11,7 @@
 [ext_resource type="Resource" uid="uid://pm11x0q0cu7n" path="res://prefabs/resources/test_sticker_whip.tres" id="9_8ywur"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_htlnx"]
-panorama = ExtResource("1_saww7")
+panorama = ExtResource("2_8ywur")
 
 [sub_resource type="Sky" id="Sky_ig1s7"]
 sky_material = SubResource("PanoramaSkyMaterial_htlnx")
