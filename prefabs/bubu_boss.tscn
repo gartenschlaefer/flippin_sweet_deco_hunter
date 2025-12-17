@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://dxsppsj63dtfa"]
+
+[ext_resource type="Script" uid="uid://dj15cotxd0f80" path="res://scripts/bubu_boss.gd" id="1_5txs5"]
+[ext_resource type="Texture2D" uid="uid://b4a78dmcht2bu" path="res://art/boss_spritesheet900px.png" id="1_v0qj6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_toria"]
+atlas = ExtResource("1_v0qj6")
+region = Rect2(0, 900, 737, 900)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtcmb"]
+atlas = ExtResource("1_v0qj6")
+region = Rect2(737, 900, 737, 900)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7cn1i"]
+atlas = ExtResource("1_v0qj6")
+region = Rect2(0, 0, 737, 900)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mjbw7"]
+atlas = ExtResource("1_v0qj6")
+region = Rect2(737, 0, 737, 900)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8ywur"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_toria")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wtcmb")
+}],
+"loop": true,
+"name": &"collect",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7cn1i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mjbw7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
+[node name="bubu_boss" type="Node3D"]
+script = ExtResource("1_5txs5")
+
+[node name="sprites" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -9.117514, 2.702044, 0)
+billboard = 1
+sprite_frames = SubResource("SpriteFrames_8ywur")
+frame_progress = 0.6469165
