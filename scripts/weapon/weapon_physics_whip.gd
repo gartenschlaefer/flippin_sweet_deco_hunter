@@ -81,6 +81,8 @@ func _physics_process(delta):
 		is_swinging = false
 	
 	if Engine.get_physics_frames() & 1 == 0:
+		if apply_force:
+			apply_centrifugal_force(delta)
 		stabilize_chain_angles()
 		apply_bone_pose()
 
