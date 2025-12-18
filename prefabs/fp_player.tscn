@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cs6jw26dvr3ym"]
+[gd_scene load_steps=6 format=3 uid="uid://cs6jw26dvr3ym"]
 
 [ext_resource type="Script" uid="uid://bkee4uh7lvqei" path="res://scripts/fp_player.gd" id="1_swpgi"]
+[ext_resource type="Script" uid="uid://buxkx63n4sss8" path="res://scripts/weapon/weapon_socket.gd" id="2_bdlj7"]
+[ext_resource type="Script" uid="uid://qehfg1mq03ms" path="res://scripts/weapon/weapon_inventory.gd" id="3_aij1x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ba8i8"]
 
@@ -8,8 +10,9 @@
 height = 1.0
 radius = 1.0
 
-[node name="fp_player" type="CharacterBody3D"]
+[node name="fp_player" type="CharacterBody3D" node_paths=PackedStringArray("weapon_inventory")]
 script = ExtResource("1_swpgi")
+weapon_inventory = NodePath("WeaponInventory")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -20,8 +23,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 
 [node name="Camera3D" type="Camera3D" parent="head"]
 
-[node name="WeaponSocket" type="Node3D" parent="head/Camera3D"]
+[node name="WeaponSocket" type="Node3D" parent="head/Camera3D" node_paths=PackedStringArray("inventory")]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.41945204, 0.9077775, 0, -0.9077775, 0.41945204, 0, -0.336, -0.658)
+script = ExtResource("2_bdlj7")
+inventory = NodePath("../../../WeaponInventory")
 
 [node name="interaction_area" type="Area3D" parent="."]
 collision_layer = 8
@@ -30,3 +35,6 @@ collision_mask = 8
 [node name="CollisionShape3D" type="CollisionShape3D" parent="interaction_area"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("CylinderShape3D_swpgi")
+
+[node name="WeaponInventory" type="Node" parent="."]
+script = ExtResource("3_aij1x")

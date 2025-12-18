@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bp324u76hfyw3"]
 
-[ext_resource type="Script" uid="uid://bwocj662q5fga" path="res://scripts/weapon_whip.gd" id="1_ckfqr"]
-[ext_resource type="Script" uid="uid://bdxjbc5y1tp7i" path="res://scripts/weapon_physics_whip.gd" id="2_ckfqr"]
+[ext_resource type="Script" uid="uid://bwocj662q5fga" path="res://scripts/weapon/weapon_whip.gd" id="1_ckfqr"]
+[ext_resource type="Script" uid="uid://bdxjbc5y1tp7i" path="res://scripts/weapon/weapon_physics_whip.gd" id="2_ckfqr"]
 [ext_resource type="PackedScene" uid="uid://cyfh7n71pk55x" path="res://models/Licorice_Whip.glb" id="3_w18wj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xkyhg"]
@@ -12,6 +12,7 @@ height = 0.28814697
 script = ExtResource("1_ckfqr")
 weapon_model = NodePath("Weapon_Mesh")
 weapon_physics = NodePath("Physics")
+cam_speed_while_attacking = 0.1
 
 [node name="Physics" type="Node3D" parent="." node_paths=PackedStringArray("weapon")]
 script = ExtResource("2_ckfqr")

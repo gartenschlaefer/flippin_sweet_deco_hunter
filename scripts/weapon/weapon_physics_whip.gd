@@ -10,13 +10,11 @@ class_name WeaponPhysicsWhip
 @export var chain_stiffness := 1.0
 @export var snap_duration := 0.55
 @export var swing_duration := 0.90
-@export var speed_threshold := 0.5
+@export var speed_threshold := 1.0
 @export var force_min := 2.0
 @export var force_max := 5.0
 @export var force_gain := 1.2
-@export var force_strength := 2.0
 @export var force_frames := 30
-@export var force_offset_distance := 5.0
 
 var force_frames_left := 0
 var burst_armed := true
@@ -26,9 +24,15 @@ var rest_dirs_local: Array[Vector3] = []
 var snap_time := 0.0
 var is_swinging : bool
 var is_snapping : bool
+var last_root_pos : Vector3
+var last_cam_pos : Vector3
+
+var filtered_velocity := Vector3.ZERO
+var last_velocity_dir := Vector3.ZERO
+@export var velocity_smooth := 10.0
 
 
-func _init_physics_chain():
+func _init_physics():
 	segs.clear()
 	for c in segment_root.get_children():
 		if c is RigidBody3D:
@@ -52,15 +56,18 @@ func _init_physics_chain():
 		_create_joint(segs[i], segs[i - 1])
 
 	segs[0].freeze = true
+	
+	last_root_pos = segs[0].global_position
+	last_cam_pos = get_viewport().get_camera_3d().global_position
 
 	_cache_rest_data()
 
 
 func _physics_process(delta):
 	if is_swinging:
-		apply_centrifugal_force()
+		apply_centrifugal_force(delta)
 	elif is_snapping:
-		apply_centrifugal_force()
+		apply_centrifugal_force(delta)
 
 	if snap_time > 0.0:
 		snap_time -= delta
@@ -69,7 +76,7 @@ func _physics_process(delta):
 		is_swinging = false
 
 	if weapon and weapon.state == weapon.State.ATTACKING:
-		apply_centrifugal_force()
+		apply_centrifugal_force(delta)
 
 	stabilize_chain_angles()
 	apply_bone_pose()
@@ -220,22 +227,36 @@ func trigger_snapback():
 	is_snapping = true
 
 
-func apply_centrifugal_force():
+func apply_centrifugal_force(delta: float):
 	if segs.size() < 2:
 		return
 
-	var root := segs[0]	
-	var whip_start := segs[1]
+	var root := segs[0]
+	var cam := get_viewport().get_camera_3d()
 
-	var whip_root_speed := whip_start.linear_velocity.length()
+	var curr_root_pos := root.global_position
+	var curr_cam_pos := cam.global_position
+
+	var root_vel := (curr_root_pos - last_root_pos) / delta
+	var cam_vel := (curr_cam_pos - last_cam_pos) / delta
+
+	last_root_pos = curr_root_pos
+	last_cam_pos = curr_cam_pos
+
+	var velocity := root_vel - cam_vel
+
+	filtered_velocity = filtered_velocity.lerp(
+		velocity,
+		clamp(delta * velocity_smooth, 0.0, 1.0)
+	)
+
+	var cam_to_root_dir := (root.global_position - curr_cam_pos).normalized()
+	var whip_root_speed : float = max(0.0, filtered_velocity.dot(cam_to_root_dir))
 
 	var force_value := 0.0
 
 	if whip_root_speed >= speed_threshold:
-		var raw := (whip_root_speed - speed_threshold) * force_gain
-		force_value = clamp(raw, force_min, force_max)
-
-		# refresh grace window while above threshold
+		force_value = clamp(whip_root_speed, force_min, force_max)
 		force_frames_left = force_frames
 
 	elif force_frames_left > 0:
@@ -246,9 +267,10 @@ func apply_centrifugal_force():
 	else:
 		return
 
-	var spin_axis := root.global_transform.basis.y.normalized()
-	var application_point := root.global_position + spin_axis * force_offset_distance
-	var force := spin_axis * force_value
-	var count := segs.size()
-	for i in range(count): 
-		segs[i].apply_force(force, application_point - segs[i].global_position)
+	for seg in segs:
+		var len_sq := cam_to_root_dir.length_squared()
+		if len_sq < 1e-8:
+			continue
+
+		cam_to_root_dir *= 1.0 / sqrt(len_sq)
+		seg.apply_force(cam_to_root_dir * force_value)

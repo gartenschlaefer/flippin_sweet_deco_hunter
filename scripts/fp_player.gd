@@ -16,47 +16,38 @@ const jump_velocity = 4.5
 const mouse_sensitivity = 0.005
 const lerp_speed = 7.0
 
-@onready var weapon_socket: Node3D = $head/Camera3D/WeaponSocket
-
-var _weapon: WeaponBase = null
-
-var weapon: WeaponBase:
-	set(value):
-		if _weapon:
-			_weapon.on_unequip()
-			_weapon.queue_free()
-
-		_weapon = value
-
-		if _weapon:
-			weapon_socket.add_child(_weapon)
-			_weapon.transform = Transform3D.IDENTITY
-			_weapon.on_equip(self)
-
+@onready var weapon_socket: WeaponSocket = $head/Camera3D/WeaponSocket
+@export var weapon_inventory: WeaponInventory
 
 func _ready():
-	weapon = preload("res://prefabs/weapon_whip.tscn").instantiate()
+	weapon_inventory.add_weapon(preload("res://prefabs/weapon_whip.tscn"))
+	weapon_inventory.add_weapon(preload("res://prefabs/weapon_cotton_candy.tscn"))
+	
+	weapon_socket.inventory = weapon_inventory
+	weapon_socket.try_auto_equip()
 	# hide mouse and lock at center
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
 func _input(event):
-	
-	if _weapon:
-		if Input.is_action_just_pressed("attack"):
-			_weapon.attack_pressed()
-		elif Input.is_action_just_released("attack"):
-			_weapon.attack_released()
+	if Input.is_action_just_pressed("attack"):
+		weapon_socket.attack_pressed()
+	elif Input.is_action_just_released("attack"):
+		weapon_socket.attack_released()
+	elif Input.is_action_just_pressed("weapon_previous"):
+		weapon_socket.equip_previous()
 
-	# only mouse input
-	if not event is InputEventMouseMotion: return
+	if event is InputEventMouseMotion:
+		var delta : Vector2 = event.relative
 
-	# rotate by mouse	
-	if _weapon and _weapon.state == _weapon.State.ATTACKING:
-		_weapon.handle_mouse_motion(event.relative)
-		handle_mouse_motion(event.relative * _weapon.cam_speed_while_attacking)
-	else:
-		handle_mouse_motion(event.relative)
+		weapon_socket.handle_mouse_motion(delta)
+
+		var cam_mul := 1.0
+		if weapon_socket.current_weapon:
+			cam_mul = weapon_socket.current_weapon.get_camera_speed_multiplier()
+
+		handle_mouse_motion(delta * cam_mul)
+
 
 
 func _physics_process(delta: float) -> void:

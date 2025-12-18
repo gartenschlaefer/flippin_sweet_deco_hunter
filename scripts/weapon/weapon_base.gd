@@ -241,6 +241,12 @@ func _find_skeleton(n: Node) -> Skeleton3D:
 			return s
 	return null
 
+func get_camera_speed_multiplier() -> float:
+	if state == State.ATTACKING:
+		return cam_speed_while_attacking
+	return 1.0
+
+
 func notify_hit(_enemy):
 	pass
 

@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://swau5mtb57rs"]
+
+[ext_resource type="Shader" uid="uid://crd761yfownr8" path="res://shader/cotton_candy.gdshader" id="1_wx6m5"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_wx6m5")
+shader_parameter/movement_dir = Vector3(0, 0, 1)
+shader_parameter/height_scale = 0.25
+shader_parameter/wave_speed = 1.0
+shader_parameter/global_alpha = 0.99
+shader_parameter/squash_strength = 0.1
+shader_parameter/color_low = Color(0.9, 0.8, 0.9, 1)
+shader_parameter/color_high = Color(0.40392157, 0.9019608, 1, 1)
+shader_parameter/enable_fresnel = true
+shader_parameter/fresnel_power = 5.575
+shader_parameter/fresnel_alpha_strength = 0.45
+shader_parameter/light_dir = Vector3(0.5, -0.5, 0)

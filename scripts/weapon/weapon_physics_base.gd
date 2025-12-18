@@ -20,7 +20,7 @@ func setup(_skeleton: Skeleton3D, _mesh: MeshInstance3D):
 	mesh = _mesh
 
 	_collect_segments()
-	_init_physics_chain()
+	_init_physics()
 	skeleton.reset_bone_poses()
 	_initialized = true
 
@@ -37,5 +37,5 @@ func _collect_segments():
 		push_error("WeaponPhysicsBase: no RigidBody3D segments found")
 
 
-func _init_physics_chain():
+func _init_physics():
 	pass
