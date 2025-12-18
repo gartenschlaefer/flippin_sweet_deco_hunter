@@ -8,8 +8,8 @@ class_name WeaponPhysicsWhip
 @export var physics_allow_segment_y: float = 15.0
 @export var physics_allow_segment_z: float = 15.0
 @export var chain_stiffness := 1.0
-@export var snap_duration := 0.55
-@export var swing_duration := 0.90
+@export var snap_duration := 0.5
+@export var swing_duration := 1.0
 @export var speed_threshold := 1.0
 @export var force_min := 2.0
 @export var force_max := 5.0
@@ -183,12 +183,6 @@ func _create_joint(a: RigidBody3D, b: RigidBody3D) -> Generic6DOFJoint3D:
 	j.node_a = a.get_path()
 	j.node_b = b.get_path()
 	
-	var pj := PinJoint3D.new()
-	#a.add_child(pj)
-
-	pj.node_a = a.get_path()
-	pj.node_b = b.get_path()
-
 	j.set_param_x(Generic6DOFJoint3D.PARAM_LINEAR_LOWER_LIMIT, 0.0)
 	j.set_param_x(Generic6DOFJoint3D.PARAM_LINEAR_UPPER_LIMIT, 0.0)
 	j.set_param_y(Generic6DOFJoint3D.PARAM_LINEAR_LOWER_LIMIT, 0.0)
@@ -251,7 +245,7 @@ func apply_centrifugal_force(delta: float):
 	)
 
 	var cam_to_root_dir := (root.global_position - curr_cam_pos).normalized()
-	var whip_root_speed : float = max(0.0, filtered_velocity.dot(cam_to_root_dir))
+	var whip_root_speed : float = abs(filtered_velocity.dot(cam_to_root_dir))
 
 	var force_value := 0.0
 
