@@ -10,6 +10,8 @@ class_name  Player
 # vars
 var direction: Vector3
 var collected_sticker: Array[StickerResource] = []
+var is_in_tree_hanging_range = false
+var christmas_tree_object = null
 
 # const
 const speed = 5.0
@@ -28,6 +30,9 @@ func _ready():
 	weapon_socket.try_auto_equip()
 	# hide mouse and lock at center
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+	is_in_tree_hanging_range = false
+	christmas_tree_object = null
 
 
 func _input(event):
@@ -48,6 +53,12 @@ func _input(event):
 			cam_mul = weapon_socket.current_weapon.get_camera_speed_multiplier()
 
 		handle_mouse_motion(delta * cam_mul)
+
+	# tree hanging
+	if not is_in_tree_hanging_range: return
+
+	# interact with christmas tree
+	if Input.is_action_just_pressed("interact"): self.hang_deco_on_christmas_tree()
 
 
 
@@ -90,13 +101,35 @@ func add_sticker(sticker: StickerResource):
 	print("sticker collected!")
 
 
+func hang_deco_on_christmas_tree():
+
+	# skips if no christmas tree object or sticker
+	if christmas_tree_object == null: return
+	if not len(collected_sticker): return
+
+	# add deco
+	christmas_tree_object.hang_deco_on_tree(collected_sticker.pop_back(), self)
+
+
 # --
 # setter and getter
 
-func get_player_has_bubaba_sticker():
+func get_player_has_sticker() -> bool: return bool(len(collected_sticker))
+
+func get_player_has_bubaba_sticker() -> bool:
 
 	# quick has bubaba sticker evaluation
 	for sticker in collected_sticker:
 		if sticker.get_sticker_type_is_bubaba(): return true
 
 	return false
+
+
+func set_is_in_tree_hanging_range(is_in_range: bool, christmas_tree: ChristmasTree): 
+
+	# settings
+	is_in_tree_hanging_range = is_in_range
+	christmas_tree_object = christmas_tree if is_in_range else null
+
+
+func get_is_in_tree_hanging_range() -> bool: return is_in_tree_hanging_range

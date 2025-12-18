@@ -14,7 +14,6 @@ sticker_resource = ExtResource("2_e7m20")
 
 [node name="sprite" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-billboard = 2
 texture = ExtResource("3_83q44")
 
 [node name="Area3D" type="Area3D" parent="."]

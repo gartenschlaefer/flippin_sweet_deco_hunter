@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cq4lncecf1h10"]
+[gd_scene load_steps=26 format=3 uid="uid://cq4lncecf1h10"]
 
 [ext_resource type="Script" uid="uid://55fb0suofs58" path="res://scripts/test_deco.gd" id="1_rldlp"]
 [ext_resource type="Texture2D" uid="uid://bmxetnj4ffiud" path="res://art/sky2.exr" id="2_8ywur"]
@@ -6,7 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://cs6jw26dvr3ym" path="res://prefabs/fp_player.tscn" id="3_rldlp"]
 [ext_resource type="Script" uid="uid://d3kl87rwaov15" path="res://scripts/christmas_tree.gd" id="4_67i2j"]
 [ext_resource type="Texture2D" uid="uid://cx60boovqgg14" path="res://art/christmas_tree.png" id="4_vnriv"]
+[ext_resource type="Texture2D" uid="uid://dvfchxwgcj1ux" path="res://art/hang_button_off.png" id="6_wtcmb"]
 [ext_resource type="PackedScene" uid="uid://dxsppsj63dtfa" path="res://prefabs/bubu_boss.tscn" id="7_8ywur"]
+[ext_resource type="Texture2D" uid="uid://4l4yr7rd4rfv" path="res://art/hang_button_on.png" id="7_toria"]
 [ext_resource type="PackedScene" uid="uid://qdfw3qsr5x8o" path="res://prefabs/sticker.tscn" id="8_htlnx"]
 [ext_resource type="Resource" uid="uid://pm11x0q0cu7n" path="res://prefabs/resources/test_sticker_whip.tres" id="9_8ywur"]
 
@@ -105,14 +107,21 @@ shape = SubResource("ConcavePolygonShape3D_htlnx")
 [node name="fp_player" parent="." instance=ExtResource("3_rldlp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.032339573, 0, 9.340942)
 
-[node name="christmas_tree" type="Node3D" parent="." node_paths=PackedStringArray("debug_cube")]
+[node name="christmas_tree" type="Node3D" parent="." node_paths=PackedStringArray("hang_button", "debug_cube")]
 script = ExtResource("4_67i2j")
+hang_button_textures = Array[Texture2D]([ExtResource("6_wtcmb"), ExtResource("7_toria")])
+hang_button = NodePath("turnable_hanging_space/pivot/hang_button")
 debug_cube = NodePath("debug_cube")
 
 [node name="turnable_hanging_space" type="Node3D" parent="christmas_tree"]
 
 [node name="pivot" type="Node3D" parent="christmas_tree/turnable_hanging_space"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05)
+
+[node name="hang_button" type="Sprite3D" parent="christmas_tree/turnable_hanging_space/pivot"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -3.0596905, 2.8337207, 0)
+billboard = 1
+texture = ExtResource("7_toria")
 
 [node name="debug_cube2" type="MeshInstance3D" parent="christmas_tree/turnable_hanging_space/pivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
