@@ -1,15 +1,17 @@
 [gd_scene load_steps=24 format=3 uid="uid://cq4lncecf1h10"]
 
 [ext_resource type="Script" uid="uid://55fb0suofs58" path="res://scripts/test_deco.gd" id="1_rldlp"]
-[ext_resource type="Texture2D" uid="uid://lo82ex7pt7r4" path="res://art/brent-minehan-candyland.jpg" id="1_saww7"]
+[ext_resource type="Texture2D" uid="uid://bmxetnj4ffiud" path="res://art/sky2.exr" id="2_8ywur"]
 [ext_resource type="Material" uid="uid://b6ncbnox5ob0h" path="res://materials/raster_texture.tres" id="2_67i2j"]
 [ext_resource type="PackedScene" uid="uid://cs6jw26dvr3ym" path="res://prefabs/fp_player.tscn" id="3_rldlp"]
 [ext_resource type="Script" uid="uid://d3kl87rwaov15" path="res://scripts/christmas_tree.gd" id="4_67i2j"]
 [ext_resource type="Texture2D" uid="uid://cx60boovqgg14" path="res://art/christmas_tree.png" id="4_vnriv"]
-[ext_resource type="Texture2D" uid="uid://d0unaeg410xxw" path="res://art/bubaba_boss_new.png" id="7_vnriv"]
+[ext_resource type="PackedScene" uid="uid://dxsppsj63dtfa" path="res://prefabs/bubu_boss.tscn" id="7_8ywur"]
+[ext_resource type="PackedScene" uid="uid://qdfw3qsr5x8o" path="res://prefabs/sticker.tscn" id="8_htlnx"]
+[ext_resource type="Resource" uid="uid://pm11x0q0cu7n" path="res://prefabs/resources/test_sticker_whip.tres" id="9_8ywur"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_htlnx"]
-panorama = ExtResource("1_saww7")
+panorama = ExtResource("2_8ywur")
 
 [sub_resource type="Sky" id="Sky_ig1s7"]
 sky_material = SubResource("PanoramaSkyMaterial_htlnx")
@@ -61,21 +63,6 @@ albedo_color = Color(0.7647059, 0.8, 0.77254903, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_htlnx"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vnriv"]
-atlas = ExtResource("7_vnriv")
-region = Rect2(0, 0, 2556, 5541)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_8ywur"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vnriv")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
 [node name="test_deco" type="Node3D"]
 script = ExtResource("1_rldlp")
 
@@ -122,6 +109,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0490212, 0, 6.1791053)
 script = ExtResource("4_67i2j")
 debug_cube = NodePath("debug_cube")
 
+[node name="turnable_hanging_space" type="Node3D" parent="christmas_tree"]
+
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="christmas_tree"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.017766, 0)
 billboard = 2
@@ -146,13 +135,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48328996, 0)
 material_override = SubResource("StandardMaterial3D_vnriv")
 mesh = SubResource("BoxMesh_htlnx")
 
-[node name="bubaba_boss" type="Node3D" parent="."]
+[node name="bubaba_boss" parent="." instance=ExtResource("7_8ywur")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.725)
 
-[node name="bubaba_boss" type="AnimatedSprite3D" parent="bubaba_boss"]
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -9.117514, 2.702044, 0)
-billboard = 1
-sprite_frames = SubResource("SpriteFrames_8ywur")
+[node name="sticker_whip" parent="." instance=ExtResource("8_htlnx")]
+transform = Transform3D(0.9999892, 0.004642559, 0, -0.004642559, 0.9999892, 0, 0, 0, 1, 5.562973, 0, 11.7752905)
+sticker_resource = ExtResource("9_8ywur")
+
+[node name="sticker_oneeye" parent="." instance=ExtResource("8_htlnx")]
+transform = Transform3D(0.9999892, 0.004642559, 0, -0.004642559, 0.9999892, 0, 0, 0, 1, 5.562973, 0, 7.863282)
 
 [connection signal="area_entered" from="christmas_tree/hang_deco_area" to="christmas_tree" method="_on_hang_deco_area_area_entered"]
 [connection signal="area_exited" from="christmas_tree/hang_deco_area" to="christmas_tree" method="_on_hang_deco_area_area_exited"]

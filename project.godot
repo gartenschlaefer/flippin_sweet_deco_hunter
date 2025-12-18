@@ -15,6 +15,10 @@ run/main_scene="uid://bbj0651rvyjij"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="uid://qk7v22a5wifd"
 
+[autoload]
+
+Enums="*res://scripts/enums.gd"
+
 [global_group]
 
 enemies="all enemies"

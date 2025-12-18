@@ -9,6 +9,7 @@ class_name  Player
 
 # vars
 var direction: Vector3
+var collected_sticker: Array[StickerResource] = []
 
 # const
 const speed = 5.0
@@ -80,3 +81,22 @@ func handle_mouse_motion(delta: Vector2):
 	rotate_y(-delta.x * mouse_sensitivity)
 	head.rotate_x(-delta.y * mouse_sensitivity)
 	head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
+
+
+func add_sticker(sticker: StickerResource):
+
+	# add sticker
+	collected_sticker.append(sticker)
+	print("sticker collected!")
+
+
+# --
+# setter and getter
+
+func get_player_has_bubaba_sticker():
+
+	# quick has bubaba sticker evaluation
+	for sticker in collected_sticker:
+		if sticker.get_sticker_type_is_bubaba(): return true
+
+	return false
