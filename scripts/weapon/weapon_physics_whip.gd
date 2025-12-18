@@ -30,7 +30,7 @@ var last_cam_pos : Vector3
 var filtered_velocity := Vector3.ZERO
 var last_velocity_dir := Vector3.ZERO
 
-@export var velocity_smooth := 8.0
+@export var velocity_smooth := 10.0
 
 
 func _init_physics():
@@ -42,7 +42,7 @@ func _init_physics():
 	if segs.size() == 0:
 		push_error("No physics segments found under Physics")
 		return
- 
+
 	offsets.resize(segs.size())
 
 	for i in segs.size():
@@ -186,13 +186,6 @@ func _create_joint(a: RigidBody3D, b: RigidBody3D) -> Generic6DOFJoint3D:
 	j.node_a = a.get_path()
 	j.node_b = b.get_path()
 	
-	
-	var pj := PinJoint3D.new()
-	#a.add_child(pj)
-
-	pj.node_a = a.get_path()
-	pj.node_b = b.get_path()
-	
 	j.set_param_x(Generic6DOFJoint3D.PARAM_LINEAR_LOWER_LIMIT, 0.0)
 	j.set_param_x(Generic6DOFJoint3D.PARAM_LINEAR_UPPER_LIMIT, 0.0)
 	j.set_param_y(Generic6DOFJoint3D.PARAM_LINEAR_LOWER_LIMIT, 0.0)
@@ -260,8 +253,7 @@ func apply_centrifugal_force(delta: float):
 	var force_value := 0.0
 
 	if whip_root_speed >= speed_threshold:
-		var raw := (whip_root_speed) 
-		force_value = clamp(raw, force_min, force_max)
+		force_value = clamp(whip_root_speed, force_min, force_max)
 		force_frames_left = force_frames
 
 	elif force_frames_left > 0:
@@ -273,9 +265,4 @@ func apply_centrifugal_force(delta: float):
 		return
 
 	for seg in segs:
-		'var len_sq := cam_to_root_dir.length_squared()
-		if len_sq < 1e-8:
-			continue
-
-		cam_to_root_dir *= 1.0 / sqrt(len_sq)'
 		seg.apply_force(cam_to_root_dir * force_value)
