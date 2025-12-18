@@ -58,7 +58,7 @@ func handle_mouse_motion(delta: Vector2):
 
 
 func _physics_process(delta): 
-	if weapon_physics:
+	if weapon_physics and weapon_physics.is_ready:
 		weapon_physics._physics_process(delta)
 	if attack_mode == AttackMode.COMBO:
 		match state: 
@@ -193,7 +193,6 @@ func get_attack_pose(index: int):
 				"pos": Vector3(-40, 0, -15),
 				"rot": Vector3(deg_to_rad(-10),deg_to_rad(15),deg_to_rad(45))
 				}
-			
 		1:
 			return {
 				"pos": Vector3(-10, 0, 5),

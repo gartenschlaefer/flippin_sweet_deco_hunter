@@ -33,6 +33,7 @@ func _init_physics():
 			physics_body = c
 
 	last_root_pos = physics_body.global_position
+	is_ready = true
 
 
 func _physics_process(delta):

@@ -9,6 +9,8 @@ var offsets: Array = []
 
 var _initialized := false
 
+var is_ready : bool
+
 func _physics_process(_delta: float) -> void:
 	pass
 

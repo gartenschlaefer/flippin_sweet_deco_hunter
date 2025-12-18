@@ -29,7 +29,8 @@ var last_cam_pos : Vector3
 
 var filtered_velocity := Vector3.ZERO
 var last_velocity_dir := Vector3.ZERO
-@export var velocity_smooth := 10.0
+
+@export var velocity_smooth := 8.0
 
 
 func _init_physics():
@@ -38,12 +39,10 @@ func _init_physics():
 		if c is RigidBody3D:
 			segs.append(c as RigidBody3D)
 
-	segs.sort_custom(func(a, b): return a.global_position.y < b.global_position.y)
-
 	if segs.size() == 0:
 		push_error("No physics segments found under Physics")
 		return
-
+ 
 	offsets.resize(segs.size())
 
 	for i in segs.size():
@@ -61,12 +60,18 @@ func _init_physics():
 	last_cam_pos = get_viewport().get_camera_3d().global_position
 
 	_cache_rest_data()
+	is_ready = true
 
 
 func _physics_process(delta):
-	if is_swinging:
-		apply_centrifugal_force(delta)
-	elif is_snapping:
+	var apply_force := false
+
+	if is_swinging or is_snapping:
+		apply_force = true
+	elif weapon and weapon.state == weapon.State.ATTACKING:
+		apply_force = true
+
+	if apply_force:
 		apply_centrifugal_force(delta)
 
 	if snap_time > 0.0:
@@ -74,12 +79,10 @@ func _physics_process(delta):
 	else:
 		is_snapping = false
 		is_swinging = false
-
-	if weapon and weapon.state == weapon.State.ATTACKING:
-		apply_centrifugal_force(delta)
-
-	stabilize_chain_angles()
-	apply_bone_pose()
+	
+	if Engine.get_physics_frames() & 1 == 0:
+		stabilize_chain_angles()
+		apply_bone_pose()
 
 
 func stabilize_chain_angles():
@@ -183,6 +186,13 @@ func _create_joint(a: RigidBody3D, b: RigidBody3D) -> Generic6DOFJoint3D:
 	j.node_a = a.get_path()
 	j.node_b = b.get_path()
 	
+	
+	var pj := PinJoint3D.new()
+	#a.add_child(pj)
+
+	pj.node_a = a.get_path()
+	pj.node_b = b.get_path()
+	
 	j.set_param_x(Generic6DOFJoint3D.PARAM_LINEAR_LOWER_LIMIT, 0.0)
 	j.set_param_x(Generic6DOFJoint3D.PARAM_LINEAR_UPPER_LIMIT, 0.0)
 	j.set_param_y(Generic6DOFJoint3D.PARAM_LINEAR_LOWER_LIMIT, 0.0)
@@ -245,12 +255,13 @@ func apply_centrifugal_force(delta: float):
 	)
 
 	var cam_to_root_dir := (root.global_position - curr_cam_pos).normalized()
-	var whip_root_speed : float = abs(filtered_velocity.dot(cam_to_root_dir))
+	var whip_root_speed : float = max(0.0,velocity.dot(cam_to_root_dir))
 
 	var force_value := 0.0
 
 	if whip_root_speed >= speed_threshold:
-		force_value = clamp(whip_root_speed, force_min, force_max)
+		var raw := (whip_root_speed) 
+		force_value = clamp(raw, force_min, force_max)
 		force_frames_left = force_frames
 
 	elif force_frames_left > 0:
@@ -262,9 +273,9 @@ func apply_centrifugal_force(delta: float):
 		return
 
 	for seg in segs:
-		var len_sq := cam_to_root_dir.length_squared()
+		'var len_sq := cam_to_root_dir.length_squared()
 		if len_sq < 1e-8:
 			continue
 
-		cam_to_root_dir *= 1.0 / sqrt(len_sq)
+		cam_to_root_dir *= 1.0 / sqrt(len_sq)'
 		seg.apply_force(cam_to_root_dir * force_value)

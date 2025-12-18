@@ -29,4 +29,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8914156, 0)
 shape = SubResource("CapsuleShape3D_8wr3x")
 
 [node name="Cotton Candy" parent="." instance=ExtResource("2_hy2u3")]
-transform = Transform3D(-0.7306034, 0, 0.6828022, 0, 1, 0, -0.6828022, 0, -0.7306034, 0, 0, 0)
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
