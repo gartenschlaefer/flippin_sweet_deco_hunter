@@ -8,10 +8,13 @@ class_name Sticker extends Node3D
 @onready var sprite: Sprite3D = $sprite
 
 # var
-var use_rotation = true 
+var is_hanging_on_tree = true
+var tree_rotation_dir = 1
 
 # const
-const rotation_speed = 1.5
+const rotation_speed_on_ground = 1.5
+const rotation_speed_on_tree = 0.3
+const rotation_deco_on_tree_max = 0.5
 
 func _ready():
 		
@@ -24,17 +27,27 @@ func _ready():
 
 func _process(delta):
 
-	# skip
-	if not use_rotation: return
+	# hanging on tree rotation
+	if is_hanging_on_tree:
 
-	# rotate
-	self.rotate_y(rotation_speed * delta)
+		# calculate new rotation
+		var new_rotation_y = self.get_rotation().y + rotation_speed_on_tree * delta  * tree_rotation_dir
+
+		# direction shift
+		if abs(new_rotation_y) >= rotation_deco_on_tree_max: tree_rotation_dir *= -1
+
+		# set new rotation
+		self.set_rotation(Vector3(0, new_rotation_y, 0))
+		return
+
+	# ground rotation
+	self.rotate_y(rotation_speed_on_ground * delta)
 
 
 func hang_on_tree():
 
 	# stop rotating
-	use_rotation = false
+	is_hanging_on_tree = false
 
 
 func _on_area_3d_area_entered(area: Area3D) -> void:

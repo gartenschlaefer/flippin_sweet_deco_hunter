@@ -1,7 +1,8 @@
 // NOTE: Shader automatically converted from Godot Engine 4.5.1.stable's StandardMaterial3D.
 
 shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx;
+
+render_mode unshaded, cull_disabled;
 
 uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
 
@@ -30,4 +31,5 @@ void fragment() {
 
 	vec4 albedo_tex = texture(texture_albedo, base_uv);
 	ALBEDO = albedo_tex.rgb;
+	ALPHA = albedo_tex.a;
 }

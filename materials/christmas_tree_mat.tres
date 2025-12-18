@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://ddgxxuins00jd"]
+
+[ext_resource type="Shader" uid="uid://b57cre0cvtyhd" path="res://shader/billboard.gdshader" id="1_tung6"]
+[ext_resource type="Texture2D" uid="uid://cx60boovqgg14" path="res://art/christmas_tree.png" id="2_e8jn2"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_tung6")
+shader_parameter/texture_albedo = ExtResource("2_e8jn2")
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)

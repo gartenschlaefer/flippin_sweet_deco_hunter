@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StickerResource" load_steps=4 format=3 uid="uid://dq4wc51u7kgh3"]
+
+[ext_resource type="Script" uid="uid://cuf87m0wc3vuq" path="res://scripts/sticker_resource.gd" id="1_8ab3c"]
+[ext_resource type="Texture2D" uid="uid://dvj1k0g8823uu" path="res://art/bubaba_mockup_sprite_sheet.png" id="2_0tloo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lxabj"]
+atlas = ExtResource("2_0tloo")
+region = Rect2(0, 0, 200, 500)
+
+[resource]
+script = ExtResource("1_8ab3c")
+uid = 1
+texture = SubResource("AtlasTexture_lxabj")
+metadata/_custom_type_script = "uid://cuf87m0wc3vuq"
