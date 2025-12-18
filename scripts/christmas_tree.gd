@@ -3,13 +3,46 @@
 
 extends Node3D
 
-var collected_deco = []
+# refs
 @export var debug_cube: MeshInstance3D = null
+@onready var turnable_hanging_space = $turnable_hanging_space
+
+# vars
+var collected_deco = []
+var actual_frame = 0
+
+# const frame update
+const frame_update_dir = 1
+
 
 func _ready():
 
 	# change color
 	self.debug_cube_set_inactive()
+
+	# actual frame
+	actual_frame = 0
+
+
+func _process(_delta):
+
+	# # skip
+	# if actual_frame <= frame_update_dir: 
+	# 	actual_frame += 1
+	# 	return
+
+	# do turning
+	actual_frame = 0
+
+	# positions
+	var camera_pos = get_viewport().get_camera_3d().global_transform.origin
+	var tree_pos = self.get_global_transform().origin
+
+	# to player vector
+	var player_vector = Vector2(camera_pos.z - tree_pos.z, camera_pos.x - tree_pos.x).normalized()
+
+	# rotate turnable hanging space
+	turnable_hanging_space.set_rotation(Vector3(0, player_vector.angle(), 0))
 
 
 func add_deco_to_tree(deco_index: int):
