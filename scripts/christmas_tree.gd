@@ -20,7 +20,6 @@ var actual_frame = 0
 
 # const frame update
 const frame_update_dir = 1
-const scale_sticker_on_tree = 0.4
 
 
 func _ready():
@@ -81,7 +80,6 @@ func hang_deco_on_tree(deco: StickerResource, player: Player):
 
 	# create sticker on resource and hang on tree
 	var sticker = Sticker.new_sticker(deco, true)
-	sticker.set_scale(Vector3(scale_sticker_on_tree, scale_sticker_on_tree, scale_sticker_on_tree))
 
 	# run through sticker locations and find next empty one
 	for sticker_location: Marker3D in sticker_locations.get_children():
@@ -116,7 +114,7 @@ func check_win_condition_hanged_all_bubabas():
 
 	# won
 	win_hanged_all_bubaba_on_tree.emit()
-	print("Won game!!!")
+	print("You win the game!!!")
 
 
 func hang_button_update(player: Player):

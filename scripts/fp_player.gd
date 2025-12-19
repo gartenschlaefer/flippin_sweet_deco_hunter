@@ -58,7 +58,8 @@ func _input(event):
 	if not is_in_tree_hanging_range: return
 
 	# interact with christmas tree
-	if Input.is_action_just_pressed("interact"): self.hang_deco_on_christmas_tree()
+	if Input.is_action_just_pressed("interact"): 
+		if not event.is_echo(): self.hang_deco_on_christmas_tree()
 
 
 

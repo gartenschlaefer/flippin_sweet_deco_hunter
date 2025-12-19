@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://w1uqnm545mln"]
+[gd_scene load_steps=16 format=3 uid="uid://w1uqnm545mln"]
 
 [ext_resource type="Script" uid="uid://dxmws7ppsutq5" path="res://scripts/bubaba.gd" id="1_t54ac"]
 [ext_resource type="Texture2D" uid="uid://dvj1k0g8823uu" path="res://art/bubaba_mockup_sprite_sheet.png" id="2_t54ac"]
@@ -44,10 +44,8 @@ animations = [{
 "speed": 2.0
 }]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_akbmi"]
-
 [sub_resource type="ViewportTexture" id="ViewportTexture_akbmi"]
-viewport_path = NodePath("healthbar_view/SubViewport")
+viewport_path = NodePath("anim/healthbar_view/SubViewport")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t54ac"]
 
@@ -71,37 +69,126 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 expand_margin_bottom = 2.0
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_akbmi"]
+
+[sub_resource type="Animation" id="Animation_t54ac"]
+resource_name = "death"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("anim/healthbar_view:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("anim")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 2, 0, 0.5, 1, 0, 2, 0, 0.96666664, 1, 0, 5, 0, 2, 1, 0, 1.2570512, 0)
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"bubaba_is_dead"
+}]
+}
+tracks/4/type = "scale_3d"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("anim")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = PackedFloat32Array(0, 1, 1, 1, 1, 0.5, 1, 1, 1, 1, 1, 1, 0.7, 1.5, 1, 2, 1, 0.6, 0.6, 0.6)
+
+[sub_resource type="Animation" id="Animation_j32dc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("anim/healthbar_view:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("anim")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 2, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eb3nx"]
+_data = {
+&"RESET": SubResource("Animation_j32dc"),
+&"death": SubResource("Animation_t54ac")
+}
+
 [node name="bubaba" type="CharacterBody3D" node_paths=PackedStringArray("health_bar") groups=["enemies"]]
 script = ExtResource("1_t54ac")
-health_bar = NodePath("healthbar_view/SubViewport/healthbar_panel/healthbar")
+health_bar = NodePath("anim/healthbar_view/SubViewport/healthbar_panel/healthbar")
 
 [node name="anim" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05269, 0)
+transform = Transform3D(0.601, 0, 0, 0, 0.609, 0, 0, 0, 0.60400003, 0, 2, 0)
 billboard = 1
 sprite_frames = SubResource("SpriteFrames_eb3nx")
 animation = &"normal_idle"
 autoplay = "normal_idle"
 frame_progress = 0.36325064
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_akbmi")
-
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
-target_desired_distance = 3.0
-avoidance_enabled = true
-debug_enabled = true
-
-[node name="healthbar_view" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0.1)
+[node name="healthbar_view" type="Sprite3D" parent="anim"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.44731, 0.1)
 billboard = 1
 texture = SubResource("ViewportTexture_akbmi")
 
-[node name="SubViewport" type="SubViewport" parent="healthbar_view"]
+[node name="SubViewport" type="SubViewport" parent="anim/healthbar_view"]
 transparent_bg = true
 size = Vector2i(250, 40)
 
-[node name="healthbar_panel" type="Panel" parent="healthbar_view/SubViewport"]
+[node name="healthbar_panel" type="Panel" parent="anim/healthbar_view/SubViewport"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -109,7 +196,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_t54ac")
 
-[node name="healthbar" type="ProgressBar" parent="healthbar_view/SubViewport/healthbar_panel"]
+[node name="healthbar" type="ProgressBar" parent="anim/healthbar_view/SubViewport/healthbar_panel"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -124,6 +211,20 @@ grow_vertical = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_j32dc")
 theme_override_styles/fill = SubResource("StyleBoxFlat_eb3nx")
 value = 50.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_akbmi")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+target_desired_distance = 3.0
+avoidance_enabled = true
+debug_enabled = true
+
+[node name="anim_player" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_eb3nx")
+}
 
 [connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
 [connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]

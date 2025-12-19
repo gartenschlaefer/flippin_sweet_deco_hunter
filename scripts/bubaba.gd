@@ -3,10 +3,14 @@
 
 class_name Bubaba extends CharacterBody3D
 
+# resources
+@export var sticker_resource: StickerResource
+
 # refs
 @export var health_bar: ProgressBar
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim: AnimatedSprite3D = $anim
+@onready var anim_player: AnimationPlayer = $anim_player
 
 # vars
 var player_in_reach = false
@@ -16,10 +20,13 @@ var is_ko = false
 # const
 const speed = 2.0
 const evil_to_normal_distance = 3.0
+const hit_cooldown_time = 2.0
+#const whip_damage_to_be_taken = 50.0
+const whip_damage_to_be_taken = 100.0
 const anim_normal_idle = &"normal_idle"
 const anim_evil_idle = &"evil_idle"
-const hit_cooldown_time = 2.0
-const whip_damage_to_be_taken = 50.0
+const anim_player_death = &"death"
+const weapon_force = 10.0
 
 
 func _ready():
@@ -35,7 +42,10 @@ func _ready():
 func _physics_process(_delta):
 	
 	# k.o.
-	if is_ko: 
+	if is_ko:
+
+		# check if stopped moving
+		if (velocity.x + velocity.y + velocity.z) < 0.1: self.bubaba_dies()
 		move_and_slide()
 		return
 
@@ -64,7 +74,7 @@ func take_damage(collision: KinematicCollision3D):
 	# hit vector + velocity
 	var hit_vector = (self.global_transform.origin - collision.get_position())
 	hit_vector.y = 0.0
-	velocity = velocity + hit_vector.normalized() * 20.0
+	velocity = velocity + hit_vector.normalized() * weapon_force
 
 	# decrease health
 	health_bar.set_value(health_bar.get_value() - whip_damage_to_be_taken)
@@ -84,6 +94,30 @@ func bubaba_set_to_ko():
 
 	# todo:
 	# set ko anim
+
+
+func bubaba_dies():
+
+	# play anim, everything else is handled by it
+	anim_player.play(anim_player_death)
+
+
+func bubaba_is_dead():
+
+	# parent
+	var world = self.get_parent()
+
+	# create sticker on resource and hang on tree
+	var sticker = Sticker.new_sticker(sticker_resource, false)
+
+	# set position
+	sticker.set_position(self.get_global_transform().origin)
+
+	# spawn a bubaba sticker
+	world.add_child(sticker)
+
+	# remove bubaba from this world forever, sob***
+	self.queue_free()
 
 
 func update_target_position(target_position):

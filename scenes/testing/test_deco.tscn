@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cq4lncecf1h10"]
+[gd_scene load_steps=19 format=3 uid="uid://cq4lncecf1h10"]
 
 [ext_resource type="Script" uid="uid://55fb0suofs58" path="res://scripts/test_deco.gd" id="1_rldlp"]
 [ext_resource type="Texture2D" uid="uid://bmxetnj4ffiud" path="res://art/sky2.exr" id="2_8ywur"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://dxsppsj63dtfa" path="res://prefabs/bubu_boss.tscn" id="7_8ywur"]
 [ext_resource type="PackedScene" uid="uid://qdfw3qsr5x8o" path="res://prefabs/sticker.tscn" id="8_htlnx"]
 [ext_resource type="Resource" uid="uid://pm11x0q0cu7n" path="res://prefabs/resources/test_sticker_whip.tres" id="9_8ywur"]
+[ext_resource type="PackedScene" uid="uid://w1uqnm545mln" path="res://prefabs/bubaba.tscn" id="9_toria"]
+[ext_resource type="Resource" uid="uid://dotdbourxw403" path="res://prefabs/resources/bubaba0.tres" id="10_toria"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_htlnx"]
 panorama = ExtResource("2_8ywur")
@@ -109,3 +111,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.096463, 0.037588716, -10.14
 
 [node name="sticker_oneeye7" parent="stickers" instance=ExtResource("8_htlnx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9789925, 0.027758129, -11.132539)
+
+[node name="bubaba" parent="." instance=ExtResource("9_toria")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.828829, 0, 0)
+sticker_resource = ExtResource("10_toria")

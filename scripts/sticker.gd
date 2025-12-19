@@ -16,6 +16,8 @@ const sticker_scene: PackedScene = preload("uid://qdfw3qsr5x8o")
 const rotation_speed_on_ground = 1.5
 const rotation_speed_on_tree = 0.3
 const rotation_deco_on_tree_max = 0.5
+const scale_sticker_on_tree = 0.4
+const scale_sticker_on_ground = 0.6
 
 
 static func new_sticker(target_sticker_resource: StickerResource, _is_hanging_on_tree: bool = false):
@@ -29,7 +31,11 @@ static func new_sticker(target_sticker_resource: StickerResource, _is_hanging_on
 
 	# set random start rotation
 	new_sticker_inst.set_rotation(Vector3(0, randf_range(-rotation_deco_on_tree_max, rotation_deco_on_tree_max), 0))
-	
+
+	# set correct scale
+	if _is_hanging_on_tree: new_sticker_inst.set_scale(Vector3(scale_sticker_on_tree, scale_sticker_on_tree, scale_sticker_on_tree))
+	else: new_sticker_inst.set_scale(Vector3(scale_sticker_on_ground, scale_sticker_on_ground, scale_sticker_on_ground))
+
 	return new_sticker_inst
 
 
