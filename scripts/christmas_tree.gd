@@ -3,20 +3,24 @@
 
 class_name ChristmasTree extends Node3D
 
+# singlas
+signal win_hanged_all_bubaba_on_tree
+
 # resources
 @export var hang_button_textures: Array[Texture2D]
 
 # refs
+@export var sticker_locations: Node3D
 @export var hang_button: Sprite3D
 @export var debug_cube: MeshInstance3D = null
 @onready var turnable_hanging_space = $turnable_hanging_space
 
 # vars
-var collected_deco: Array[StickerResource] = []
 var actual_frame = 0
 
 # const frame update
 const frame_update_dir = 1
+const scale_sticker_on_tree = 0.4
 
 
 func _ready():
@@ -24,11 +28,8 @@ func _ready():
 	# change color
 	self.debug_cube_set_inactive()
 
-	# actual frame
-	actual_frame = 0
-
-	# hide
-	hang_button.hide()
+	# reset
+	self.reset()
 
 
 func _process(_delta):
@@ -40,28 +41,82 @@ func _process(_delta):
 
 	# do turning
 	actual_frame = 0
+	
+	# camera
+	var camera = get_viewport().get_camera_3d()
+	if camera == null: return
 
 	# positions
-	var camera_pos = get_viewport().get_camera_3d().global_transform.origin
+	var camera_pos = camera.global_transform.origin
 	var tree_pos = self.get_global_transform().origin
 
 	# to player vector
 	var player_vector = Vector2(camera_pos.z - tree_pos.z, camera_pos.x - tree_pos.x).normalized()
 
 	# rotate turnable hanging space
-	turnable_hanging_space.set_rotation(Vector3(0, player_vector.angle(), 0))
+	turnable_hanging_space.set_rotation(Vector3(turnable_hanging_space.get_rotation().x, player_vector.angle(), 0))
 
+
+func reset():
+
+	# actual frame
+	actual_frame = 0
+
+	# hide
+	hang_button.hide()
+
+	# remove all existing stickers -> demo stickers for placement
+	for sticker_location: Marker3D in sticker_locations.get_children():
+		for child in sticker_location.get_children():
+			child.queue_free()
+		
 
 func hang_deco_on_tree(deco: StickerResource, player: Player):
 
+	# add deco info
 	print("add deco: ", deco)
+
+	# hang button update (if stickers are empty)
 	self.hang_button_update(player)
 
-	# add deco
-	collected_deco.append(deco)
-
-	# todo:
 	# create sticker on resource and hang on tree
+	var sticker = Sticker.new_sticker(deco, true)
+	sticker.set_scale(Vector3(scale_sticker_on_tree, scale_sticker_on_tree, scale_sticker_on_tree))
+
+	# run through sticker locations and find next empty one
+	for sticker_location: Marker3D in sticker_locations.get_children():
+
+		# already has a sticker
+		if len(sticker_location.get_children()): continue
+
+		# add sticker to location
+		sticker_location.add_child(sticker)
+		break
+
+	# check win condition
+	check_win_condition_hanged_all_bubabas()
+
+
+func check_win_condition_hanged_all_bubabas():
+
+	# added sticker
+	var num_added_stickers = 0
+
+	# run through sticker locations
+	for sticker_location: Marker3D in sticker_locations.get_children():
+
+		# already has a sticker
+		if not len(sticker_location.get_children()): continue
+
+		# there is a sticker
+		num_added_stickers += 1
+
+	# not win skip
+	if num_added_stickers < len(sticker_locations.get_children()): return
+
+	# won
+	win_hanged_all_bubaba_on_tree.emit()
+	print("Won game!!!")
 
 
 func hang_button_update(player: Player):

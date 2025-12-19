@@ -7,6 +7,13 @@
 [ext_resource type="Texture2D" uid="uid://cx60boovqgg14" path="res://art/christmas_tree.png" id="5_abym3"]
 [ext_resource type="Material" uid="uid://ddgxxuins00jd" path="res://materials/christmas_tree_mat.tres" id="6_y3j3f"]
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_67i2j"]
+height = 6.0
+radius = 2.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rldlp"]
+radius = 5.0
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vnriv"]
 albedo_color = Color(0.7647059, 0.8, 0.77254903, 1)
 
@@ -27,88 +34,70 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_67i2j"]
-height = 6.0
-radius = 2.0
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_rldlp"]
-radius = 5.0
-
 [sub_resource type="QuadMesh" id="QuadMesh_aln87"]
 size = Vector2(7.178, 10)
 
-[node name="christmas_tree" type="Node3D" node_paths=PackedStringArray("hang_button", "debug_cube")]
+[node name="christmas_tree" type="Node3D" node_paths=PackedStringArray("sticker_locations", "hang_button", "debug_cube")]
 script = ExtResource("1_vllvk")
 hang_button_textures = Array[Texture2D]([ExtResource("2_48fxv"), ExtResource("3_xri17")])
+sticker_locations = NodePath("turnable_hanging_space/pivot/sticker_locations")
 hang_button = NodePath("turnable_hanging_space/pivot/hang_button")
 debug_cube = NodePath("debug_cube")
 
 [node name="turnable_hanging_space" type="Node3D" parent="."]
 
 [node name="pivot" type="Node3D" parent="turnable_hanging_space"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05)
 
 [node name="hang_button" type="Sprite3D" parent="turnable_hanging_space/pivot"]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -3.0596905, 2.8337207, 0)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -3.5597935, 3.4538474, 0)
+sorting_offset = 1.0
 billboard = 1
 texture = ExtResource("3_xri17")
 
-[node name="debug_cube2" type="MeshInstance3D" parent="turnable_hanging_space/pivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-visible = false
-material_override = SubResource("StandardMaterial3D_vnriv")
-mesh = SubResource("BoxMesh_htlnx")
-skeleton = NodePath("../../..")
-
 [node name="sticker_locations" type="Node3D" parent="turnable_hanging_space/pivot"]
 
-[node name="location0" type="Marker3D" parent="turnable_hanging_space/pivot/sticker_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28783846, 7.0542383, 0)
-
-[node name="sticker" parent="turnable_hanging_space/pivot/sticker_locations/location0" instance=ExtResource("4_perss")]
-transform = Transform3D(0.39999568, 0.0018570237, 0, -0.0018570237, 0.39999568, 0, 0, 0, 0.4, 0, 0, 0)
-
-[node name="location1" type="Marker3D" parent="turnable_hanging_space/pivot/sticker_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.66564703, 5.596885, 0)
-
-[node name="sticker" parent="turnable_hanging_space/pivot/sticker_locations/location1" instance=ExtResource("4_perss")]
-transform = Transform3D(0.39999568, 0.0018570237, 0, -0.0018570237, 0.39999568, 0, 0, 0, 0.4, -0.098825455, 0.18325329, 0)
-
-[node name="location2" type="Marker3D" parent="turnable_hanging_space/pivot/sticker_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8567604, 5.1739945, 0)
-
-[node name="sticker" parent="turnable_hanging_space/pivot/sticker_locations/location2" instance=ExtResource("4_perss")]
-transform = Transform3D(0.39999568, 0.0018570237, 0, -0.0018570237, 0.39999568, 0, 0, 0, 0.4, -0.04223919, -0.3311391, 0)
-
-[node name="location3" type="Marker3D" parent="turnable_hanging_space/pivot/sticker_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4691406, 3.877129, 0)
-
-[node name="sticker" parent="turnable_hanging_space/pivot/sticker_locations/location3" instance=ExtResource("4_perss")]
-transform = Transform3D(0.39999568, 0.0018570237, 0, -0.0018570237, 0.39999568, 0, 0, 0, 0.4, -0.9370842, -0.11227083, 0)
-
-[node name="location4" type="Marker3D" parent="turnable_hanging_space/pivot/sticker_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5192894, 3.0736365, 0)
-
-[node name="sticker" parent="turnable_hanging_space/pivot/sticker_locations/location4" instance=ExtResource("4_perss")]
-transform = Transform3D(0.39999568, 0.0018570237, 0, -0.0018570237, 0.39999568, 0, 0, 0, 0.4, 0, 0, 0)
-
-[node name="location5" type="Marker3D" parent="turnable_hanging_space/pivot/sticker_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15817714, 2.5097818, 0)
-
-[node name="sticker" parent="turnable_hanging_space/pivot/sticker_locations/location5" instance=ExtResource("4_perss")]
-transform = Transform3D(0.39999568, 0.0018570237, 0, -0.0018570237, 0.39999568, 0, 0, 0, 0.4, -0.42314053, -0.78944635, 0)
-
 [node name="location6" type="Marker3D" parent="turnable_hanging_space/pivot/sticker_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2576929, 2.5097818, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8158847, 2.1659775, 0)
 
 [node name="sticker" parent="turnable_hanging_space/pivot/sticker_locations/location6" instance=ExtResource("4_perss")]
-transform = Transform3D(0.39999568, 0.0018570237, 0, -0.0018570237, 0.39999568, 0, 0, 0, 0.4, 0.55688, -0.027942896, 0)
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
 
-[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.017766, -0.5659237)
-visible = false
-billboard = 2
-sprite_frames = SubResource("SpriteFrames_7cn1i")
+[node name="location5" type="Marker3D" parent="turnable_hanging_space/pivot/sticker_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8482578, 2.5013509, 0)
+
+[node name="sticker" parent="turnable_hanging_space/pivot/sticker_locations/location5" instance=ExtResource("4_perss")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+
+[node name="location4" type="Marker3D" parent="turnable_hanging_space/pivot/sticker_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06827092, 3.196065, 0)
+
+[node name="sticker" parent="turnable_hanging_space/pivot/sticker_locations/location4" instance=ExtResource("4_perss")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+
+[node name="location3" type="Marker3D" parent="turnable_hanging_space/pivot/sticker_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5528919, 4.3422885, 0)
+
+[node name="sticker" parent="turnable_hanging_space/pivot/sticker_locations/location3" instance=ExtResource("4_perss")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+
+[node name="location2" type="Marker3D" parent="turnable_hanging_space/pivot/sticker_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9232801, 5.011189, 0)
+
+[node name="sticker" parent="turnable_hanging_space/pivot/sticker_locations/location2" instance=ExtResource("4_perss")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+
+[node name="location1" type="Marker3D" parent="turnable_hanging_space/pivot/sticker_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6116605, 6.454659, 0)
+
+[node name="sticker" parent="turnable_hanging_space/pivot/sticker_locations/location1" instance=ExtResource("4_perss")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+
+[node name="location0" type="Marker3D" parent="turnable_hanging_space/pivot/sticker_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.36583948, 7.729965, 0)
+
+[node name="sticker" parent="turnable_hanging_space/pivot/sticker_locations/location0" instance=ExtResource("4_perss")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.12002468, 0.12002373, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
@@ -129,7 +118,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48328996, 0)
 material_override = SubResource("StandardMaterial3D_vnriv")
 mesh = SubResource("BoxMesh_htlnx")
 
-[node name="christmas_tree_shader_billboard" type="MeshInstance3D" parent="."]
+[node name="tree_sprite" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.018, 0)
+visible = false
+billboard = 2
+sprite_frames = SubResource("SpriteFrames_7cn1i")
+
+[node name="tree_sprite_billboard" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
 material_override = ExtResource("6_y3j3f")
 mesh = SubResource("QuadMesh_aln87")

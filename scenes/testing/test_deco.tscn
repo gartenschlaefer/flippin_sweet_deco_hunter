@@ -82,9 +82,30 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.032339573, 0, 9.340942)
 [node name="bubaba_boss" parent="." instance=ExtResource("7_8ywur")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.725)
 
-[node name="sticker_whip" parent="." instance=ExtResource("8_htlnx")]
-transform = Transform3D(0.9999892, 0.004642559, 0, -0.004642559, 0.9999892, 0, 0, 0, 1, 5.562973, 0, 11.7752905)
+[node name="stickers" type="Node3D" parent="."]
+transform = Transform3D(0.9999892, 0.004642559, 0, -0.004642559, 0.9999892, 0, 0, 0, 1, 5.562973, 0, 7.863282)
+
+[node name="sticker_whip" parent="stickers" instance=ExtResource("8_htlnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.9120083)
 sticker_resource = ExtResource("9_8ywur")
 
-[node name="sticker_oneeye" parent="." instance=ExtResource("8_htlnx")]
-transform = Transform3D(0.9999892, 0.004642559, 0, -0.004642559, 0.9999892, 0, 0, 0, 1, 5.562973, 0, 7.863282)
+[node name="sticker_oneeye" parent="stickers" instance=ExtResource("8_htlnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="sticker_oneeye2" parent="stickers" instance=ExtResource("8_htlnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2938395, 0.010649402, -1.8589554)
+
+[node name="sticker_oneeye3" parent="stickers" instance=ExtResource("8_htlnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2727976, 0.019836929, -3.517539)
+
+[node name="sticker_oneeye4" parent="stickers" instance=ExtResource("8_htlnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9028425, 0.027404591, -4.877185)
+
+[node name="sticker_oneeye5" parent="stickers" instance=ExtResource("8_htlnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5843143, 0.035211008, -6.121236)
+
+[node name="sticker_oneeye6" parent="stickers" instance=ExtResource("8_htlnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.096463, 0.037588716, -10.149142)
+
+[node name="sticker_oneeye7" parent="stickers" instance=ExtResource("8_htlnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9789925, 0.027758129, -11.132539)
