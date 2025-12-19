@@ -3,6 +3,7 @@ class_name WeaponPhysicsWhip
 
 @export var weapon: WeaponBase
 @export var segment_root_path: NodePath
+@onready var cam : Camera3D = get_viewport().get_camera_3d()
 @onready var segment_root: Node = get_node_or_null(segment_root_path)
 @export var physics_allow_segment_x: float = 15.0
 @export var physics_allow_segment_y: float = 15.0
@@ -28,7 +29,6 @@ var last_root_pos : Vector3
 var last_cam_pos : Vector3
 
 var filtered_velocity := Vector3.ZERO
-var last_velocity_dir := Vector3.ZERO
 
 @export var velocity_smooth := 10.0
 
@@ -66,29 +66,20 @@ func _init_physics():
 func _physics_process(delta):
 	var apply_force := false
 
-	if is_swinging or is_snapping:
-		apply_force = true
-	elif weapon and weapon.state == weapon.State.ATTACKING:
+	if weapon and weapon.state == weapon.State.ATTACKING:
 		apply_force = true
 
+	#if Engine.get_physics_frames() & 1 == 0:
 	if apply_force:
 		apply_centrifugal_force(delta)
-
-	if snap_time > 0.0:
-		snap_time -= delta
-	else:
-		is_snapping = false
-		is_swinging = false
-	
-	if Engine.get_physics_frames() & 1 == 0:
-		if apply_force:
-			apply_centrifugal_force(delta)
-		stabilize_chain_angles()
-		apply_bone_pose()
+	stabilize_chain_angles()
+	apply_bone_pose()
 
 
 func stabilize_chain_angles():
 	var count := segs.size()
+	if count < 2:
+		return
 	if rest_lengths.size() != count - 1:
 		return
 	if rest_dirs_local.size() != count - 1:
@@ -96,7 +87,7 @@ func stabilize_chain_angles():
 
 	var max_angle := deg_to_rad(physics_allow_segment_x)
 	var cos_max := cos(max_angle)
-	var stiffness : float = clamp(chain_stiffness, 0.0, 1.0)
+	var stiffness :float= clamp(chain_stiffness, 0.0, 1.0)
 
 	for i in range(1, count):
 		var a := segs[i - 1]
@@ -105,42 +96,45 @@ func stabilize_chain_angles():
 		var a_pos := a.global_position
 		var b_pos := b.global_position
 
-		var dir := b_pos - a_pos
-		var len_sq := dir.length_squared()
+		var d := b_pos - a_pos
+		var len_sq := d.length_squared()
 		if len_sq <= 1e-12:
 			continue
 
 		var inv_len := 1.0 / sqrt(len_sq)
-		var n := dir * inv_len
-		var target := rest_lengths[i - 1]
+		var n := d * inv_len
+		var target_len := rest_lengths[i - 1]
 
-		var forward := a.global_transform.basis * rest_dirs_local[i - 1]
-		var dotv : float = clamp(forward.dot(n), -1.0, 1.0)
+		var forward := (a.global_transform.basis * rest_dirs_local[i - 1]).normalized()
+		var dotv :float= clamp(forward.dot(n), -1.0, 1.0)
 
-		if dotv >= cos_max:
-			var seg_len := len_sq * inv_len
-			if abs(seg_len - target) > 0.0001:
-				b.global_position = a_pos + n * target
-			continue
+		var desired_dir := n
 
-		var axis := forward.cross(n)
-		var axis_len_sq := axis.length_squared()
-		if axis_len_sq <= 1e-12:
-			b.global_position = a_pos + forward * target
-			continue
+		if dotv < cos_max:
+			var lateral := n - forward * dotv
+			var lat_len_sq := lateral.length_squared()
+			if lat_len_sq <= 1e-12:
+				desired_dir = forward
+			else:
+				var lateral_n := lateral * (1.0 / sqrt(lat_len_sq))
+				var sin_max := sqrt(max(0.0, 1.0 - cos_max * cos_max))
+				desired_dir = (forward * cos_max + lateral_n * sin_max).normalized()
 
-		axis *= 1.0 / sqrt(axis_len_sq)
+		var desired_pos := a_pos + desired_dir * target_len
+		var corr := desired_pos - b_pos
 
-		var angle := acos(dotv)
-		var corr := (angle - max_angle) * stiffness
+		var max_corr := target_len * 0.25
+		var corr_len := corr.length()
+		if corr_len > max_corr:
+			corr *= max_corr / corr_len
 
-		var q := Quaternion(axis, -corr)
-		var new_dir := q * n
-
-		b.global_position = a_pos + new_dir * target
+		b.global_position = b_pos + corr * stiffness
 
 		var v := b.linear_velocity
-		b.linear_velocity = v - new_dir * v.dot(new_dir)
+		var vc := v.dot(desired_dir)
+		if vc < 0.0:
+			b.linear_velocity = v - desired_dir * vc
+
 
 
 func apply_bone_pose():
@@ -153,12 +147,6 @@ func apply_bone_pose():
 		var world_t: Transform3D = seg_pose * offsets[i]
 		var bone_t: Transform3D = skel_inv * world_t
 		skeleton.set_bone_global_pose(bone, bone_t)
-
-
-func get_segment_stiffness(i: int) -> float:
-	var t := float(i - 1) / float(segs.size() - 3)
-	return clamp(1.0 - t * t, 0.15, 1.0)
-
 
 
 func _cache_rest_data():
@@ -231,7 +219,6 @@ func apply_centrifugal_force(delta: float):
 		return
 
 	var root := segs[0]
-	var cam := get_viewport().get_camera_3d()
 
 	var curr_root_pos := root.global_position
 	var curr_cam_pos := cam.global_position
@@ -266,5 +253,5 @@ func apply_centrifugal_force(delta: float):
 	else:
 		return
 
-	for seg in segs:
-		seg.apply_force(cam_to_root_dir * force_value)
+	var tip := segs[segs.size()-1]
+	tip.apply_force(cam_to_root_dir * force_value*segs.size())
