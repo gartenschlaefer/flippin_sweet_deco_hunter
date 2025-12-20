@@ -47,6 +47,7 @@ func _ready():
 	weapon_mesh = _find_mesh(weapon_model)
 	weapon_skeleton= _find_skeleton(weapon_model)
 	weapon_physics.setup(weapon_skeleton,weapon_mesh)
+	init_weapon()
 
 
 func handle_mouse_motion(delta: Vector2):
@@ -245,6 +246,8 @@ func get_camera_speed_multiplier() -> float:
 		return cam_speed_while_attacking
 	return 1.0
 
+func init_weapon():
+	pass
 
 func notify_hit(_enemy):
 	pass

@@ -1,23 +1,43 @@
-[gd_scene load_steps=5 format=3 uid="uid://bp324u76hfyw3"]
+[gd_scene load_steps=13 format=3 uid="uid://bp324u76hfyw3"]
 
 [ext_resource type="Script" uid="uid://bwocj662q5fga" path="res://scripts/weapon/weapon_whip.gd" id="1_ckfqr"]
 [ext_resource type="Script" uid="uid://bdxjbc5y1tp7i" path="res://scripts/weapon/weapon_physics_whip.gd" id="2_ckfqr"]
+[ext_resource type="Script" uid="uid://xjyxdpiblkwl" path="res://scripts/weapon/weapon_collision_whip.gd" id="3_63b3e"]
+[ext_resource type="AudioStream" uid="uid://di2d7lutq3ibj" path="res://audio/sfx/whip_swing/whip_swing_randomizer.tres" id="3_knkmy"]
 [ext_resource type="PackedScene" uid="uid://cyfh7n71pk55x" path="res://models/Licorice_Whip.glb" id="3_w18wj"]
+[ext_resource type="AudioStream" uid="uid://ddfqfa0cmyx2h" path="res://audio/sfx/whip_crack/Whip_Crack 01.mp3" id="4_l2s7t"]
+[ext_resource type="AudioStream" uid="uid://k4gjtskalxrk" path="res://audio/sfx/whip_crack/Whip_Crack 02.mp3" id="5_3kali"]
+[ext_resource type="AudioStream" uid="uid://ys23a7yjxi2x" path="res://audio/sfx/whip_crack/Whip_Crack 03.mp3" id="6_kxper"]
+[ext_resource type="AudioStream" uid="uid://d3yp3iier5cqm" path="res://audio/sfx/whip_crack/Whip_Crack 04.mp3" id="7_lsmc1"]
+[ext_resource type="AudioStream" uid="uid://djxjycit0nvrd" path="res://audio/sfx/whip_crack/Whip_Crack 05.mp3" id="8_s6s37"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xkyhg"]
 radius = 0.087890625
 height = 0.28814697
 
-[node name="LicoriceWhip" type="Node3D" node_paths=PackedStringArray("weapon_model", "weapon_physics")]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5ae1t"]
+streams_count = 5
+stream_0/stream = ExtResource("4_l2s7t")
+stream_1/stream = ExtResource("5_3kali")
+stream_2/stream = ExtResource("6_kxper")
+stream_3/stream = ExtResource("7_lsmc1")
+stream_4/stream = ExtResource("8_s6s37")
+
+[node name="LicoriceWhip" type="Node3D" node_paths=PackedStringArray("whip_collision", "whip_tip_audio_player", "whip_mid_audio_player", "weapon_model", "weapon_physics")]
 script = ExtResource("1_ckfqr")
+whip_collision = NodePath("Physics/RigidBody3D9/CollisionShape3D")
+whip_tip_audio_player = NodePath("Physics/RigidBody3D9/AudioStreamPlayer3D")
+whip_mid_audio_player = NodePath("Physics/RigidBody3D5/AudioStreamPlayer3D")
 weapon_model = NodePath("Weapon_Mesh")
 weapon_physics = NodePath("Physics")
 cam_speed_while_attacking = 0.1
 
-[node name="Physics" type="Node3D" parent="." node_paths=PackedStringArray("weapon")]
+[node name="Physics" type="Node3D" parent="." node_paths=PackedStringArray("weapon", "whip_tip", "whip_tip_collision")]
 script = ExtResource("2_ckfqr")
 weapon = NodePath("..")
 segment_root_path = NodePath(".")
+whip_tip = NodePath("RigidBody3D9")
+whip_tip_collision = NodePath("RigidBody3D9/CollisionShape3D")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -59,7 +79,7 @@ mass = 0.1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 shape = SubResource("CapsuleShape3D_xkyhg")
 
-[node name="RigidBody3D5" type="RigidBody3D" parent="Physics" groups=["weapon_part"]]
+[node name="RigidBody3D5" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 mass = 0.1
 
@@ -67,7 +87,11 @@ mass = 0.1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 shape = SubResource("CapsuleShape3D_xkyhg")
 
-[node name="RigidBody3D6" type="RigidBody3D" parent="Physics" groups=["weapon_part"]]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Physics/RigidBody3D5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7, 0)
+stream = ExtResource("3_knkmy")
+
+[node name="RigidBody3D6" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 mass = 0.1
 
@@ -75,7 +99,7 @@ mass = 0.1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 shape = SubResource("CapsuleShape3D_xkyhg")
 
-[node name="RigidBody3D7" type="RigidBody3D" parent="Physics" groups=["weapon_part"]]
+[node name="RigidBody3D7" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
 mass = 0.1
 
@@ -83,7 +107,7 @@ mass = 0.1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 shape = SubResource("CapsuleShape3D_xkyhg")
 
-[node name="RigidBody3D8" type="RigidBody3D" parent="Physics" groups=["weapon_part"]]
+[node name="RigidBody3D8" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
 mass = 0.1
 
@@ -98,5 +122,9 @@ mass = 0.1
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D9"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 shape = SubResource("CapsuleShape3D_xkyhg")
+script = ExtResource("3_63b3e")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Physics/RigidBody3D9"]
+stream = SubResource("AudioStreamRandomizer_5ae1t")
 
 [node name="Weapon_Mesh" parent="." instance=ExtResource("3_w18wj")]

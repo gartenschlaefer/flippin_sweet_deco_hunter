@@ -1,0 +1,11 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=4 format=3 uid="uid://nnff2hyv714w"]
+
+[ext_resource type="AudioStream" uid="uid://ddfqfa0cmyx2h" path="res://audio/sfx/whip_crack/Whip_Crack 01.mp3" id="1_lrufs"]
+[ext_resource type="AudioStream" uid="uid://k4gjtskalxrk" path="res://audio/sfx/whip_crack/Whip_Crack 02.mp3" id="2_rts77"]
+[ext_resource type="AudioStream" uid="uid://ys23a7yjxi2x" path="res://audio/sfx/whip_crack/Whip_Crack 03.mp3" id="3_rts77"]
+
+[resource]
+streams_count = 3
+stream_0/stream = ExtResource("1_lrufs")
+stream_1/stream = ExtResource("2_rts77")
+stream_2/stream = ExtResource("3_rts77")

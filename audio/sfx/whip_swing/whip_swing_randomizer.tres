@@ -1,0 +1,15 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=6 format=3 uid="uid://di2d7lutq3ibj"]
+
+[ext_resource type="AudioStream" uid="uid://bbxxqsnrlwok7" path="res://audio/sfx/whip_swing/Whip_Swing 01.mp3" id="1_xk1ry"]
+[ext_resource type="AudioStream" uid="uid://dq1d1r186m7go" path="res://audio/sfx/whip_swing/Whip_Swing 02.mp3" id="2_qc211"]
+[ext_resource type="AudioStream" uid="uid://cw5gspwn5e0em" path="res://audio/sfx/whip_swing/Whip_Swing 03.mp3" id="3_nkplt"]
+[ext_resource type="AudioStream" uid="uid://gcnpq1oswyml" path="res://audio/sfx/whip_swing/Whip_Swing 04.mp3" id="4_f27g3"]
+[ext_resource type="AudioStream" uid="uid://btp6h6ic5adqd" path="res://audio/sfx/whip_swing/Whip_Swing 05.mp3" id="5_vxuph"]
+
+[resource]
+streams_count = 5
+stream_0/stream = ExtResource("1_xk1ry")
+stream_1/stream = ExtResource("2_qc211")
+stream_2/stream = ExtResource("3_nkplt")
+stream_3/stream = ExtResource("4_f27g3")
+stream_4/stream = ExtResource("5_vxuph")

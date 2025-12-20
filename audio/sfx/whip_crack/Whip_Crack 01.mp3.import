@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ddfqfa0cmyx2h"
+path="res://.godot/imported/Whip_Crack 01.mp3-c485b913a43687faf2c2434d657d3435.mp3str"
+
+[deps]
+
+source_file="res://audio/sfx/whip_crack/Whip_Crack 01.mp3"
+dest_files=["res://.godot/imported/Whip_Crack 01.mp3-c485b913a43687faf2c2434d657d3435.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
