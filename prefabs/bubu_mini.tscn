@@ -129,6 +129,8 @@ _data = {
 }
 
 [node name="bubu_mini" type="CharacterBody3D" node_paths=PackedStringArray("health_bar")]
+collision_layer = 4
+collision_mask = 23
 script = ExtResource("1_funu2")
 health_bar = NodePath("anim/healthbar_view/SubViewport/healthbar_panel/healthbar")
 

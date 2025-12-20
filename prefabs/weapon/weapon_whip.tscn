@@ -40,7 +40,7 @@ whip_tip_collision = NodePath("RigidBody3D9")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-collision_layer = 0
+collision_layer = 32
 collision_mask = 0
 mass = 0.1
 
@@ -50,7 +50,7 @@ shape = SubResource("CapsuleShape3D_xkyhg")
 
 [node name="RigidBody3D2" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
-collision_layer = 0
+collision_layer = 32
 collision_mask = 0
 mass = 0.1
 
@@ -60,7 +60,7 @@ shape = SubResource("CapsuleShape3D_xkyhg")
 
 [node name="RigidBody3D3" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
-collision_layer = 0
+collision_layer = 32
 collision_mask = 0
 mass = 0.1
 
@@ -70,7 +70,7 @@ shape = SubResource("CapsuleShape3D_xkyhg")
 
 [node name="RigidBody3D4" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
-collision_layer = 0
+collision_layer = 32
 collision_mask = 0
 mass = 0.1
 
@@ -80,6 +80,7 @@ shape = SubResource("CapsuleShape3D_xkyhg")
 
 [node name="RigidBody3D5" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+collision_layer = 32
 mass = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D5"]
@@ -92,6 +93,7 @@ stream = ExtResource("3_knkmy")
 
 [node name="RigidBody3D6" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+collision_layer = 32
 mass = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D6"]
@@ -100,6 +102,7 @@ shape = SubResource("CapsuleShape3D_xkyhg")
 
 [node name="RigidBody3D7" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
+collision_layer = 32
 mass = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D7"]
@@ -108,6 +111,7 @@ shape = SubResource("CapsuleShape3D_xkyhg")
 
 [node name="RigidBody3D8" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
+collision_layer = 32
 mass = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D8"]
@@ -116,6 +120,8 @@ shape = SubResource("CapsuleShape3D_xkyhg")
 
 [node name="RigidBody3D9" type="RigidBody3D" parent="Physics" groups=["weapon_part"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
+collision_layer = 16
+collision_mask = 7
 mass = 0.1
 script = ExtResource("3_63b3e")
 

@@ -11,6 +11,8 @@ height = 1.0
 radius = 1.0
 
 [node name="fp_player" type="CharacterBody3D" node_paths=PackedStringArray("weapon_inventory")]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_swpgi")
 weapon_inventory = NodePath("WeaponInventory")
 

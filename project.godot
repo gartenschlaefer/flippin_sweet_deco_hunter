@@ -98,6 +98,8 @@ alternate={
 3d_physics/layer_2="player"
 3d_physics/layer_3="enemy"
 3d_physics/layer_4="interaction"
+3d_physics/layer_5="weapon"
+3d_physics/layer_6="unused_weapon_part"
 
 [physics]
 

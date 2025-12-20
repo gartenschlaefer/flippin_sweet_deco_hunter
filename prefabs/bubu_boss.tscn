@@ -30,8 +30,8 @@ corner_radius_bottom_left = 5
 expand_margin_bottom = 2.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_itrur"]
-radius = 1.0
-height = 4.0
+radius = 1.5
+height = 7.0
 
 [sub_resource type="Animation" id="Animation_j32dc"]
 length = 0.001
@@ -130,6 +130,8 @@ _data = {
 }
 
 [node name="bubu_boss" type="CharacterBody3D" node_paths=PackedStringArray("health_bar")]
+collision_layer = 4
+collision_mask = 23
 script = ExtResource("1_5txs5")
 sticker_resource = ExtResource("2_laa38")
 health_bar = NodePath("anim/healthbar_view/SubViewport/healthbar_panel/healthbar")
@@ -174,7 +176,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_2v5fk")
 value = 50.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
 shape = SubResource("CapsuleShape3D_itrur")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
