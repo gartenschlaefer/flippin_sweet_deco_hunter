@@ -1,38 +1,46 @@
-[gd_scene load_steps=8 format=3 uid="uid://bcsjhmh4u64pj"]
+[gd_scene load_steps=9 format=3 uid="uid://cwg5hosq5uu7g"]
 
-[ext_resource type="PackedScene" path="res://scenes/donutisland.tscn" id="1_o3kro"]
-[ext_resource type="Texture2D" uid="uid://bmxetnj4ffiud" path="res://art/sky2.exr" id="2_d2h07"]
-[ext_resource type="PackedScene" path="res://scenes/killzone.tscn" id="3_g1vmp"]
-[ext_resource type="PackedScene" path="res://scenes/ocean.tscn" id="5_d103j"]
+[ext_resource type="PackedScene" uid="uid://cli7h7phc1jqi" path="res://scenes/donut.tscn" id="1_d2h07"]
+[ext_resource type="Texture2D" uid="uid://1oooiuf5iung" path="res://art/sky.exr" id="1_d103j"]
+[ext_resource type="PackedScene" uid="uid://bq51wb1qevq5r" path="res://scenes/killzone.tscn" id="3_g1vmp"]
+[ext_resource type="PackedScene" uid="uid://cge5ol25fqrex" path="res://scenes/ocean.tscn" id="5_d103j"]
+[ext_resource type="PackedScene" uid="uid://bnkpm7r6rq7fb" path="res://scenes/candyislands.tscn" id="5_mxov6"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_d2h07"]
-panorama = ExtResource("2_d2h07")
+panorama = ExtResource("1_d103j")
 
 [sub_resource type="Sky" id="Sky_o3kro"]
 sky_material = SubResource("PanoramaSkyMaterial_d2h07")
 
 [sub_resource type="Environment" id="Environment_g1vmp"]
 background_mode = 2
+background_energy_multiplier = 0.96
 sky = SubResource("Sky_o3kro")
-ambient_light_sky_contribution = 0.17
+ambient_light_source = 3
 reflected_light_source = 2
 tonemap_mode = 2
 
 [node name="donutworld" type="Node3D"]
 
-[node name="donutisland" parent="." instance=ExtResource("1_o3kro")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15254974, -3.8146973e-06, 0.04232788)
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.9666602, 0.07728187, 0.24412201, -0.21990591, -0.23787364, 0.9460748, 0.13118462, -0.9682168, -0.21294825, 0.36515093, 50.193943, -0.16069603)
-light_energy = 0.677
-shadow_enabled = true
-sky_mode = 1
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_g1vmp")
 
+[node name="donut" parent="." instance=ExtResource("1_d2h07")]
+transform = Transform3D(0.99999994, 2.9802322e-08, 7.450581e-09, 0, 0.9999999, 1.4901161e-08, 1.4901161e-08, 0, 0.9999999, -4.7683716e-07, 11.7268715, -4.7683716e-07)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.96666026, 0.07728188, 0.24412192, -0.24694899, 0.029278785, 0.96858597, 0.067706496, -0.9965792, 0.04738739, 0.36515093, 74.9321, -0.16069603)
+light_energy = 0.677
+shadow_enabled = true
+shadow_opacity = 0.41
+shadow_blur = 1.583
+sky_mode = 1
+
 [node name="Killzone" parent="." instance=ExtResource("3_g1vmp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.648506, 0)
 
 [node name="Ocean" parent="." instance=ExtResource("5_d103j")]
-transform = Transform3D(11.7, 0, 0, 0, 11.7, 0, 0, 0, 11.7, 0, -2.925228, 0)
+transform = Transform3D(11.7, 0, 0, 0, 11.7, 0, 0, 0, 11.7, 0.044311523, -2.9431725, -0.01373291)
+
+[node name="candyislands" parent="." instance=ExtResource("5_mxov6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 492.64862, 0, 668.17944)

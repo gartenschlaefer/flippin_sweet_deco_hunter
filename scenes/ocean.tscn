@@ -38,7 +38,7 @@ shader_parameter/alpha = 0.94000004465
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_mn261"]
 material = SubResource("ShaderMaterial_fiuhb")
-size = Vector2(100, 100)
+size = Vector2(400, 400)
 subdivide_width = 80
 subdivide_depth = 80
 
