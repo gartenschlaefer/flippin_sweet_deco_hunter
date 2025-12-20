@@ -6,6 +6,7 @@ class_name WeaponSocket
 @export var input_weapon_2 := "weapon_2"
 @export var input_weapon_3 := "weapon_3"
 @export var input_previous := "weapon_previous"
+@export var player: Player
 
 var current_weapon: WeaponBase
 
@@ -79,3 +80,5 @@ func attack_released():
 func handle_mouse_motion(delta: Vector2):
 	if current_weapon:
 		current_weapon.handle_mouse_motion(delta)
+
+func get_player(): return player

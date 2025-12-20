@@ -25,10 +25,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 
 [node name="Camera3D" type="Camera3D" parent="head"]
 
-[node name="WeaponSocket" type="Node3D" parent="head/Camera3D" node_paths=PackedStringArray("inventory")]
+[node name="WeaponSocket" type="Node3D" parent="head/Camera3D" node_paths=PackedStringArray("inventory", "player")]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.41945204, 0.9077775, 0, -0.9077775, 0.41945204, 0, -0.336, -0.658)
 script = ExtResource("2_bdlj7")
 inventory = NodePath("../../../WeaponInventory")
+player = NodePath("../../..")
 
 [node name="interaction_area" type="Area3D" parent="."]
 collision_layer = 8

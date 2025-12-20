@@ -6,10 +6,6 @@ extends Node3D
 @onready var player = $fp_player
 
 
-func _ready():
-	pass
-
-
 func _input(event):
 
 	# end game

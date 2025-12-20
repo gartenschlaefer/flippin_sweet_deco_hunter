@@ -5,12 +5,14 @@ class_name ChristmasTree extends Node3D
 
 # singlas
 signal win_hanged_all_bubaba_on_tree
+signal note_that_more_than_three_bubaba_sticker_on_tree
 
 # resources
 @export var hang_button_textures: Array[Texture2D]
 
 # refs
-@export var sticker_locations: Node3D
+@export var bubaba_sticker_locations: Node3D
+@export var other_sticker_locations: Node3D
 @export var hang_button: Sprite3D
 @export var debug_cube: MeshInstance3D = null
 @onready var turnable_hanging_space = $turnable_hanging_space
@@ -65,7 +67,11 @@ func reset():
 	hang_button.hide()
 
 	# remove all existing stickers -> demo stickers for placement
-	for sticker_location: Marker3D in sticker_locations.get_children():
+	for sticker_location: Marker3D in bubaba_sticker_locations.get_children():
+		for child in sticker_location.get_children():
+			child.queue_free()
+
+	for sticker_location: Marker3D in other_sticker_locations.get_children():
 		for child in sticker_location.get_children():
 			child.queue_free()
 		
@@ -81,6 +87,9 @@ func hang_deco_on_tree(deco: StickerResource, player: Player):
 	# create sticker on resource and hang on tree
 	var sticker = Sticker.new_sticker(deco, true)
 
+	# define sticker location to hang
+	var sticker_locations = bubaba_sticker_locations if deco.get_sticker_type_is_bubaba() else other_sticker_locations
+
 	# run through sticker locations and find next empty one
 	for sticker_location: Marker3D in sticker_locations.get_children():
 
@@ -92,25 +101,19 @@ func hang_deco_on_tree(deco: StickerResource, player: Player):
 		break
 
 	# check win condition
-	check_win_condition_hanged_all_bubabas()
+	if deco.get_sticker_type_is_bubaba(): check_win_condition_hanged_all_bubabas()
 
 
 func check_win_condition_hanged_all_bubabas():
 
-	# added sticker
-	var num_added_stickers = 0
+	# determine number of bubaba sticker
+	var num_bubaba_sticker = self.get_num_bubaba_sticker_hanging_on_tree()
 
-	# run through sticker locations
-	for sticker_location: Marker3D in sticker_locations.get_children():
-
-		# already has a sticker
-		if not len(sticker_location.get_children()): continue
-
-		# there is a sticker
-		num_added_stickers += 1
+	# notification
+	if num_bubaba_sticker >= 3: note_that_more_than_three_bubaba_sticker_on_tree.emit()
 
 	# not win skip
-	if num_added_stickers < len(sticker_locations.get_children()): return
+	if num_bubaba_sticker < len(bubaba_sticker_locations.get_children()): return
 
 	# won
 	win_hanged_all_bubaba_on_tree.emit()
@@ -152,7 +155,6 @@ func _on_hang_deco_area_area_entered(area: Area3D) -> void:
 	if player.get_player_has_bubaba_sticker(): self.debug_cube_set_active()
 
 
-
 func _on_hang_deco_area_area_exited(area: Area3D) -> void:
 
 	# safety
@@ -167,3 +169,43 @@ func _on_hang_deco_area_area_exited(area: Area3D) -> void:
 	# updates
 	self.hang_button_update(player)
 	self.debug_cube_set_inactive()
+
+
+# --
+# setter and getter
+
+func get_num_bubaba_sticker_hanging_on_tree() -> int:
+
+	# added sticker
+	var num_added_stickers = 0
+
+	# run through sticker locations
+	for sticker_location: Marker3D in bubaba_sticker_locations.get_children():
+
+		# has no sticker
+		if not len(sticker_location.get_children()): continue
+
+		# there is a sticker
+		num_added_stickers += 1
+
+	return num_added_stickers
+
+
+func get_num_other_sticker_hanging_on_tree() -> int:
+
+	# added sticker
+	var num_added_stickers = 0
+
+	# run through sticker locations
+	for sticker_location: Marker3D in other_sticker_locations.get_children():
+
+		# has no sticker
+		if not len(sticker_location.get_children()): continue
+
+		# there is a sticker
+		num_added_stickers += 1
+
+	return num_added_stickers
+
+
+func get_num_sticker_hanging_on_tree() -> int: return self.get_num_bubaba_sticker_hanging_on_tree() + self.get_num_other_sticker_hanging_on_tree()

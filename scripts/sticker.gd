@@ -32,10 +32,6 @@ static func new_sticker(target_sticker_resource: StickerResource, _is_hanging_on
 	# set random start rotation
 	new_sticker_inst.set_rotation(Vector3(0, randf_range(-rotation_deco_on_tree_max, rotation_deco_on_tree_max), 0))
 
-	# set correct scale
-	if _is_hanging_on_tree: new_sticker_inst.set_scale(Vector3(scale_sticker_on_tree, scale_sticker_on_tree, scale_sticker_on_tree))
-	else: new_sticker_inst.set_scale(Vector3(scale_sticker_on_ground, scale_sticker_on_ground, scale_sticker_on_ground))
-
 	return new_sticker_inst
 
 
@@ -46,6 +42,9 @@ func _ready():
 
 	# set texture
 	sprite.set_texture(sticker_resource.get_texture())
+
+	# scaling
+	_scale_to_defined_size()
 
 
 func _process(delta):
@@ -67,20 +66,26 @@ func _process(delta):
 	self.rotate_y(rotation_speed_on_ground * delta)
 
 
-func _on_area_3d_area_entered(area: Area3D) -> void:
-	
-	# todo: use cotton candy area!!! (activate collider when hit)
-	# must be player to interact
-	if not area.get_parent() is Player: return
-	
-	# player
-	var player = area.get_parent()
+func _scale_to_defined_size():
 
+	# set correct scale
+	if is_hanging_on_tree: set_scale(Vector3(scale_sticker_on_tree, scale_sticker_on_tree, scale_sticker_on_tree))
+	else: set_scale(Vector3(scale_sticker_on_ground, scale_sticker_on_ground, scale_sticker_on_ground))
+
+
+func _on_area_3d_area_entered(area: Area3D) -> void:
+		
+	# skip
+	if is_hanging_on_tree: return
+
+	# only cotton candy can pick it up
+	if not area.get_parent() is WeaponCottonCandy: return
+	
 	# do not add sticker
 	if sticker_resource == null: return
 
 	# add sticker
-	player.add_sticker(sticker_resource)
+	area.get_parent().get_parent().get_player().add_sticker(sticker_resource)
 
 	# delete
 	self.queue_free()
@@ -89,5 +94,19 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
 # --
 # getter and setter
 
-func set_is_hanging_on_tree(is_hanging: bool): is_hanging_on_tree = is_hanging
+func set_is_hanging_on_tree(is_hanging: bool): 
+	
+	# flag
+	is_hanging_on_tree = is_hanging
+
+	# hanging condition
+	if is_hanging: 
+
+		# disable collision
+		$interaction_area/collision_shape.set_disabled(true)
+
+		# sorting if hanging on tree
+		$sprite.set_sorting_offset(3)
+
+
 func set_sticker_resource(sr: StickerResource): sticker_resource = sr

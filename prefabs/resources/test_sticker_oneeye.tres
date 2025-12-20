@@ -5,4 +5,5 @@
 
 [resource]
 script = ExtResource("1_cf2rh")
+sticker_type = 1
 texture = ExtResource("2_ddpa4")

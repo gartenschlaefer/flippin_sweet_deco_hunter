@@ -23,6 +23,7 @@ Enums="*res://scripts/enums.gd"
 
 enemies="all enemies"
 weapon_part=""
+christmas_tree=""
 
 [input]
 
@@ -100,6 +101,7 @@ alternate={
 3d_physics/layer_4="interaction"
 3d_physics/layer_5="weapon"
 3d_physics/layer_6="unused_weapon_part"
+3d_physics/layer_8="interaction_weapon"
 
 [physics]
 

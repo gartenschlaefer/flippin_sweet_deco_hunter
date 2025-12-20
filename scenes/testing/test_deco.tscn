@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cq4lncecf1h10"]
+[gd_scene load_steps=17 format=3 uid="uid://cq4lncecf1h10"]
 
 [ext_resource type="Script" uid="uid://55fb0suofs58" path="res://scripts/test_deco.gd" id="1_rldlp"]
 [ext_resource type="Environment" uid="uid://cntlpekj5push" path="res://materials/world_environment_candy.tres" id="2_8ywur"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://qdfw3qsr5x8o" path="res://prefabs/sticker.tscn" id="8_htlnx"]
 [ext_resource type="Resource" uid="uid://pm11x0q0cu7n" path="res://prefabs/resources/test_sticker_whip.tres" id="9_8ywur"]
 [ext_resource type="PackedScene" uid="uid://w1uqnm545mln" path="res://prefabs/bubaba.tscn" id="9_toria"]
+[ext_resource type="Resource" uid="uid://cobsrvd4jqmad" path="res://prefabs/resources/bubaba3.tres" id="9_wtcmb"]
+[ext_resource type="Resource" uid="uid://dotdbourxw403" path="res://prefabs/resources/bubaba0.tres" id="10_a8giq"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_toria"]
 size = Vector2(50, 50)
@@ -83,21 +85,31 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="sticker_oneeye2" parent="stickers" instance=ExtResource("8_htlnx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2938395, 0.010649402, -1.8589554)
+sticker_resource = ExtResource("9_wtcmb")
 
-[node name="sticker_oneeye3" parent="stickers" instance=ExtResource("8_htlnx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2727976, 0.019836929, -3.517539)
+[node name="bubaba" parent="stickers" instance=ExtResource("8_htlnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2727976, 0.019836929, -5.787134)
+sticker_resource = ExtResource("10_a8giq")
 
-[node name="sticker_oneeye4" parent="stickers" instance=ExtResource("8_htlnx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9028425, 0.027404591, -4.877185)
+[node name="bubaba2" parent="stickers" instance=ExtResource("8_htlnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6312437, 0.03542888, -5.787134)
+sticker_resource = ExtResource("10_a8giq")
 
-[node name="sticker_oneeye5" parent="stickers" instance=ExtResource("8_htlnx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5843143, 0.035211008, -6.121236)
+[node name="bubaba3" parent="stickers" instance=ExtResource("8_htlnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6312437, 0.035428878, -10.178509)
+sticker_resource = ExtResource("10_a8giq")
 
-[node name="sticker_oneeye6" parent="stickers" instance=ExtResource("8_htlnx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.096463, 0.037588716, -10.149142)
+[node name="bubaba4" parent="stickers" instance=ExtResource("8_htlnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6312437, 0.035428874, -14.660927)
+sticker_resource = ExtResource("10_a8giq")
 
-[node name="sticker_oneeye7" parent="stickers" instance=ExtResource("8_htlnx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9789925, 0.027758129, -11.132539)
+[node name="bubaba5" parent="stickers" instance=ExtResource("8_htlnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6312437, 0.03542887, -1.7596111)
+sticker_resource = ExtResource("10_a8giq")
+
+[node name="bubaba6" parent="stickers" instance=ExtResource("8_htlnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6312437, 0.035428867, 1.1181173)
+sticker_resource = ExtResource("10_a8giq")
 
 [node name="bubaba" parent="." instance=ExtResource("9_toria")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.828829, 0, 0)
