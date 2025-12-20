@@ -16,6 +16,8 @@ class_name WeaponPhysicsWhip
 @export var force_max := 5.0
 @export var force_gain := 1.2
 @export var force_frames := 30
+@export var whip_tip : RigidBody3D
+@export var whip_tip_collision : WeaponCollisionWhip
 
 var force_frames_left := 0
 var burst_armed := true
@@ -23,10 +25,12 @@ var rest_lengths: Array[float] = []
 var rest_dirs_local: Array[Vector3] = []
 
 var snap_time := 0.0
+var force_value := 0.0
 var is_swinging : bool
 var is_snapping : bool
 var last_root_pos : Vector3
 var last_cam_pos : Vector3
+var cam_to_root_dir := Vector3.ZERO
 
 var filtered_velocity := Vector3.ZERO
 
@@ -69,11 +73,15 @@ func _physics_process(delta):
 	if weapon and weapon.state == weapon.State.ATTACKING:
 		apply_force = true
 
-	#if Engine.get_physics_frames() & 1 == 0:
-	if apply_force:
-		apply_centrifugal_force(delta)
-	stabilize_chain_angles()
-	apply_bone_pose()
+	if Engine.get_physics_frames() & 1 == 0:
+		if apply_force:
+			if whip_tip_collision.is_active:
+				apply_centrifugal_force(cam_to_root_dir)
+			else:
+				calculate_whip_speed(delta)
+	else:
+		stabilize_chain_angles()
+		apply_bone_pose()
 
 
 func stabilize_chain_angles():
@@ -214,7 +222,17 @@ func trigger_snapback():
 	is_snapping = true
 
 
-func apply_centrifugal_force(delta: float):
+func apply_centrifugal_force(direction):
+	if force_frames_left > 0:
+		force_value = force_min
+		force_frames_left -= 1
+	else:
+		whip_tip_collision.is_active = false
+		return
+	whip_tip.apply_force(direction * force_value*segs.size())
+
+
+func calculate_whip_speed(delta: float):
 	if segs.size() < 2:
 		return
 
@@ -236,22 +254,9 @@ func apply_centrifugal_force(delta: float):
 		clamp(delta * velocity_smooth, 0.0, 1.0)
 	)
 
-	var cam_to_root_dir := (root.global_position - curr_cam_pos).normalized()
+	cam_to_root_dir = (root.global_position - curr_cam_pos).normalized()
 	var whip_root_speed : float = max(0.0,velocity.dot(cam_to_root_dir))
 
-	var force_value := 0.0
-
 	if whip_root_speed >= speed_threshold:
-		force_value = clamp(whip_root_speed, force_min, force_max)
+		whip_tip_collision.is_active = true
 		force_frames_left = force_frames
-
-	elif force_frames_left > 0:
-		# speed dropped, but keep minimum force alive
-		force_value = force_min
-		force_frames_left -= 1
-
-	else:
-		return
-
-	var tip := segs[segs.size()-1]
-	tip.apply_force(cam_to_root_dir * force_value*segs.size())
