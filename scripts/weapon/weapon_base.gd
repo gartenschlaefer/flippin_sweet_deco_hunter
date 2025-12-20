@@ -17,9 +17,9 @@ var drag_rot := Vector3.ZERO
 
 @export var drag_pos_sensitivity := 0.1
 @export var drag_rot_sensitivity := 0.003
-@export var cam_speed_while_attacking := 1.0
-const DRAG_ROT_MAX_Z := deg_to_rad(45.0)
-const DRAG_ROT_MAX_X := deg_to_rad(90.0)
+@export var cam_speed_while_attacking := 0.1
+const DRAG_ROT_MAX_Z := deg_to_rad(90.0)
+const DRAG_ROT_MAX_X := deg_to_rad(45.0)
 
 var state: State = State.IDLE
 
@@ -42,6 +42,9 @@ const POS_SCALE := 0.01
 var attack_duration := 1.9
 var attack_time := 0.0
 var attack_alpha := 0.0
+
+var current_pos := Vector3.ZERO
+var current_rot := Vector3.ZERO
 
 func _ready():
 	weapon_mesh = _find_mesh(weapon_model)
@@ -115,8 +118,8 @@ func _start_attack(pose):
 
 func _start_drag():
 	drag_active = true
-	drag_pos = get_current_pos()
-	drag_rot = rotation
+	drag_pos = current_pos
+	drag_rot = current_rot
 	state = State.ATTACKING
 
 func _end_drag():
@@ -126,28 +129,26 @@ func _end_drag():
 
 
 func _apply_drag(mouse_delta: Vector2):
-	drag_rot.z -= mouse_delta.x * drag_rot_sensitivity
-	if (drag_rot.z > DRAG_ROT_MAX_X):
-		drag_rot.z = DRAG_ROT_MAX_X
-	elif (drag_rot.z < -DRAG_ROT_MAX_X):
-		drag_rot.z = -DRAG_ROT_MAX_X
-	else:
+	var raw_z := drag_rot.z - mouse_delta.x * drag_rot_sensitivity
+	var clamped_z = clamp(raw_z, -DRAG_ROT_MAX_Z, DRAG_ROT_MAX_Z)
+
+	if raw_z == clamped_z:
 		drag_pos.x += mouse_delta.x * drag_pos_sensitivity
-	
-	drag_rot.x -= mouse_delta.y * drag_rot_sensitivity	
-	if (drag_rot.x > DRAG_ROT_MAX_Z):
-		drag_rot.x = DRAG_ROT_MAX_Z
-	elif (drag_rot.x < -DRAG_ROT_MAX_Z):
-		drag_rot.x = -DRAG_ROT_MAX_Z
-	else:
-		drag_pos.y -= mouse_delta.y * drag_pos_sensitivity
+	drag_rot.z = clamped_z
+
+	var raw_x := drag_rot.x - mouse_delta.y * drag_rot_sensitivity
+	var clamped_x = clamp(raw_x, -DRAG_ROT_MAX_X, DRAG_ROT_MAX_X)
+
+	if raw_x == clamped_x:
+		drag_pos.y += mouse_delta.y * drag_pos_sensitivity
+	drag_rot.x = clamped_x
 
 	set_weapon_pose(drag_pos, drag_rot)
 
 
 func _start_return():
-	start_pos = get_current_pos()
-	start_rot = rotation
+	start_pos = current_pos
+	start_rot = current_rot
 	end_pos = idle_pos
 	end_rot = idle_rot
 	attack_time  = 0.0
@@ -157,8 +158,8 @@ func _apply_step(delta):
 	var speed := 1.0 / attack_duration
 	var step : float = speed * delta
 
-	var curr_pos := get_current_pos()
-	var curr_rot := rotation
+	var curr_pos := current_pos
+	var curr_rot := current_rot
 
 	var target_pos := curr_pos.move_toward(end_pos, step * curr_pos.distance_to(end_pos))
 	var target_rot := Vector3(
@@ -171,21 +172,22 @@ func _apply_step(delta):
 
 
 func set_weapon_pose(pos: Vector3, rot: Vector3):
-	var local_pos := Vector3(
-		pos.x * POS_SCALE,
-		pos.y * POS_SCALE,
-		pos.z * POS_SCALE
-	)
+	transform.origin = pos * POS_SCALE
 
-	transform.origin = local_pos
-	rotation = rot
+	var qx := Quaternion(Vector3.RIGHT, rot.x)
+	var qy := Quaternion(Vector3.UP, rot.y)
+	var qz := Quaternion(Vector3.BACK, rot.z)
 
+	transform.basis = Basis(qz * qy * qx)
+
+
+'
 func get_current_pos() -> Vector3:
 	return Vector3(
 		transform.origin.x / POS_SCALE,
 		transform.origin.y / POS_SCALE,
 		transform.origin.z / POS_SCALE
-	)
+	)'
 
 func get_attack_pose(index: int):
 	match index:

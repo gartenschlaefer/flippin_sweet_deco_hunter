@@ -4,6 +4,7 @@ class_name WeaponSocket
 @export var inventory: WeaponInventory
 @export var input_weapon_1 := "weapon_1"
 @export var input_weapon_2 := "weapon_2"
+@export var input_weapon_3 := "weapon_3"
 @export var input_previous := "weapon_previous"
 
 var current_weapon: WeaponBase
@@ -22,6 +23,9 @@ func _unhandled_input(event):
 	elif event.is_action_pressed(input_weapon_2):
 		if current_index != 1:
 			equip_index(1)
+	elif event.is_action_pressed(input_weapon_3):
+		if current_index != 2:
+			equip_index(2)
 	elif event.is_action_pressed(input_previous):
 		equip_previous()
 
