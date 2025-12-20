@@ -1,15 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://w1uqnm545mln"]
+[gd_scene load_steps=11 format=3 uid="uid://c7kbpfu4dyb3s"]
 
-[ext_resource type="Script" uid="uid://dxmws7ppsutq5" path="res://scripts/bubaba.gd" id="1_t54ac"]
-[ext_resource type="Resource" uid="uid://dotdbourxw403" path="res://prefabs/resources/bubaba0.tres" id="2_j32dc"]
-[ext_resource type="SpriteFrames" uid="uid://bwipi1uukg12o" path="res://prefabs/resources/sprite_frames_bubaba.tres" id="3_j32dc"]
+[ext_resource type="Script" uid="uid://bjja321p3mq8x" path="res://scripts/bubu_mini.gd" id="1_funu2"]
+[ext_resource type="SpriteFrames" uid="uid://d2splkrp2bkac" path="res://prefabs/resources/sprite_frames_bubu_mini.tres" id="2_funu2"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_akbmi"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_laa38"]
 viewport_path = NodePath("anim/healthbar_view/SubViewport")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t54ac"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cugf8"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j32dc"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wif1q"]
 bg_color = Color(0.50534403, 0.5053441, 0.50534403, 1)
 border_width_bottom = 2
 border_color = Color(0.38928655, 0.38928664, 0.3892865, 1)
@@ -19,7 +18,7 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 expand_margin_bottom = 2.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eb3nx"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2v5fk"]
 bg_color = Color(0.90712297, 0.33714142, 0.7958806, 1)
 border_width_bottom = 2
 border_color = Color(0.4225831, 0.17671248, 0.3790326, 1)
@@ -29,7 +28,9 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 expand_margin_bottom = 2.0
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_akbmi"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_itrur"]
+radius = 1.0
+height = 4.0
 
 [sub_resource type="Animation" id="Animation_j32dc"]
 length = 0.001
@@ -127,22 +128,20 @@ _data = {
 &"death": SubResource("Animation_t54ac")
 }
 
-[node name="bubaba" type="CharacterBody3D" node_paths=PackedStringArray("health_bar") groups=["enemies"]]
-script = ExtResource("1_t54ac")
-sticker_resource = ExtResource("2_j32dc")
+[node name="bubu_mini" type="CharacterBody3D" node_paths=PackedStringArray("health_bar")]
+script = ExtResource("1_funu2")
 health_bar = NodePath("anim/healthbar_view/SubViewport/healthbar_panel/healthbar")
 
 [node name="anim" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(0.601, 0, 0, 0, 0.609, 0, 0, 0, 0.60400003, 0, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 billboard = 1
-sprite_frames = ExtResource("3_j32dc")
+sprite_frames = ExtResource("2_funu2")
 animation = &"evil_idle"
-autoplay = "normal_idle"
 
 [node name="healthbar_view" type="Sprite3D" parent="anim"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.44731, 0.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0.1)
 billboard = 1
-texture = SubResource("ViewportTexture_akbmi")
+texture = SubResource("ViewportTexture_laa38")
 
 [node name="SubViewport" type="SubViewport" parent="anim/healthbar_view"]
 transparent_bg = true
@@ -154,10 +153,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_t54ac")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_cugf8")
 
 [node name="healthbar" type="ProgressBar" parent="anim/healthbar_view/SubViewport/healthbar_panel"]
-unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -169,13 +167,13 @@ offset_right = -8.0
 offset_bottom = 13.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_j32dc")
-theme_override_styles/fill = SubResource("StyleBoxFlat_eb3nx")
+theme_override_styles/background = SubResource("StyleBoxFlat_wif1q")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2v5fk")
 value = 50.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_akbmi")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("CapsuleShape3D_itrur")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 avoidance_enabled = true

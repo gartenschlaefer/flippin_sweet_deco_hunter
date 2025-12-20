@@ -1,54 +1,187 @@
-[gd_scene load_steps=8 format=3 uid="uid://dxsppsj63dtfa"]
+[gd_scene load_steps=12 format=3 uid="uid://dxsppsj63dtfa"]
 
 [ext_resource type="Script" uid="uid://dj15cotxd0f80" path="res://scripts/bubu_boss.gd" id="1_5txs5"]
-[ext_resource type="Texture2D" uid="uid://b4a78dmcht2bu" path="res://art/boss_spritesheet900px.png" id="1_v0qj6"]
+[ext_resource type="SpriteFrames" uid="uid://cd3pwhj0ua4m8" path="res://prefabs/resources/sprite_frame_bubu_boss.tres" id="2_5txs5"]
+[ext_resource type="Resource" uid="uid://pm11x0q0cu7n" path="res://prefabs/resources/test_sticker_whip.tres" id="2_laa38"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_toria"]
-atlas = ExtResource("1_v0qj6")
-region = Rect2(0, 900, 737, 900)
+[sub_resource type="ViewportTexture" id="ViewportTexture_laa38"]
+viewport_path = NodePath("anim/healthbar_view/SubViewport")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wtcmb"]
-atlas = ExtResource("1_v0qj6")
-region = Rect2(737, 900, 737, 900)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cugf8"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7cn1i"]
-atlas = ExtResource("1_v0qj6")
-region = Rect2(0, 0, 737, 900)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wif1q"]
+bg_color = Color(0.50534403, 0.5053441, 0.50534403, 1)
+border_width_bottom = 2
+border_color = Color(0.38928655, 0.38928664, 0.3892865, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_bottom = 2.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mjbw7"]
-atlas = ExtResource("1_v0qj6")
-region = Rect2(737, 0, 737, 900)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2v5fk"]
+bg_color = Color(0.90712297, 0.33714142, 0.7958806, 1)
+border_width_bottom = 2
+border_color = Color(0.4225831, 0.17671248, 0.3790326, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_bottom = 2.0
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_8ywur"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_toria")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wtcmb")
-}],
-"loop": true,
-"name": &"collect",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7cn1i")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mjbw7")
-}],
-"loop": true,
-"name": &"default",
-"speed": 3.0
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_itrur"]
+radius = 1.0
+height = 4.0
+
+[sub_resource type="Animation" id="Animation_j32dc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("anim/healthbar_view:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("anim")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 4.2, 0)
+
+[sub_resource type="Animation" id="Animation_t54ac"]
+resource_name = "death"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("anim/healthbar_view:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("anim")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 4.2, 0, 0.5, 1, 0, 4.2, 0, 0.96666664, 1, 0, 7.2, 0, 2, 1, 0, 2.6, 0)
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"bubaba_is_dead"
 }]
+}
+tracks/4/type = "scale_3d"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("anim")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = PackedFloat32Array(0, 1, 1, 1, 1, 0.5, 1, 1, 1, 1, 1, 1, 0.7, 1.5, 1, 2, 1, 0.6, 0.6, 0.6)
 
-[node name="bubu_boss" type="Node3D"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eb3nx"]
+_data = {
+&"RESET": SubResource("Animation_j32dc"),
+&"death": SubResource("Animation_t54ac")
+}
+
+[node name="bubu_boss" type="CharacterBody3D" node_paths=PackedStringArray("health_bar")]
 script = ExtResource("1_5txs5")
+sticker_resource = ExtResource("2_laa38")
+health_bar = NodePath("anim/healthbar_view/SubViewport/healthbar_panel/healthbar")
 
-[node name="sprites" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -9.117514, 2.702044, 0)
+[node name="anim" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2, 0)
 billboard = 1
-sprite_frames = SubResource("SpriteFrames_8ywur")
-frame_progress = 0.6469165
+sprite_frames = ExtResource("2_5txs5")
+animation = &"collect"
+
+[node name="healthbar_view" type="Sprite3D" parent="anim"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0.1)
+billboard = 1
+texture = SubResource("ViewportTexture_laa38")
+
+[node name="SubViewport" type="SubViewport" parent="anim/healthbar_view"]
+transparent_bg = true
+size = Vector2i(500, 40)
+
+[node name="healthbar_panel" type="Panel" parent="anim/healthbar_view/SubViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_cugf8")
+
+[node name="healthbar" type="ProgressBar" parent="anim/healthbar_view/SubViewport/healthbar_panel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = -13.5
+offset_right = -8.0
+offset_bottom = 13.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_wif1q")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2v5fk")
+value = 50.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("CapsuleShape3D_itrur")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+debug_enabled = true
+
+[node name="anim_player" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_eb3nx")
+}

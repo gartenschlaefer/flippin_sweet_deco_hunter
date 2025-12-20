@@ -1,26 +1,14 @@
-[gd_scene load_steps=21 format=3 uid="uid://5r062dd2110r"]
+[gd_scene load_steps=18 format=3 uid="uid://5r062dd2110r"]
 
 [ext_resource type="Texture2D" uid="uid://qk7v22a5wifd" path="res://art/bubaba_boss.png" id="1_ac5ne"]
-[ext_resource type="Texture2D" uid="uid://lo82ex7pt7r4" path="res://art/brent-minehan-candyland.jpg" id="1_lv0s1"]
 [ext_resource type="Script" uid="uid://dm21mbk7i7sp5" path="res://scripts/test_billboarding.gd" id="1_ravi7"]
 [ext_resource type="Script" uid="uid://jvafnwu6wliy" path="res://scripts/billboarding.gd" id="2_5rrt6"]
+[ext_resource type="Environment" uid="uid://cntlpekj5push" path="res://materials/world_environment_candy.tres" id="2_ajvqx"]
 [ext_resource type="Shader" uid="uid://b57cre0cvtyhd" path="res://shader/billboard.gdshader" id="3_cftx8"]
 [ext_resource type="Material" uid="uid://b6ncbnox5ob0h" path="res://materials/raster_texture.tres" id="3_ravi7"]
 [ext_resource type="Material" uid="uid://ddgxxuins00jd" path="res://materials/christmas_tree_mat.tres" id="7_ajvqx"]
 [ext_resource type="PackedScene" uid="uid://cs6jw26dvr3ym" path="res://prefabs/fp_player.tscn" id="7_ravi7"]
 [ext_resource type="PackedScene" uid="uid://1hhjb1caibmp" path="res://prefabs/christmas_tree.tscn" id="8_ajvqx"]
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_lv0s1"]
-panorama = ExtResource("1_lv0s1")
-
-[sub_resource type="Sky" id="Sky_ig1s7"]
-sky_material = SubResource("PanoramaSkyMaterial_lv0s1")
-
-[sub_resource type="Environment" id="Environment_ravi7"]
-background_mode = 2
-sky = SubResource("Sky_ig1s7")
-tonemap_mode = 2
-glow_enabled = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_1kaft"]
 size = Vector2(50, 50)
@@ -61,7 +49,7 @@ light_color = Color(1, 0.8494006, 0.7956167, 1)
 light_energy = 0.5
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="env"]
-environment = SubResource("Environment_ravi7")
+environment = ExtResource("2_ajvqx")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="env"]
 transform = Transform3D(0.136632, 0.75684506, -0.6391536, 0, 0.6452044, 0.7640101, 0.99062186, -0.10438822, 0.08815556, -3.7533355, 3.079902, 0)

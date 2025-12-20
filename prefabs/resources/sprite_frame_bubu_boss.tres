@@ -1,0 +1,63 @@
+[gd_resource type="SpriteFrames" load_steps=8 format=3 uid="uid://cd3pwhj0ua4m8"]
+
+[ext_resource type="Texture2D" uid="uid://b4a78dmcht2bu" path="res://art/boss_spritesheet900px.png" id="1_wh84c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_toria"]
+atlas = ExtResource("1_wh84c")
+region = Rect2(0, 900, 737, 900)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtcmb"]
+atlas = ExtResource("1_wh84c")
+region = Rect2(737, 900, 737, 900)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wh84c"]
+atlas = ExtResource("1_wh84c")
+region = Rect2(0, 0, 737, 900)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48ha0"]
+atlas = ExtResource("1_wh84c")
+region = Rect2(737, 0, 737, 900)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7cn1i"]
+atlas = ExtResource("1_wh84c")
+region = Rect2(0, 0, 737, 900)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mjbw7"]
+atlas = ExtResource("1_wh84c")
+region = Rect2(737, 0, 737, 900)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_toria")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wtcmb")
+}],
+"loop": true,
+"name": &"collect",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wh84c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_48ha0")
+}],
+"loop": true,
+"name": &"evil_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7cn1i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mjbw7")
+}],
+"loop": true,
+"name": &"normal_idle",
+"speed": 3.0
+}]

@@ -1,0 +1,26 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://d2splkrp2bkac"]
+
+[ext_resource type="Texture2D" uid="uid://co4pxamr7fjjb" path="res://art/bubu_miniboss600px_noshadow.png" id="1_7mryk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iombn"]
+atlas = ExtResource("1_7mryk")
+region = Rect2(0, 0, 426, 600)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iombn")
+}],
+"loop": true,
+"name": &"evil_idle",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iombn")
+}],
+"loop": true,
+"name": &"normal_idle",
+"speed": 2.0
+}]
