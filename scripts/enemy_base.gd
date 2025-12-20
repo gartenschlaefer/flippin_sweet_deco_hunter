@@ -189,9 +189,15 @@ func _weapon_interaction():
 		# get collision
 		var collision = get_slide_collision(i)
 
+		# get collider
+		var weapon_collider = collision.get_collider()
+
 		# skips
-		if collision.get_collider() == null: continue
+		if weapon_collider == null: continue
 		if not collision.get_collider().is_in_group('weapon_part'): continue
+
+		# emit hit signal
+		weapon_collider.emit_enemy_hit_signal()
 
 		# take damage
 		self.take_damage(collision)

@@ -1,5 +1,7 @@
-extends WeaponCollisionBase
-class_name WeaponCollisionWhip
+# --
+# weapon collision whip
+
+class_name WeaponCollisionWhip extends WeaponCollisionBase
 
 signal whip_crack
 

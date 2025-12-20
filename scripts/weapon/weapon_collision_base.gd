@@ -1,5 +1,7 @@
-extends CollisionShape3D
-class_name WeaponCollisionBase
+# --
+# collision base
+
+class_name WeaponCollisionBase extends RigidBody3D
 
 var is_active: bool = false
 

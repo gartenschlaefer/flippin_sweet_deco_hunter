@@ -25,19 +25,18 @@ stream_4/stream = ExtResource("8_s6s37")
 
 [node name="LicoriceWhip" type="Node3D" node_paths=PackedStringArray("whip_collision", "whip_tip_audio_player", "whip_mid_audio_player", "weapon_model", "weapon_physics")]
 script = ExtResource("1_ckfqr")
-whip_collision = NodePath("Physics/RigidBody3D9/CollisionShape3D")
+whip_collision = NodePath("Physics/RigidBody3D9")
 whip_tip_audio_player = NodePath("Physics/RigidBody3D9/AudioStreamPlayer3D")
 whip_mid_audio_player = NodePath("Physics/RigidBody3D5/AudioStreamPlayer3D")
 weapon_model = NodePath("Weapon_Mesh")
 weapon_physics = NodePath("Physics")
-cam_speed_while_attacking = 0.1
 
 [node name="Physics" type="Node3D" parent="." node_paths=PackedStringArray("weapon", "whip_tip", "whip_tip_collision")]
 script = ExtResource("2_ckfqr")
 weapon = NodePath("..")
 segment_root_path = NodePath(".")
 whip_tip = NodePath("RigidBody3D9")
-whip_tip_collision = NodePath("RigidBody3D9/CollisionShape3D")
+whip_tip_collision = NodePath("RigidBody3D9")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -118,11 +117,11 @@ shape = SubResource("CapsuleShape3D_xkyhg")
 [node name="RigidBody3D9" type="RigidBody3D" parent="Physics" groups=["weapon_part"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
 mass = 0.1
+script = ExtResource("3_63b3e")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D9"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 shape = SubResource("CapsuleShape3D_xkyhg")
-script = ExtResource("3_63b3e")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Physics/RigidBody3D9"]
 stream = SubResource("AudioStreamRandomizer_5ae1t")
