@@ -17,7 +17,7 @@ var drag_rot := Vector3.ZERO
 
 @export var drag_pos_sensitivity := 0.1
 @export var drag_rot_sensitivity := 0.003
-@export var cam_speed_while_attacking := 1.0
+@export var cam_speed_while_attacking := 0.1
 const DRAG_ROT_MAX_Z := deg_to_rad(90.0)
 const DRAG_ROT_MAX_X := deg_to_rad(45.0)
 
@@ -141,7 +141,7 @@ func _apply_drag(mouse_delta: Vector2):
 
 	if raw_x == clamped_x:
 		drag_pos.y += mouse_delta.y * drag_pos_sensitivity
-	drag_rot.x = abs(clamped_x)
+	drag_rot.x = clamped_x
 
 	set_weapon_pose(drag_pos, drag_rot)
 
@@ -179,6 +179,7 @@ func set_weapon_pose(pos: Vector3, rot: Vector3):
 	var qz := Quaternion(Vector3.BACK, rot.z)
 
 	transform.basis = Basis(qz * qy * qx)
+
 
 '
 func get_current_pos() -> Vector3:
