@@ -1,0 +1,14 @@
+# --
+# todo
+
+- send present to wax
+- itch io project page
+- player health?
+- win/loose
+- credits
+- title -> camera slide?
+- stats tweak
+- bubu stealing!
+- add nav mesh
+- help letters
+- animations
