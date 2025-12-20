@@ -1,0 +1,11 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=4 format=3 uid="uid://bnc5gpemt7xip"]
+
+[ext_resource type="AudioStream" uid="uid://cnwq5qoarp5bg" path="res://audio/sfx/bubaba/dying/Bubaba_Dying 01.mp3" id="1_6si27"]
+[ext_resource type="AudioStream" uid="uid://cey2qb7tp5ytb" path="res://audio/sfx/bubaba/dying/Bubaba_Dying 02.mp3" id="2_yhe4p"]
+[ext_resource type="AudioStream" uid="uid://crcjcrtomaukp" path="res://audio/sfx/bubaba/dying/Bubaba_Dying 03.mp3" id="3_nlagg"]
+
+[resource]
+streams_count = 3
+stream_0/stream = ExtResource("1_6si27")
+stream_1/stream = ExtResource("2_yhe4p")
+stream_2/stream = ExtResource("3_nlagg")

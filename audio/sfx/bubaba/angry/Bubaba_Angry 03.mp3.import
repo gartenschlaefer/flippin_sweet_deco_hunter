@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://3ixqmxue6rsf"
+path="res://.godot/imported/Bubaba_Angry 03.mp3-ec721485f96726e605904f89e78e0f70.mp3str"
+
+[deps]
+
+source_file="res://audio/sfx/bubaba/angry/Bubaba_Angry 03.mp3"
+dest_files=["res://.godot/imported/Bubaba_Angry 03.mp3-ec721485f96726e605904f89e78e0f70.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

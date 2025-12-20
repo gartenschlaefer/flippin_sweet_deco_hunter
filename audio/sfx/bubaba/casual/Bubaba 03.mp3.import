@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d3xpgix5k7x8m"
+path="res://.godot/imported/Bubaba 03.mp3-2b24c7c41ea31b537951b1b166c0a902.mp3str"
+
+[deps]
+
+source_file="res://audio/sfx/bubaba/casual/Bubaba 03.mp3"
+dest_files=["res://.godot/imported/Bubaba 03.mp3-2b24c7c41ea31b537951b1b166c0a902.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

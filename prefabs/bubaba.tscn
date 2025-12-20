@@ -1,8 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://w1uqnm545mln"]
+[gd_scene load_steps=16 format=3 uid="uid://w1uqnm545mln"]
 
 [ext_resource type="Script" uid="uid://dxmws7ppsutq5" path="res://scripts/bubaba.gd" id="1_t54ac"]
 [ext_resource type="Resource" uid="uid://dotdbourxw403" path="res://prefabs/resources/bubaba0.tres" id="2_j32dc"]
+[ext_resource type="AudioStream" uid="uid://d31b3m3c658ih" path="res://audio/sfx/bubaba/casual/bubaba_casual.tres" id="3_4l2d8"]
 [ext_resource type="SpriteFrames" uid="uid://bwipi1uukg12o" path="res://prefabs/resources/sprite_frames_bubaba.tres" id="3_j32dc"]
+[ext_resource type="AudioStream" uid="uid://fni0dtvhjfqa" path="res://audio/sfx/bubaba/angry/bubaba_angry.tres" id="4_2aruk"]
+[ext_resource type="AudioStream" uid="uid://bw7l6gght24lo" path="res://audio/sfx/bubaba/hurt/bubaba_hurt.tres" id="5_2aruk"]
+[ext_resource type="AudioStream" uid="uid://bnc5gpemt7xip" path="res://audio/sfx/bubaba/dying/bubaba_dying.tres" id="5_6qiti"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_akbmi"]
 viewport_path = NodePath("anim/healthbar_view/SubViewport")
@@ -133,6 +137,10 @@ collision_mask = 23
 script = ExtResource("1_t54ac")
 sticker_resource = ExtResource("2_j32dc")
 health_bar = NodePath("anim/healthbar_view/SubViewport/healthbar_panel/healthbar")
+casual_calls = ExtResource("3_4l2d8")
+angry_calls = ExtResource("4_2aruk")
+hurt_calls = ExtResource("5_2aruk")
+death_screams = ExtResource("5_6qiti")
 
 [node name="anim" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(0.601, 0, 0, 0, 0.609, 0, 0, 0, 0.60400003, 0, 2, 0)
@@ -187,3 +195,9 @@ debug_enabled = true
 libraries = {
 &"": SubResource("AnimationLibrary_eb3nx")
 }
+
+[node name="audio_player" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_4l2d8")
+
+[node name="call_timer" type="Timer" parent="."]
+wait_time = 5.0

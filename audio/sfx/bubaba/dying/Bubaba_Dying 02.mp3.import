@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cey2qb7tp5ytb"
+path="res://.godot/imported/Bubaba_Dying 02.mp3-5ce9ba9a3043eda609d7d93e94992716.mp3str"
+
+[deps]
+
+source_file="res://audio/sfx/bubaba/dying/Bubaba_Dying 02.mp3"
+dest_files=["res://.godot/imported/Bubaba_Dying 02.mp3-5ce9ba9a3043eda609d7d93e94992716.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

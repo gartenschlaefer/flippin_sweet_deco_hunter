@@ -1,0 +1,15 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=6 format=3 uid="uid://fni0dtvhjfqa"]
+
+[ext_resource type="AudioStream" uid="uid://drugdll4efp0g" path="res://audio/sfx/bubaba/angry/Bubaba_Angry 01.mp3" id="1_pgvgf"]
+[ext_resource type="AudioStream" uid="uid://k6cpm8t73nr3" path="res://audio/sfx/bubaba/angry/Bubaba_Angry 02.mp3" id="2_o87qp"]
+[ext_resource type="AudioStream" uid="uid://3ixqmxue6rsf" path="res://audio/sfx/bubaba/angry/Bubaba_Angry 03.mp3" id="3_f44rr"]
+[ext_resource type="AudioStream" uid="uid://cete1lvk1av5w" path="res://audio/sfx/bubaba/angry/Bubaba_Angry 04.mp3" id="4_cc61p"]
+[ext_resource type="AudioStream" uid="uid://bhcxud773w5f5" path="res://audio/sfx/bubaba/angry/Bubaba_Angry 05.mp3" id="5_0mrpj"]
+
+[resource]
+streams_count = 5
+stream_0/stream = ExtResource("1_pgvgf")
+stream_1/stream = ExtResource("2_o87qp")
+stream_2/stream = ExtResource("3_f44rr")
+stream_3/stream = ExtResource("4_cc61p")
+stream_4/stream = ExtResource("5_0mrpj")

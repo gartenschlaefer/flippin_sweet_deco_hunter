@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://djegmityva2tc"
+path="res://.godot/imported/Bubaba_Hurt 04.mp3-73f8f1f8288a49149515fcb775026b29.mp3str"
+
+[deps]
+
+source_file="res://audio/sfx/bubaba/hurt/Bubaba_Hurt 04.mp3"
+dest_files=["res://.godot/imported/Bubaba_Hurt 04.mp3-73f8f1f8288a49149515fcb775026b29.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

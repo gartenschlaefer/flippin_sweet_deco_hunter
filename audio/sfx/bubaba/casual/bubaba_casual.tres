@@ -1,0 +1,17 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=7 format=3 uid="uid://d31b3m3c658ih"]
+
+[ext_resource type="AudioStream" uid="uid://dkg8hffcnq26w" path="res://audio/sfx/bubaba/casual/Bubaba 01.mp3" id="1_g6sk7"]
+[ext_resource type="AudioStream" uid="uid://d3xpgix5k7x8m" path="res://audio/sfx/bubaba/casual/Bubaba 03.mp3" id="2_5hhfg"]
+[ext_resource type="AudioStream" uid="uid://poyrua8fy112" path="res://audio/sfx/bubaba/casual/Bubaba 04.mp3" id="3_4pcjb"]
+[ext_resource type="AudioStream" uid="uid://miif0b8kyb0i" path="res://audio/sfx/bubaba/casual/Bubaba 05.mp3" id="4_maqgd"]
+[ext_resource type="AudioStream" uid="uid://doer25at38tsx" path="res://audio/sfx/bubaba/casual/Bubaba 06.mp3" id="5_k50yt"]
+[ext_resource type="AudioStream" uid="uid://t7l30g3b648b" path="res://audio/sfx/bubaba/casual/Bubaba 02.mp3" id="6_fx88a"]
+
+[resource]
+streams_count = 6
+stream_0/stream = ExtResource("1_g6sk7")
+stream_1/stream = ExtResource("2_5hhfg")
+stream_2/stream = ExtResource("3_4pcjb")
+stream_3/stream = ExtResource("4_maqgd")
+stream_4/stream = ExtResource("5_k50yt")
+stream_5/stream = ExtResource("6_fx88a")

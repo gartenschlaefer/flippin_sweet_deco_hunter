@@ -1,0 +1,13 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=5 format=3 uid="uid://bw7l6gght24lo"]
+
+[ext_resource type="AudioStream" uid="uid://drdexjhwe183i" path="res://audio/sfx/bubaba/hurt/Bubaba_Hurt 01.mp3" id="1_w6wha"]
+[ext_resource type="AudioStream" uid="uid://hiedxjl1l1yu" path="res://audio/sfx/bubaba/hurt/Bubaba_Hurt 02.mp3" id="2_ynof6"]
+[ext_resource type="AudioStream" uid="uid://coyvhfgqypsq1" path="res://audio/sfx/bubaba/hurt/Bubaba_Hurt 03.mp3" id="3_dxvjr"]
+[ext_resource type="AudioStream" uid="uid://djegmityva2tc" path="res://audio/sfx/bubaba/hurt/Bubaba_Hurt 04.mp3" id="4_650w5"]
+
+[resource]
+streams_count = 4
+stream_0/stream = ExtResource("1_w6wha")
+stream_1/stream = ExtResource("2_ynof6")
+stream_2/stream = ExtResource("3_dxvjr")
+stream_3/stream = ExtResource("4_650w5")

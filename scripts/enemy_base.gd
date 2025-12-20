@@ -20,6 +20,13 @@ class_name EnemyBase extends CharacterBody3D
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim: AnimatedSprite3D = $anim
 @onready var anim_player: AnimationPlayer = $anim_player
+@onready var audio_player: AudioStreamPlayer3D = $audio_player
+@onready var call_timer: Timer = $call_timer
+
+@export var casual_calls: AudioStreamRandomizer
+@export var angry_calls: AudioStreamRandomizer
+@export var hurt_calls: AudioStreamRandomizer
+@export var death_screams: AudioStreamRandomizer
 
 # vars
 var player_in_sight = false
@@ -27,6 +34,7 @@ var target_in_reach = false
 var hit_cooldown_timer: Timer = null
 var is_ko = false
 var home_location: Vector3
+var is_angry := false
 
 # animations
 const anim_normal_idle = &"normal_idle"
@@ -53,6 +61,10 @@ func _ready():
 	# connect signals
 	nav_agent.velocity_computed.connect(self._on_navigation_agent_3d_velocity_computed)
 	nav_agent.navigation_finished.connect(self._on_navigation_agent_3d_navigation_finished)
+	
+	if call_timer:
+		call_timer.timeout.connect(_on_call_timer_timeout)
+		_schedule_casual_call()
 
 
 func _physics_process(_delta):
@@ -96,7 +108,9 @@ func take_damage(collision: KinematicCollision3D):
 	health_bar.set_value(health_bar.get_value() - whip_damage_to_be_taken)
 
 	# not dead yet
-	if health_bar.get_value(): return
+	if health_bar.get_value(): 
+		_play_call(hurt_calls)
+		return
 	self.bubaba_set_to_ko()
 
 
@@ -107,6 +121,8 @@ func bubaba_set_to_ko():
 
 	# end velocity
 	nav_agent.set_velocity(Vector3.ZERO)
+	_play_call(death_screams)
+
 
 	# todo:
 	# set ko anim
@@ -178,6 +194,8 @@ func _player_interaction():
 
 	# to normal
 	anim.set_animation(anim_evil_idle)
+	is_angry = true
+	_play_call(angry_calls) 
 	target_in_reach = true
 
 
@@ -225,3 +243,31 @@ func _on_navigation_agent_3d_navigation_finished() -> void:
 	if not player_in_sight: 
 		self.go_on_another_expedition()
 		return
+
+
+func _play_call(stream: AudioStreamRandomizer):
+	if audio_player and stream:
+		#audio_player.stop()
+		audio_player.stream = stream
+		audio_player.play()
+
+
+func _schedule_casual_call():
+	if is_ko:
+		return
+	call_timer.start(randf_range(5.0, 15.0))
+
+
+func _schedule_angry_call():
+	if is_ko:
+		return
+	call_timer.start(randf_range(5.0, 10.0))
+
+
+func _on_call_timer_timeout():
+	if is_angry:
+		_play_call(angry_calls)
+		_schedule_angry_call()
+	else:
+		_play_call(casual_calls)
+		_schedule_casual_call()
