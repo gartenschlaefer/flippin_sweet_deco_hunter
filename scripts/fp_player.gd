@@ -23,8 +23,9 @@ const lerp_speed = 7.0
 @export var weapon_inventory: WeaponInventory
 
 func _ready():
-	weapon_inventory.add_weapon(preload("res://prefabs/weapon/weapon_whip.tscn"))
 	weapon_inventory.add_weapon(preload("res://prefabs/weapon/weapon_cotton_candy.tscn"))
+	weapon_inventory.add_weapon(preload("res://prefabs/weapon/weapon_lollipop.tscn"))
+	weapon_inventory.add_weapon(preload("res://prefabs/weapon/weapon_whip.tscn"))
 	
 	weapon_socket.inventory = weapon_inventory
 	weapon_socket.try_auto_equip()
