@@ -214,6 +214,9 @@ func _weapon_interaction():
 		if weapon_collider == null: continue
 		if not collision.get_collider().is_in_group('weapon_part'): continue
 
+		# is weapon active
+		if not weapon_collider.get_is_active(): continue
+
 		# emit hit signal
 		weapon_collider.emit_enemy_hit_signal()
 

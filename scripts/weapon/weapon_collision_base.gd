@@ -13,3 +13,5 @@ func emit_enemy_hit_signal():
 
 func emit_start_swing_signal():
 	swing_start.emit()
+
+func get_is_active(): return is_active
