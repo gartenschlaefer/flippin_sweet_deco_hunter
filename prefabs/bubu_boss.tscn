@@ -202,7 +202,6 @@ shape = SubResource("CapsuleShape3D_itrur")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 avoidance_enabled = true
-debug_enabled = true
 
 [node name="anim_player" type="AnimationPlayer" parent="."]
 libraries = {
