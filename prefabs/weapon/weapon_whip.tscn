@@ -26,20 +26,20 @@ stream_4/stream = ExtResource("8_s6s37")
 [sub_resource type="SphereShape3D" id="SphereShape3D_knkmy"]
 radius = 0.36604002
 
-[node name="LicoriceWhip" type="Node3D" node_paths=PackedStringArray("whip_tip_audio_player", "weapon_audio_player", "weapon_model", "weapon_physics", "weapon_collision")]
+[node name="LicoriceWhip" type="Node3D" node_paths=PackedStringArray("whip_tip_audio_player", "weapon_model", "weapon_physics", "weapon_collision", "weapon_audio_player")]
 script = ExtResource("1_ckfqr")
+whip_tip_audio_player = NodePath("Physics/RigidBody3D9/AudioStreamPlayer3D")
 whip_crack_light_energy = null
 whip_crack_light_range = null
 whip_crack_light_fade_frames = null
 whip_crack_light_color = null
-drag_pos_sensitivity = null
-drag_rot_sensitivity = null
-cam_speed_while_attacking = null
-whip_tip_audio_player = NodePath("Physics/RigidBody3D9/AudioStreamPlayer3D")
-weapon_audio_player = NodePath("Physics/RigidBody3D5/AudioStreamPlayer3D")
 weapon_model = NodePath("Weapon_Mesh")
 weapon_physics = NodePath("Physics")
 weapon_collision = NodePath("Physics/RigidBody3D9")
+weapon_audio_player = NodePath("Physics/RigidBody3D5/AudioStreamPlayer3D")
+drag_pos_sensitivity = null
+drag_rot_sensitivity = null
+cam_speed_while_attacking = null
 
 [node name="Physics" type="Node3D" parent="." node_paths=PackedStringArray("whip_tip", "body", "weapon_collision", "weapon")]
 script = ExtResource("2_ckfqr")
@@ -134,7 +134,7 @@ shape = SubResource("CapsuleShape3D_xkyhg")
 [node name="RigidBody3D9" type="RigidBody3D" parent="Physics" node_paths=PackedStringArray("enemy_colission", "weapon") groups=["weapon_part"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
 collision_layer = 16
-collision_mask = 7
+collision_mask = 5
 mass = 0.1
 script = ExtResource("3_63b3e")
 enemy_colission = NodePath("enemy_collision")
@@ -143,6 +143,7 @@ weapon = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D9"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0121046305, 0.099999905, 0)
 shape = SubResource("CapsuleShape3D_xkyhg")
+disabled = true
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Physics/RigidBody3D9"]
 stream = SubResource("AudioStreamRandomizer_5ae1t")
