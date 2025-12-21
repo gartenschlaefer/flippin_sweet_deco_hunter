@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://w1uqnm545mln"]
+[gd_scene load_steps=18 format=3 uid="uid://w1uqnm545mln"]
 
 [ext_resource type="Script" uid="uid://dxmws7ppsutq5" path="res://scripts/bubaba.gd" id="1_t54ac"]
 [ext_resource type="Resource" uid="uid://dotdbourxw403" path="res://prefabs/resources/bubaba0.tres" id="2_j32dc"]
@@ -34,6 +34,7 @@ corner_radius_bottom_left = 5
 expand_margin_bottom = 2.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_akbmi"]
+height = 3.0
 
 [sub_resource type="Animation" id="Animation_j32dc"]
 length = 0.001
@@ -102,7 +103,7 @@ tracks/2/enabled = true
 tracks/2/path = NodePath("anim")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/keys = PackedFloat32Array(0, 1, 0, 2, 0, 0.5, 1, 0, 2, 0, 0.96666664, 1, 0, 5, 0, 2, 1, 0, 1.2570512, 0)
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 2, 0, 0.5, 1, 0, 2, 0, 0.96666664, 1, 0, 4, 0, 2, 1, 0, 2, 0)
 tracks/3/type = "method"
 tracks/3/imported = false
 tracks/3/enabled = true
@@ -131,6 +132,15 @@ _data = {
 &"death": SubResource("Animation_t54ac")
 }
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2aruk"]
+depth_draw_mode = 1
+albedo_color = Color(1, 0.72114, 0.98490804, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2aruk"]
+top_radius = 0.4
+bottom_radius = 0.4
+height = 0.1
+
 [node name="bubaba" type="CharacterBody3D" node_paths=PackedStringArray("health_bar") groups=["enemies"]]
 collision_layer = 4
 collision_mask = 23
@@ -144,7 +154,9 @@ death_screams = ExtResource("5_6qiti")
 
 [node name="anim" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-billboard = 1
+sorting_offset = 1.0
+pixel_size = 0.009
+billboard = 2
 sprite_frames = ExtResource("3_j32dc")
 animation = &"normal_idle"
 autoplay = "normal_idle"
@@ -184,7 +196,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_eb3nx")
 value = 50.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 shape = SubResource("CapsuleShape3D_akbmi")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
@@ -200,3 +212,9 @@ stream = ExtResource("3_4l2d8")
 
 [node name="call_timer" type="Timer" parent="."]
 wait_time = 5.0
+
+[node name="shadow_mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+material_override = SubResource("StandardMaterial3D_2aruk")
+mesh = SubResource("CylinderMesh_2aruk")
+skeleton = NodePath("../CollisionShape3D")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dxsppsj63dtfa"]
+[gd_scene load_steps=18 format=3 uid="uid://dxsppsj63dtfa"]
 
 [ext_resource type="Script" uid="uid://dj15cotxd0f80" path="res://scripts/bubu_boss.gd" id="1_5txs5"]
 [ext_resource type="SpriteFrames" uid="uid://cd3pwhj0ua4m8" path="res://prefabs/resources/sprite_frame_bubu_boss.tres" id="2_5txs5"]
@@ -133,6 +133,15 @@ _data = {
 &"death": SubResource("Animation_t54ac")
 }
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_itrur"]
+depth_draw_mode = 1
+albedo_color = Color(1, 0.72114, 0.98490804, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_iuy41"]
+top_radius = 1.0
+bottom_radius = 1.0
+height = 0.1
+
 [node name="bubu_boss" type="CharacterBody3D" node_paths=PackedStringArray("health_bar") groups=["enemies"]]
 collision_layer = 4
 collision_mask = 23
@@ -149,8 +158,9 @@ death_screams = ExtResource("6_j7ijy")
 
 [node name="anim" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+visible = false
 pixel_size = 0.007
-billboard = 1
+billboard = 2
 sprite_frames = ExtResource("2_5txs5")
 animation = &"collect"
 
@@ -206,3 +216,9 @@ pitch_scale = 0.5
 
 [node name="call_timer" type="Timer" parent="."]
 wait_time = 5.0
+
+[node name="shadow_mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+material_override = SubResource("StandardMaterial3D_itrur")
+mesh = SubResource("CylinderMesh_iuy41")
+skeleton = NodePath("../CollisionShape3D")
