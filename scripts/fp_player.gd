@@ -14,10 +14,10 @@ var is_in_tree_hanging_range = false
 var christmas_tree_object = null
 
 # const
-const speed = 5.0
-const jump_velocity = 4.5
+const speed = 7.0
+const jump_velocity = 15.0
 const mouse_sensitivity = 0.005
-const lerp_speed = 7.0
+const lerp_speed = 10.0
 
 @onready var weapon_socket: WeaponSocket = $head/Camera3D/WeaponSocket
 @export var weapon_inventory: WeaponInventory
@@ -67,7 +67,7 @@ func _input(event):
 func _physics_process(delta: float) -> void:
 
 	# add the gravity
-	if not is_on_floor(): velocity += get_gravity() * delta
+	if not is_on_floor(): velocity += get_gravity() * 2.0 * delta
 
 	# jump
 	if Input.is_action_just_pressed("jump") and is_on_floor(): velocity.y = jump_velocity

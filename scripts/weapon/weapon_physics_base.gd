@@ -1,7 +1,6 @@
 extends Node3D
 class_name WeaponPhysicsBase
 
-@onready var cam : Camera3D = get_viewport().get_camera_3d()
 @export var speed_threshold := 1.0
 @export var velocity_smooth := 10.0
 @export var body : RigidBody3D
@@ -43,7 +42,7 @@ func _init_physics():
 
 func calculate_if_swing(active_body: RigidBody3D,delta : float):
 	var curr_body_pos := active_body.global_position
-	var curr_cam_pos := cam.global_position
+	var curr_cam_pos := get_viewport().get_camera_3d().global_position
 
 	var body_vel := (curr_body_pos - last_body_pos) / delta
 	var cam_vel := (curr_cam_pos - last_cam_pos) / delta

@@ -52,6 +52,7 @@ func _physics_process(delta):
 		is_attacking = true
 
 	if Engine.get_physics_frames() & 1 == 0:
+		var cam = get_viewport().get_camera_3d()
 		if weapon_collision.is_active:
 			cam_to_body_dir = (body.global_position - cam.global_position).normalized()
 			process_attack(cam_to_body_dir)

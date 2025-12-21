@@ -10,9 +10,8 @@ extends Node
 @onready var win_canvas = $win_canvas
 
 # preloads
-#var deco_hunt_world: PackedScene = preload("uid://c3a8qsy3ho4yp")
-#var deco_hunt_world: PackedScene = preload("uid://cwg5hosq5uu7g")
-var deco_hunt_world: PackedScene = preload("uid://boleh4e6kmmso")
+var deco_hunt_world: PackedScene = preload("uid://cwg5hosq5uu7g")
+var title_world: PackedScene = preload("uid://boleh4e6kmmso")
 
 # playing flag
 var is_playing:bool = false
@@ -37,25 +36,28 @@ func _ready() -> void:
 	# is playing
 	is_playing = false
 
-	# todo: 
-	# start game over title
+	# load title world
+	self.load_title_world()
 
-	# directly start game
-	self.start_new_game()
+
+func load_title_world():
+
+	# swipe world
+	world.add_child(title_world.instantiate())
 
 
 func _process(_delta: float) -> void:
 
 	# leave cases
-	# if credits_canvas.visible: return
+	if credits_canvas.visible: return
 
 	# escape
 	if Input.is_action_just_pressed("escape"):
 
-		# # end if title canvas
-		# if title_canvas.visible: 
-		# 	get_tree().quit()
-		# 	return
+		# end if title canvas
+		if title_canvas.visible: 
+			get_tree().quit()
+			return
 
 		# title
 		if not is_playing: return
@@ -85,8 +87,8 @@ func start_new_game():
 	# 	actual_world.win_the_memory_world.connect(self.win_the_game)
 
 	# title
-	# title_canvas.hide()
-	# credits_canvas.hide()
+	title_canvas.hide()
+	credits_canvas.hide()
 
 	# is playing
 	is_playing = true
@@ -102,15 +104,13 @@ func clean_world():
 
 
 func title_to_credits():
-	pass
-	# credits_canvas.show()
-	# title_canvas.hide()
+	credits_canvas.show()
+	title_canvas.hide()
 
 
 func credits_to_title():
-	pass
-	# title_canvas.show()
-	# credits_canvas.hide()
+	title_canvas.show()
+	credits_canvas.hide()
 
 
 func game_to_title():
@@ -118,13 +118,12 @@ func game_to_title():
 	# clean_world
 	self.clean_world()
 
-	# canvas
-	# title_canvas.show()
-	# credits_canvas.hide()
+	# title world
+	self.load_title_world()
 
-	# todo:
-	# add title
-	self.end_game()
+	# canvas
+	title_canvas.show()
+	credits_canvas.hide()
 
 
 func win_the_game():

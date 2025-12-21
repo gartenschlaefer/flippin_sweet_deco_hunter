@@ -19,6 +19,11 @@ config/icon="uid://qk7v22a5wifd"
 
 Enums="*res://scripts/enums.gd"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+
 [global_group]
 
 enemies="all enemies"
