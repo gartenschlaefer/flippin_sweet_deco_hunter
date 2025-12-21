@@ -158,7 +158,6 @@ death_screams = ExtResource("6_j7ijy")
 
 [node name="anim" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
-visible = false
 pixel_size = 0.007
 billboard = 2
 sprite_frames = ExtResource("2_5txs5")

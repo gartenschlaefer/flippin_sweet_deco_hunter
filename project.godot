@@ -24,7 +24,6 @@ Enums="*res://scripts/enums.gd"
 enemies="all enemies"
 weapon_part=""
 christmas_tree=""
-player=""
 
 [input]
 
