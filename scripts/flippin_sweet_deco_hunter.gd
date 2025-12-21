@@ -10,7 +10,9 @@ extends Node
 @onready var win_canvas = $win_canvas
 
 # preloads
-var deco_hunt_world: PackedScene = preload("uid://c3a8qsy3ho4yp")
+#var deco_hunt_world: PackedScene = preload("uid://c3a8qsy3ho4yp")
+#var deco_hunt_world: PackedScene = preload("uid://cwg5hosq5uu7g")
+var deco_hunt_world: PackedScene = preload("uid://boleh4e6kmmso")
 
 # playing flag
 var is_playing:bool = false

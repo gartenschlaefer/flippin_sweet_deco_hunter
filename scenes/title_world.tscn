@@ -1,0 +1,107 @@
+[gd_scene load_steps=14 format=3 uid="uid://boleh4e6kmmso"]
+
+[ext_resource type="Texture2D" uid="uid://1oooiuf5iung" path="res://art/sky.exr" id="1_kucp7"]
+[ext_resource type="PackedScene" uid="uid://cli7h7phc1jqi" path="res://scenes/donut.tscn" id="2_wh80b"]
+[ext_resource type="PackedScene" uid="uid://cge5ol25fqrex" path="res://scenes/ocean.tscn" id="3_v2r5f"]
+[ext_resource type="PackedScene" uid="uid://bnkpm7r6rq7fb" path="res://scenes/candyislands.tscn" id="4_ucwi1"]
+[ext_resource type="PackedScene" uid="uid://1hhjb1caibmp" path="res://prefabs/christmas_tree.tscn" id="5_1d6eo"]
+[ext_resource type="Script" uid="uid://cfwq5ahckyxcu" path="res://scripts/camera_slide.gd" id="6_wh80b"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_38idu"]
+panorama = ExtResource("1_kucp7")
+
+[sub_resource type="Sky" id="Sky_o3kro"]
+sky_material = SubResource("PanoramaSkyMaterial_38idu")
+
+[sub_resource type="Environment" id="Environment_5b2dn"]
+background_mode = 2
+background_energy_multiplier = 0.96
+sky = SubResource("Sky_o3kro")
+ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 2
+
+[sub_resource type="Curve3D" id="Curve3D_v2r5f"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, -100, 0, 0, 0, 100, 50, 0, 100, 0, 0, 0, 0, 0, 0, 66.88862, 100, 0, 0, 100, 0, 0, -10, -100, 50, 0, -100, 0, 0, 10, 0, 0, 0, 64.94493, -100),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="Animation" id="Animation_wh80b"]
+resource_name = "marker_movement"
+length = 15.0
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0.03333333, 1, 0, 30, 0, 6.633333, 1, -100, 75, 0, 15, 1, 0, 30, 0)
+
+[sub_resource type="Animation" id="Animation_v2r5f"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 50, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ucwi1"]
+_data = {
+&"RESET": SubResource("Animation_v2r5f"),
+&"marker_movement": SubResource("Animation_wh80b")
+}
+
+[node name="TitleWorld" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5b2dn")
+
+[node name="donut" parent="." instance=ExtResource("2_wh80b")]
+transform = Transform3D(0.99999994, 2.9802322e-08, 7.450581e-09, 0, 0.9999999, 1.4901161e-08, 1.4901161e-08, 0, 0.9999999, -4.7683716e-07, 11.7268715, -4.7683716e-07)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.96666026, 0.07728188, 0.24412192, -0.24694899, 0.029278785, 0.96858597, 0.067706496, -0.9965792, 0.04738739, 0.36515093, 74.9321, -0.16069603)
+light_energy = 0.677
+shadow_enabled = true
+shadow_opacity = 0.41
+shadow_blur = 1.583
+sky_mode = 1
+
+[node name="Ocean" parent="." instance=ExtResource("3_v2r5f")]
+transform = Transform3D(11.7, 0, 0, 0, 11.7, 0, 0, 0, 11.7, 0.044311523, -2.9431725, -0.01373291)
+
+[node name="candyislands" parent="." instance=ExtResource("4_ucwi1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 492.64862, 0, 668.17944)
+
+[node name="christmas_tree" parent="." instance=ExtResource("5_1d6eo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0842943, 0)
+
+[node name="camera_slide" type="Path3D" parent="." node_paths=PackedStringArray("target_object", "target_anim_player")]
+curve = SubResource("Curve3D_v2r5f")
+script = ExtResource("6_wh80b")
+slide_time = 15.0
+target_object = NodePath("../target_marker")
+target_anim_player = NodePath("../anim_player")
+
+[node name="path_follow" type="PathFollow3D" parent="camera_slide"]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.99999905, 0, 0, 0, 0.9999991, 100, 50, 0)
+rotation_mode = 0
+
+[node name="camera_stand" type="Node3D" parent="camera_slide/path_follow"]
+
+[node name="camera" type="Camera3D" parent="camera_slide/path_follow/camera_stand"]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="target_marker" type="Marker3D" parent="."]
+transform = Transform3D(0.99999994, 2.9802322e-08, 7.450581e-09, 0, 0.9999999, 1.4901161e-08, 1.4901161e-08, 0, 0.9999999, 0, 50, 0)
+
+[node name="anim_player" type="AnimationPlayer" parent="."]
+root_node = NodePath("../target_marker")
+libraries = {
+&"": SubResource("AnimationLibrary_ucwi1")
+}
