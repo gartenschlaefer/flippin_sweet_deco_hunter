@@ -11,10 +11,10 @@ func _physics_process(delta):
 	if weapon and weapon.state == weapon.State.ATTACKING:
 		is_attacking = true
 
-	if is_attacking:
-		if weapon_collision.is_active:
-			process_attack()
-		else:
+	if weapon_collision.is_active:
+		process_attack()
+	else:
+		if is_attacking:
 			calculate_if_swing(body,delta)
 
 

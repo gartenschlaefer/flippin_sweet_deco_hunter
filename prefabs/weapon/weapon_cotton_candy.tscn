@@ -29,10 +29,11 @@ body = NodePath("RigidBody3D")
 weapon_collision = NodePath("RigidBody3D")
 weapon = NodePath("..")
 
-[node name="RigidBody3D" type="RigidBody3D" parent="Physics"]
+[node name="RigidBody3D" type="RigidBody3D" parent="Physics" node_paths=PackedStringArray("weapon") groups=["weapon_part"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.82129264, 0)
 freeze = true
 script = ExtResource("3_vkjvi")
+weapon = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.079757094, 0)

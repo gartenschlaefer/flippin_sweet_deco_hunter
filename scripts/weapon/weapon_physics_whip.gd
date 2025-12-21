@@ -52,12 +52,13 @@ func _physics_process(delta):
 		is_attacking = true
 
 	if Engine.get_physics_frames() & 1 == 0:
-		if is_attacking:
+		if weapon_collision.is_active:
+			cam_to_body_dir = (body.global_position - cam.global_position).normalized()
+			process_attack(cam_to_body_dir)
+		elif is_attacking:
+			calculate_if_swing(body,delta)
 			if weapon_collision.is_active:
 				cam_to_body_dir = (body.global_position - cam.global_position).normalized()
-				process_attack(cam_to_body_dir)
-			else:
-				calculate_if_swing(segs[0],delta)
 	else:
 		stabilize_chain_angles()
 		apply_bone_pose()
