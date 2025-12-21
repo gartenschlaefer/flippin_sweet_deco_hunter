@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://w1uqnm545mln" path="res://prefabs/bubaba.tscn" id="8_v17wk"]
 [ext_resource type="PackedScene" uid="uid://dxsppsj63dtfa" path="res://prefabs/bubu_boss.tscn" id="11_68lcm"]
 [ext_resource type="PackedScene" uid="uid://c7kbpfu4dyb3s" path="res://prefabs/bubu_mini.tscn" id="12_vysvs"]
-[ext_resource type="AudioStream" uid="uid://cthw7r05eo576" path="res://audio/blundering-buffoons-matt-stewart-evans-main-version-36165-02-00.mp3" id="13_vysvs"]
+[ext_resource type="AudioStream" uid="uid://fwtwh4ot4iqn" path="res://audio/background.mp3" id="13_vysvs"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_d2h07"]
 panorama = ExtResource("1_d103j")
