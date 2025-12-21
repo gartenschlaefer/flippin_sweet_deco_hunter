@@ -1,8 +1,8 @@
 extends Node3D
 class_name WeaponBase
 
-enum State { IDLE, ATTACKING, COMBO_WAIT, RETURNING }
-enum AttackMode { COMBO, DRAG }
+enum State { IDLE, ATTACKING, RETURNING }
+enum AttackMode { DRAG }
 
 var attack_mode : AttackMode = AttackMode.DRAG
 var drag_active := false
@@ -15,6 +15,8 @@ var drag_rot := Vector3.ZERO
 @onready var weapon_mesh: MeshInstance3D
 @onready var weapon_skeleton: Skeleton3D
 
+@export var weapon_collision : WeaponCollisionBase
+@export var weapon_audio_player: AudioStreamPlayer3D
 @export var drag_pos_sensitivity := 0.1
 @export var drag_rot_sensitivity := 0.003
 @export var cam_speed_while_attacking := 0.1
@@ -51,6 +53,8 @@ func _ready():
 	weapon_skeleton= _find_skeleton(weapon_model)
 	weapon_physics.setup(weapon_skeleton,weapon_mesh)
 	init_weapon()
+	weapon_collision.enemy_hit.connect(_on_enemy_hit)
+	weapon_collision.swing_start.connect(_on_swing_start)
 
 
 func handle_mouse_motion(delta: Vector2):
@@ -64,47 +68,17 @@ func handle_mouse_motion(delta: Vector2):
 func _physics_process(delta): 
 	if weapon_physics and weapon_physics.is_ready:
 		weapon_physics._physics_process(delta)
-	if attack_mode == AttackMode.COMBO:
-		match state: 
-			State.ATTACKING: 
-				attack_time += delta / attack_duration 
-				_apply_step(clamp(attack_time , 0.0, 1.0)) 
-				if attack_time  >= 1.0: 
-					state = State.COMBO_WAIT 
-					combo_timer = combo_timeout 
-			State.COMBO_WAIT: 
-				combo_timer -= delta 
-				if combo_timer <= 0.0: 
-					_start_return() 
-			State.RETURNING: 
-				attack_time  += delta / attack_duration 
-				_apply_step(clamp(attack_time , 0.0, 1.0)) 
-				if attack_time  >= 1.0: 
-					state = State.IDLE 
-					combo_index = 0
 
 
 func attack_pressed():
 	match attack_mode:
-		AttackMode.COMBO:
-			attack()
 		AttackMode.DRAG:
 			_start_drag()
-			attack()
 
 
 func attack_released():
 	if attack_mode == AttackMode.DRAG:
 		_end_drag()
-
-
-func attack():
-	if attack_mode == AttackMode.COMBO:
-		if state == State.IDLE:
-			_start_attack(get_attack_pose(0))
-		elif state == State.COMBO_WAIT:
-			combo_index += 1
-			_start_attack(get_attack_pose(combo_index))
 
 
 func _start_attack(pose):
@@ -154,22 +128,6 @@ func _start_return():
 	attack_time  = 0.0
 	state = State.RETURNING
 
-func _apply_step(delta):
-	var speed := 1.0 / attack_duration
-	var step : float = speed * delta
-
-	var curr_pos := current_pos
-	var curr_rot := current_rot
-
-	var target_pos := curr_pos.move_toward(end_pos, step * curr_pos.distance_to(end_pos))
-	var target_rot := Vector3(
-		rotate_toward(curr_rot.x, end_rot.x, delta),
-		rotate_toward(curr_rot.y, end_rot.y, delta),
-		rotate_toward(curr_rot.z, end_rot.z, delta)
-	)
-
-	set_weapon_pose(target_pos, target_rot)
-
 
 func set_weapon_pose(pos: Vector3, rot: Vector3):
 	transform.origin = pos * POS_SCALE
@@ -179,43 +137,6 @@ func set_weapon_pose(pos: Vector3, rot: Vector3):
 	var qz := Quaternion(Vector3.BACK, rot.z)
 
 	transform.basis = Basis(qz * qy * qx)
-
-
-'
-func get_current_pos() -> Vector3:
-	return Vector3(
-		transform.origin.x / POS_SCALE,
-		transform.origin.y / POS_SCALE,
-		transform.origin.z / POS_SCALE
-	)'
-
-func get_attack_pose(index: int):
-	match index:
-		0:
-			return {
-				"pos": Vector3(-40, 0, -15),
-				"rot": Vector3(deg_to_rad(-10),deg_to_rad(15),deg_to_rad(45))
-				}
-		1:
-			return {
-				"pos": Vector3(-10, 0, 5),
-				"rot": Vector3(deg_to_rad(-45),deg_to_rad(-15),deg_to_rad(-35))
-			}
-		2:
-			return {
-				"pos": Vector3(-20, 0, 30),
-				"rot": Vector3(deg_to_rad(35),deg_to_rad(15),deg_to_rad(15))
-			}
-		3:
-			return {
-				"pos": Vector3(-20, 0, 0),
-				"rot": Vector3(deg_to_rad(-30),0,deg_to_rad(15))
-			}
-		_:
-			return {
-				"pos": idle_pos,
-				"rot": idle_rot
-			}
 
 
 func rotate_toward(curr: float, target: float, max_delta: float) -> float:
@@ -251,8 +172,12 @@ func get_camera_speed_multiplier() -> float:
 func init_weapon():
 	pass
 
-func notify_hit(_enemy):
+func _on_enemy_hit():
 	pass
+
+func _on_swing_start():
+	if weapon_audio_player:
+		weapon_audio_player.play()
 
 func on_equip(_player):
 	pass

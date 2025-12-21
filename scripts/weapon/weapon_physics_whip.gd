@@ -1,39 +1,20 @@
 extends WeaponPhysicsBase
 class_name WeaponPhysicsWhip
 
-@onready var cam : Camera3D = get_viewport().get_camera_3d()
 @onready var segment_root: Node = get_node_or_null(segment_root_path)
-@export var weapon: WeaponBase
 @export var segment_root_path: NodePath
 @export var whip_tip : RigidBody3D
-@export var whip_tip_collision : WeaponCollisionWhip
 @export var physics_allow_segment_x: float = 15.0
 @export var physics_allow_segment_y: float = 15.0
 @export var physics_allow_segment_z: float = 15.0
 @export var chain_stiffness := 1.0
-@export var snap_duration := 0.5
-@export var swing_duration := 1.0
-@export var speed_threshold := 2.0
 @export var force_min := 2.0
 @export var force_max := 5.0
 @export var force_gain := 1.2
-@export var force_frames := 40
-@export var velocity_smooth := 10.0
 
-var force_frames_left := 0
-var burst_armed := true
 var rest_lengths: Array[float] = []
 var rest_dirs_local: Array[Vector3] = []
-
-var snap_time := 0.0
 var force_value := 0.0
-var is_swinging : bool
-var is_snapping : bool
-var last_root_pos : Vector3
-var last_cam_pos : Vector3
-var cam_to_root_dir := Vector3.ZERO
-
-var filtered_velocity := Vector3.ZERO
 
 
 func _init_physics():
@@ -56,10 +37,8 @@ func _init_physics():
 	
 	for i in range(1, segs.size()):
 		_create_joint(segs[i], segs[i - 1])
-
-	segs[0].freeze = true
 	
-	last_root_pos = segs[0].global_position
+	last_body_pos = body.global_position
 	last_cam_pos = get_viewport().get_camera_3d().global_position
 
 	_cache_rest_data()
@@ -67,17 +46,18 @@ func _init_physics():
 
 
 func _physics_process(delta):
-	var apply_force := false
+	var is_attacking := false
 
 	if weapon and weapon.state == weapon.State.ATTACKING:
-		apply_force = true
+		is_attacking = true
 
 	if Engine.get_physics_frames() & 1 == 0:
-		if apply_force:
-			if whip_tip_collision.is_active:
-				apply_centrifugal_force(cam_to_root_dir)
+		if is_attacking:
+			if weapon_collision.is_active:
+				cam_to_body_dir = (body.global_position - cam.global_position).normalized()
+				process_attack(cam_to_body_dir)
 			else:
-				calculate_whip_speed(delta)
+				calculate_if_swing(segs[0],delta)
 	else:
 		stabilize_chain_angles()
 		apply_bone_pose()
@@ -209,59 +189,12 @@ func _create_joint(a: RigidBody3D, b: RigidBody3D) -> Generic6DOFJoint3D:
 	return j
 
 
-func start_swing():
-	snap_time = swing_duration
-	is_swinging = true
-	is_snapping = false
-
-
-func trigger_snapback():
-	snap_time = snap_duration
-	is_swinging = false
-	is_snapping = true
-
-
-func apply_centrifugal_force(direction):
-	if force_frames_left > 0:
+func process_attack(direction):
+	if active_swing_frames_left > 0:
 		force_value = force_min
-		force_frames_left -= 1
+		active_swing_frames_left -= 1
 	else:
-		whip_tip_collision.is_active = false
-		whip_tip_collision.emit_whip_crack_signal()
+		weapon_collision.is_active = false
+		weapon_collision.emit_whip_crack_signal()
 		return
 	whip_tip.apply_force(direction * force_value*segs.size())
-
-
-func calculate_whip_speed(delta: float):
-	if segs.size() < 2:
-		return
-
-	var root := segs[0]
-
-	var curr_root_pos := root.global_position
-	var curr_cam_pos := cam.global_position
-
-	var root_vel := (curr_root_pos - last_root_pos) / delta
-	var cam_vel := (curr_cam_pos - last_cam_pos) / delta
-
-	last_root_pos = curr_root_pos
-	last_cam_pos = curr_cam_pos
-
-	var velocity := root_vel - cam_vel
-
-	filtered_velocity = filtered_velocity.lerp(
-		velocity,
-		clamp(delta * velocity_smooth, 0.0, 1.0)
-	)
-
-	cam_to_root_dir = (root.global_position - curr_cam_pos).normalized()
-	var whip_root_speed : float = max(0.0,velocity.dot(cam_to_root_dir))
-
-	if whip_root_speed >= speed_threshold and not burst_armed:
-		burst_armed = true
-		force_frames_left = force_frames
-		whip_tip_collision.is_active = true
-		whip_tip_collision.emit_start_swing_signal()
-		
-	else:
-		burst_armed = false

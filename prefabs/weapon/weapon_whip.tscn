@@ -23,26 +23,35 @@ stream_2/stream = ExtResource("6_kxper")
 stream_3/stream = ExtResource("7_lsmc1")
 stream_4/stream = ExtResource("8_s6s37")
 
-[node name="LicoriceWhip" type="Node3D" node_paths=PackedStringArray("whip_collision", "whip_tip_audio_player", "whip_mid_audio_player", "weapon_model", "weapon_physics")]
+[node name="LicoriceWhip" type="Node3D" node_paths=PackedStringArray("whip_tip_audio_player", "weapon_audio_player", "weapon_model", "weapon_physics", "weapon_collision")]
 script = ExtResource("1_ckfqr")
-whip_collision = NodePath("Physics/RigidBody3D9")
 whip_tip_audio_player = NodePath("Physics/RigidBody3D9/AudioStreamPlayer3D")
-whip_mid_audio_player = NodePath("Physics/RigidBody3D5/AudioStreamPlayer3D")
+weapon_audio_player = NodePath("Physics/RigidBody3D5/AudioStreamPlayer3D")
+whip_crack_light_energy = null
+whip_crack_light_range = null
+whip_crack_light_fade_frames = null
+whip_crack_light_color = null
 weapon_model = NodePath("Weapon_Mesh")
 weapon_physics = NodePath("Physics")
+weapon_collision = NodePath("Physics/RigidBody3D9")
+drag_pos_sensitivity = null
+drag_rot_sensitivity = null
+cam_speed_while_attacking = null
 
-[node name="Physics" type="Node3D" parent="." node_paths=PackedStringArray("weapon", "whip_tip", "whip_tip_collision")]
+[node name="Physics" type="Node3D" parent="." node_paths=PackedStringArray("weapon", "whip_tip", "body", "weapon_collision")]
 script = ExtResource("2_ckfqr")
 weapon = NodePath("..")
 segment_root_path = NodePath(".")
 whip_tip = NodePath("RigidBody3D9")
-whip_tip_collision = NodePath("RigidBody3D9")
+body = NodePath("RigidBody3D")
+weapon_collision = NodePath("RigidBody3D9")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="Physics"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 collision_layer = 32
 collision_mask = 0
 mass = 0.1
+freeze = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)

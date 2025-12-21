@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bnnikenxrmsqy"
+path="res://.godot/imported/Lollipop_Swing 02.mp3-74e3e53a7c65f5454514f7108d21abca.mp3str"
+
+[deps]
+
+source_file="res://audio/sfx/lollipop_swing/Lollipop_Swing 02.mp3"
+dest_files=["res://.godot/imported/Lollipop_Swing 02.mp3-74e3e53a7c65f5454514f7108d21abca.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

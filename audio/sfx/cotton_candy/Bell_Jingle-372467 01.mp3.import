@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bloaoevi2mcq2"
+path="res://.godot/imported/Bell_Jingle-372467 01.mp3-008660aa5bd88b8d8c711bfbddd3baf2.mp3str"
+
+[deps]
+
+source_file="res://audio/sfx/cotton_candy/Bell_Jingle-372467 01.mp3"
+dest_files=["res://.godot/imported/Bell_Jingle-372467 01.mp3-008660aa5bd88b8d8c711bfbddd3baf2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,15 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=6 format=3 uid="uid://djpd403kgyk8t"]
+
+[ext_resource type="AudioStream" uid="uid://c5uaua1wfanxv" path="res://audio/sfx/lollipop_swing/Lollipop_Swing 01.mp3" id="1_gow2g"]
+[ext_resource type="AudioStream" uid="uid://bnnikenxrmsqy" path="res://audio/sfx/lollipop_swing/Lollipop_Swing 02.mp3" id="2_ur0gp"]
+[ext_resource type="AudioStream" uid="uid://bgmup0i8w2gst" path="res://audio/sfx/lollipop_swing/Lollipop_Swing 03.mp3" id="3_5gs0q"]
+[ext_resource type="AudioStream" uid="uid://om8f7iyl4sji" path="res://audio/sfx/lollipop_swing/Lollipop_Swing 04.mp3" id="4_2xjhk"]
+[ext_resource type="AudioStream" uid="uid://5sq0vwajn5v3" path="res://audio/sfx/lollipop_swing/Lollipop_Swing 05.mp3" id="5_fyg3s"]
+
+[resource]
+streams_count = 5
+stream_0/stream = ExtResource("1_gow2g")
+stream_1/stream = ExtResource("2_ur0gp")
+stream_2/stream = ExtResource("3_5gs0q")
+stream_3/stream = ExtResource("4_2xjhk")
+stream_4/stream = ExtResource("5_fyg3s")

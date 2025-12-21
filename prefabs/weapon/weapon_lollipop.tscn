@@ -1,30 +1,43 @@
-[gd_scene load_steps=5 format=3 uid="uid://cpodjhjctdgvy"]
+[gd_scene load_steps=7 format=3 uid="uid://cpodjhjctdgvy"]
 
 [ext_resource type="Script" uid="uid://c7ud4hvi316lo" path="res://scripts/weapon/weapon_base.gd" id="1_hki12"]
-[ext_resource type="Script" uid="uid://dith72yd2ycyp" path="res://scripts/weapon/weapon_physics_base.gd" id="2_hki12"]
+[ext_resource type="Script" uid="uid://v1c6spop1xh4" path="res://scripts/weapon/weapon_physics_lollipop.gd" id="2_1v4d8"]
+[ext_resource type="Script" uid="uid://kegqfa1fjhmv" path="res://scripts/weapon/weapon_collision_base.gd" id="3_4v5s8"]
 [ext_resource type="PackedScene" uid="uid://d1fdw6hw554n7" path="res://models/Lollipop.glb" id="3_hki12"]
+[ext_resource type="AudioStream" uid="uid://djpd403kgyk8t" path="res://audio/sfx/lollipop_swing/lollipop_swing.tres" id="4_1v4d8"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_4v5s8"]
 radius = 0.21594085
 
-[node name="WeaponCottonCandy" type="Node3D" node_paths=PackedStringArray("weapon_model", "weapon_physics")]
+[node name="WeaponLollipop" type="Node3D" node_paths=PackedStringArray("weapon_model", "weapon_physics", "weapon_collision", "weapon_audio_player")]
 transform = Transform3D(0.86006606, 0, -0.5101827, 0, 1, 0, 0.5101827, 0, 0.86006606, 0, 0, 0)
 script = ExtResource("1_hki12")
 weapon_model = NodePath("Lollipop")
 weapon_physics = NodePath("Physics")
-drag_pos_sensitivity = null
-drag_rot_sensitivity = null
-cam_speed_while_attacking = null
+weapon_collision = NodePath("Physics/RigidBody3D")
+weapon_audio_player = NodePath("Physics/RigidBody3D/AudioStreamPlayer3D")
 
-[node name="Physics" type="Node3D" parent="."]
-script = ExtResource("2_hki12")
+[node name="Physics" type="Node3D" parent="." node_paths=PackedStringArray("body", "weapon_collision", "weapon")]
+script = ExtResource("2_1v4d8")
+speed_threshold = 10.0
+body = NodePath("RigidBody3D")
+weapon_collision = NodePath("RigidBody3D")
+active_swing_frames = 60
+weapon = NodePath("..")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="Physics"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0977246, 0)
 freeze = true
+script = ExtResource("3_4v5s8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.09321, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0071338415, 0)
 shape = SubResource("SphereShape3D_4v5s8")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Physics/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.010754943, 0)
+stream = ExtResource("4_1v4d8")
+volume_db = -10.874
 
 [node name="Lollipop" parent="." instance=ExtResource("3_hki12")]
 

@@ -1,20 +1,16 @@
 extends WeaponPhysicsBase
 
-@export var wave_frames := 30
 @export var base_wave_speed := 0.0
 @export var max_wave_speed := 5.0
-@export var speed_threshold := 1.0
-@export var physics_root_path: NodePath
-@onready var physics_root: Node = get_node_or_null(physics_root_path)
+#@export var physics_root_path: NodePath
+#@onready var physics_root: Node = get_node_or_null(physics_root_path)
 
-var physics_body : RigidBody3D 
 var mat: ShaderMaterial
 var curr_root_pos : Vector3
 var last_root_pos : Vector3
 var curr_wave_speed : float
 var cached_velocity
 var smooth_dir: Vector3 = Vector3.ZERO
-var wave_frames_left := 0
 
 func _init_physics():
 	for i in range(mesh.mesh.get_surface_count()):
@@ -28,20 +24,17 @@ func _init_physics():
 	if mat == null:
 		push_error("No ShaderMaterial found on mesh surfaces")
 
-	for c in physics_root.get_children():
-		if c is RigidBody3D:
-			physics_body = c
-
-	last_root_pos = physics_body.global_position
 	is_ready = true
 
 
 func _physics_process(delta):
+	if active_swing_frames_left < 1:
+		calculate_if_swing(body,delta)
 	calculate_wave_effect(delta)
 
 
 func calculate_wave_effect(delta):
-	curr_root_pos = physics_body.global_position
+	curr_root_pos = body.global_position
 	var velocity: Vector3 = (curr_root_pos - last_root_pos) / delta
 	last_root_pos = curr_root_pos
 
@@ -54,18 +47,17 @@ func calculate_wave_effect(delta):
 			base_wave_speed,
 			max_wave_speed
 		)/10
-		wave_frames_left = wave_frames
-
-	elif wave_frames_left > 0:
-		wave_frames_left -= 1
+		active_swing_frames_left = active_swing_frames
 
 	var movement := Vector3.ZERO
 	var wave_speed := base_wave_speed
 
-	if wave_frames_left > 0:
-		movement = cached_velocity
-		wave_speed = curr_wave_speed
+	if active_swing_frames_left > 0:
+		active_swing_frames_left -= 1
+		movement = velocity
+		wave_speed = base_wave_speed
 	else:
+		weapon_collision.is_active = false
 		return
 		
 	var dir := movement

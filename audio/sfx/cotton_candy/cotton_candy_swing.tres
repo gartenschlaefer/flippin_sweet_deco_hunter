@@ -1,0 +1,27 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=12 format=3 uid="uid://oifmg74628ri"]
+
+[ext_resource type="AudioStream" uid="uid://bloaoevi2mcq2" path="res://audio/sfx/cotton_candy/Bell_Jingle-372467 01.mp3" id="1_tj05d"]
+[ext_resource type="AudioStream" uid="uid://ba4hriykgyqmm" path="res://audio/sfx/cotton_candy/Bell_Jingle-372467 02.mp3" id="2_64emi"]
+[ext_resource type="AudioStream" uid="uid://c7uqv56j2sir8" path="res://audio/sfx/cotton_candy/Bell_Jingle-372467 11.mp3" id="3_fcamt"]
+[ext_resource type="AudioStream" uid="uid://dtd3vbmxhuq2v" path="res://audio/sfx/cotton_candy/Bell_Jingle-372467 03.mp3" id="4_mm4hb"]
+[ext_resource type="AudioStream" uid="uid://cx3ae4l4bbe6a" path="res://audio/sfx/cotton_candy/Bell_Jingle-372467 04.mp3" id="5_e4js7"]
+[ext_resource type="AudioStream" uid="uid://cat6gw8ce5nab" path="res://audio/sfx/cotton_candy/Bell_Jingle-372467 05.mp3" id="6_6o038"]
+[ext_resource type="AudioStream" uid="uid://j4xsn3r3vw3b" path="res://audio/sfx/cotton_candy/Bell_Jingle-372467 06.mp3" id="7_1y0ft"]
+[ext_resource type="AudioStream" uid="uid://caa2xqo5xrixj" path="res://audio/sfx/cotton_candy/Bell_Jingle-372467 07.mp3" id="8_wmyqv"]
+[ext_resource type="AudioStream" uid="uid://dg7ke5qm2v1co" path="res://audio/sfx/cotton_candy/Bell_Jingle-372467 08.mp3" id="9_cco5h"]
+[ext_resource type="AudioStream" uid="uid://dnswttjj5hswr" path="res://audio/sfx/cotton_candy/Bell_Jingle-372467 09.mp3" id="10_ktghj"]
+[ext_resource type="AudioStream" uid="uid://ytndcyvrjxrw" path="res://audio/sfx/cotton_candy/Bell_Jingle-372467 10.mp3" id="11_tw2q5"]
+
+[resource]
+streams_count = 11
+stream_0/stream = ExtResource("1_tj05d")
+stream_1/stream = ExtResource("2_64emi")
+stream_2/stream = ExtResource("4_mm4hb")
+stream_3/stream = ExtResource("5_e4js7")
+stream_4/stream = ExtResource("6_6o038")
+stream_5/stream = ExtResource("7_1y0ft")
+stream_6/stream = ExtResource("8_wmyqv")
+stream_7/stream = ExtResource("9_cco5h")
+stream_8/stream = ExtResource("10_ktghj")
+stream_9/stream = ExtResource("11_tw2q5")
+stream_10/stream = ExtResource("3_fcamt")

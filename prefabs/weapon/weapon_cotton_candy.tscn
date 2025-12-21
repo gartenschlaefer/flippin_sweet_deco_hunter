@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdycnwnqcye7"]
+[gd_scene load_steps=8 format=3 uid="uid://cdycnwnqcye7"]
 
 [ext_resource type="Script" uid="uid://cm4j27gdrqbpy" path="res://scripts/weapon/weapon_cotton_candy.gd" id="1_tw0l1"]
 [ext_resource type="Script" uid="uid://cer0b371wty2s" path="res://scripts/weapon/weapon_physics_cotton_candy.gd" id="2_8wr3x"]
 [ext_resource type="PackedScene" uid="uid://d2s8gfyqcrpvm" path="res://models/Cotton Candy.glb" id="2_hy2u3"]
+[ext_resource type="Script" uid="uid://kegqfa1fjhmv" path="res://scripts/weapon/weapon_collision_base.gd" id="3_vkjvi"]
+[ext_resource type="AudioStream" uid="uid://oifmg74628ri" path="res://audio/sfx/cotton_candy/cotton_candy_swing.tres" id="4_sc6or"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8wr3x"]
 margin = 0.0
@@ -11,23 +13,35 @@ height = 0.7
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_vkjvi"]
 
-[node name="WeaponCottonCandy" type="Node3D" node_paths=PackedStringArray("weapon_model", "weapon_physics")]
+[node name="WeaponCottonCandy" type="Node3D" node_paths=PackedStringArray("weapon_model", "weapon_physics", "weapon_collision", "weapon_audio_player")]
 transform = Transform3D(0.86006606, 0, -0.5101827, 0, 1, 0, 0.5101827, 0, 0.86006606, 0, 0, 0)
 script = ExtResource("1_tw0l1")
 weapon_model = NodePath("Cotton Candy")
 weapon_physics = NodePath("Physics")
+weapon_collision = NodePath("Physics/RigidBody3D")
+weapon_audio_player = NodePath("Physics/RigidBody3D/AudioStreamPlayer3D")
 
-[node name="Physics" type="Node3D" parent="."]
+[node name="Physics" type="Node3D" parent="." node_paths=PackedStringArray("body", "weapon_collision", "weapon")]
 script = ExtResource("2_8wr3x")
 base_wave_speed = 10.0
-physics_root_path = NodePath(".")
+speed_threshold = 5.0
+body = NodePath("RigidBody3D")
+weapon_collision = NodePath("RigidBody3D")
+weapon = NodePath("..")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="Physics"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.82129264, 0)
 freeze = true
+script = ExtResource("3_vkjvi")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8914156, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.079757094, 0)
 shape = SubResource("CapsuleShape3D_8wr3x")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Physics/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0805223, 0)
+stream = ExtResource("4_sc6or")
+volume_db = -10.874
 
 [node name="Cotton Candy" parent="." instance=ExtResource("2_hy2u3")]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
