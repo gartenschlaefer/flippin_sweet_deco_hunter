@@ -15,6 +15,7 @@ var title_world: PackedScene = preload("uid://boleh4e6kmmso")
 
 # playing flag
 var is_playing:bool = false
+var load_world_flag = false
 
 
 func _ready() -> void:
@@ -43,14 +44,46 @@ func _ready() -> void:
 
 func load_title_world():
 
+	# clean
+	clean_world()
+
 	# swipe world
 	world.add_child(title_world.instantiate())
+
+	# load world flag
+	load_world_flag = true
+
+
+func load_donutworld():
+
+	# clean
+	clean_world()
+	
+	# swipe world
+	world.add_child(deco_hunt_world.instantiate())
+
+	# load world flag
+	load_world_flag = true
 
 
 func _process(_delta: float) -> void:
 
 	# leave cases
 	if credits_canvas.visible: return
+
+	# load world
+	if load_world_flag:
+
+		# get actual world
+		var actual_world = world.get_child(0)
+
+		# world setup
+		if actual_world is DonutWorld:
+			print("DonutWorld loaded!")
+			actual_world.win_donutworld_collected_all_bubabas.connect(self.game_to_win)
+
+		# reset flag
+		load_world_flag = false
 
 	# escape
 	if Input.is_action_just_pressed("escape"):
@@ -70,19 +103,8 @@ func _process(_delta: float) -> void:
 
 func start_new_game():
 
-	# clean
-	clean_world()
-	
-	# swipe world
-	world.add_child(deco_hunt_world.instantiate())
-
-	# get actual world
-	var actual_world = world.get_child(0)
-
-	# world setup
-	if actual_world is DonutWorld:
-		print("DonutWorld loaded!")
-		actual_world.win_donutworld_collected_all_bubabas.connect(self.game_to_win)
+	# load donutworld
+	self.load_donutworld()
 
 	# title
 	title_canvas.hide()
@@ -128,14 +150,21 @@ func game_to_title():
 
 
 func game_to_win():
+
+	# title world
+	load_title_world()
+
+	print("game to win")
 	win_canvas.show()
 	title_canvas.hide()
 	credits_canvas.hide()
+
 	# message
-	print("You won!")
+	print("You won flippin sweet deco hunter!")
 
 
 func win_to_title():
+	print("win to title")
 	title_canvas.show()
 	win_canvas.hide()
 	credits_canvas.hide()

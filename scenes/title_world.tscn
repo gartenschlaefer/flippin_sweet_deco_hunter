@@ -58,7 +58,7 @@ _data = {
 &"marker_movement": SubResource("Animation_wh80b")
 }
 
-[node name="TitleWorld" type="Node3D"]
+[node name="title_world" type="Node3D"]
 script = ExtResource("1_v2r5f")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

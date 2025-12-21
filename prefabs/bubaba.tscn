@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://dxmws7ppsutq5" path="res://scripts/bubaba.gd" id="1_t54ac"]
 [ext_resource type="Resource" uid="uid://dotdbourxw403" path="res://prefabs/resources/bubaba0.tres" id="2_j32dc"]
 [ext_resource type="AudioStream" uid="uid://d31b3m3c658ih" path="res://audio/sfx/bubaba/casual/bubaba_casual.tres" id="3_4l2d8"]
-[ext_resource type="SpriteFrames" uid="uid://bwipi1uukg12o" path="res://prefabs/resources/sprite_frames_bubaba.tres" id="3_j32dc"]
 [ext_resource type="AudioStream" uid="uid://fni0dtvhjfqa" path="res://audio/sfx/bubaba/angry/bubaba_angry.tres" id="4_2aruk"]
 [ext_resource type="AudioStream" uid="uid://bw7l6gght24lo" path="res://audio/sfx/bubaba/hurt/bubaba_hurt.tres" id="5_2aruk"]
 [ext_resource type="AudioStream" uid="uid://bnc5gpemt7xip" path="res://audio/sfx/bubaba/dying/bubaba_dying.tres" id="5_6qiti"]
+[ext_resource type="SpriteFrames" uid="uid://4bvsqlcd8d4f" path="res://prefabs/resources/sprite_frames_bubaba_origin.tres" id="7_2aruk"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_akbmi"]
 viewport_path = NodePath("anim/healthbar_view/SubViewport")
@@ -157,7 +157,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 sorting_offset = 1.0
 pixel_size = 0.009
 billboard = 2
-sprite_frames = ExtResource("3_j32dc")
+sprite_frames = ExtResource("7_2aruk")
 animation = &"normal_idle"
 autoplay = "normal_idle"
 

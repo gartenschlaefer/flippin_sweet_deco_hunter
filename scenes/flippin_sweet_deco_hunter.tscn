@@ -16,7 +16,6 @@ script = ExtResource("1_hoy5o")
 [node name="world" type="Node" parent="."]
 
 [node name="win_canvas" type="CanvasLayer" parent="."]
-visible = false
 script = ExtResource("2_7u0gn")
 
 [node name="background" type="ColorRect" parent="win_canvas"]
@@ -28,7 +27,6 @@ grow_vertical = 2
 color = Color(1, 0.83137256, 1, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="win_canvas"]
-visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -123,6 +121,7 @@ size_flags_stretch_ratio = 0.26
 texture_normal = ExtResource("8_fmgb7")
 
 [node name="title_canvas" type="CanvasLayer" parent="."]
+visible = false
 script = ExtResource("5_0up4q")
 
 [node name="MarginContainer" type="MarginContainer" parent="title_canvas"]

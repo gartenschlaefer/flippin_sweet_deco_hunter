@@ -1,0 +1,54 @@
+[gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://dtrcjxjmln1nv"]
+
+[ext_resource type="Texture2D" uid="uid://dkjbqyhqp2hla" path="res://art/sprite_bubaba_02_700x980.png" id="1_b2td7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6gls1"]
+atlas = ExtResource("1_b2td7")
+region = Rect2(1400, 980, 700, 980)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_162ve"]
+atlas = ExtResource("1_b2td7")
+region = Rect2(700, 980, 700, 980)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3gigd"]
+atlas = ExtResource("1_b2td7")
+region = Rect2(0, 0, 700, 980)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a7tke"]
+atlas = ExtResource("1_b2td7")
+region = Rect2(700, 0, 700, 980)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_clans"]
+atlas = ExtResource("1_b2td7")
+region = Rect2(1400, 0, 700, 980)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6gls1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_162ve")
+}],
+"loop": true,
+"name": &"evil_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3gigd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a7tke")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3gigd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_clans")
+}],
+"loop": true,
+"name": &"normal_idle",
+"speed": 2.0
+}]

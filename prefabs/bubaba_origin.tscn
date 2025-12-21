@@ -1,0 +1,220 @@
+[gd_scene load_steps=18 format=3 uid="uid://c2b3ngdcjhfx7"]
+
+[ext_resource type="Script" uid="uid://dxmws7ppsutq5" path="res://scripts/bubaba.gd" id="1_txoci"]
+[ext_resource type="Resource" uid="uid://dotdbourxw403" path="res://prefabs/resources/bubaba0.tres" id="2_l0mlh"]
+[ext_resource type="AudioStream" uid="uid://d31b3m3c658ih" path="res://audio/sfx/bubaba/casual/bubaba_casual.tres" id="3_7ojrg"]
+[ext_resource type="AudioStream" uid="uid://fni0dtvhjfqa" path="res://audio/sfx/bubaba/angry/bubaba_angry.tres" id="4_3n37q"]
+[ext_resource type="AudioStream" uid="uid://bw7l6gght24lo" path="res://audio/sfx/bubaba/hurt/bubaba_hurt.tres" id="5_odosd"]
+[ext_resource type="AudioStream" uid="uid://bnc5gpemt7xip" path="res://audio/sfx/bubaba/dying/bubaba_dying.tres" id="6_xkgrx"]
+[ext_resource type="SpriteFrames" uid="uid://4bvsqlcd8d4f" path="res://prefabs/resources/sprite_frames_bubaba_origin.tres" id="7_8o01m"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_akbmi"]
+viewport_path = NodePath("anim/healthbar_view/SubViewport")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t54ac"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j32dc"]
+bg_color = Color(0.50534403, 0.5053441, 0.50534403, 1)
+border_width_bottom = 2
+border_color = Color(0.38928655, 0.38928664, 0.3892865, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eb3nx"]
+bg_color = Color(0.90712297, 0.33714142, 0.7958806, 1)
+border_width_bottom = 2
+border_color = Color(0.4225831, 0.17671248, 0.3790326, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_bottom = 2.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_akbmi"]
+height = 3.0
+
+[sub_resource type="Animation" id="Animation_j32dc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("anim/healthbar_view:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("anim")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 2, 0)
+
+[sub_resource type="Animation" id="Animation_t54ac"]
+resource_name = "death"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("anim/healthbar_view:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("anim")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 2, 0, 0.5, 1, 0, 2, 0, 0.96666664, 1, 0, 4, 0, 2, 1, 0, 2, 0)
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"bubaba_is_dead"
+}]
+}
+tracks/4/type = "scale_3d"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("anim")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = PackedFloat32Array(0, 1, 1, 1, 1, 0.5, 1, 1, 1, 1, 1, 1, 0.7, 1.5, 1, 2, 1, 0.6, 0.6, 0.6)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eb3nx"]
+_data = {
+&"RESET": SubResource("Animation_j32dc"),
+&"death": SubResource("Animation_t54ac")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2aruk"]
+depth_draw_mode = 1
+albedo_color = Color(1, 0.72114, 0.98490804, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2aruk"]
+top_radius = 0.4
+bottom_radius = 0.4
+height = 0.1
+
+[node name="bubaba_origin" type="CharacterBody3D" node_paths=PackedStringArray("health_bar") groups=["enemies"]]
+collision_layer = 4
+collision_mask = 23
+script = ExtResource("1_txoci")
+sticker_resource = ExtResource("2_l0mlh")
+health_bar = NodePath("anim/healthbar_view/SubViewport/healthbar_panel/healthbar")
+casual_calls = ExtResource("3_7ojrg")
+angry_calls = ExtResource("4_3n37q")
+hurt_calls = ExtResource("5_odosd")
+death_screams = ExtResource("6_xkgrx")
+
+[node name="anim" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+sorting_offset = 1.0
+pixel_size = 0.009
+billboard = 2
+sprite_frames = ExtResource("7_8o01m")
+animation = &"normal_idle"
+autoplay = "normal_idle"
+
+[node name="healthbar_view" type="Sprite3D" parent="anim"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.44731, 0.1)
+billboard = 1
+texture = SubResource("ViewportTexture_akbmi")
+
+[node name="SubViewport" type="SubViewport" parent="anim/healthbar_view"]
+transparent_bg = true
+size = Vector2i(250, 40)
+
+[node name="healthbar_panel" type="Panel" parent="anim/healthbar_view/SubViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_t54ac")
+
+[node name="healthbar" type="ProgressBar" parent="anim/healthbar_view/SubViewport/healthbar_panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = -13.5
+offset_right = -8.0
+offset_bottom = 13.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_j32dc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_eb3nx")
+value = 50.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("CapsuleShape3D_akbmi")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+
+[node name="anim_player" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_eb3nx")
+}
+
+[node name="audio_player" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_7ojrg")
+
+[node name="call_timer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="shadow_mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+material_override = SubResource("StandardMaterial3D_2aruk")
+mesh = SubResource("CylinderMesh_2aruk")
+skeleton = NodePath("../CollisionShape3D")

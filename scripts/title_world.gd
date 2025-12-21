@@ -1,4 +1,7 @@
-extends Node3D
+# --
+# title world
+
+class_name TitleWorld extends Node3D
 
 func _ready():
 	

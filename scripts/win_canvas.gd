@@ -13,7 +13,8 @@ func _process(_delta:float) -> void:
 	if not self.visible: return
 
 	# escape and end game
-	if Input.is_action_just_pressed("escape") or Input.is_action_just_pressed("interact"): 
+	#if Input.is_action_just_pressed("escape") or Input.is_action_just_pressed("interact"): 
+	if Input.is_action_just_pressed("escape"):
 		end_win.emit()
 
 

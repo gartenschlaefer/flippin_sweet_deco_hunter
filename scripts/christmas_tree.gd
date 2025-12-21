@@ -3,7 +3,7 @@
 
 class_name ChristmasTree extends Node3D
 
-# singlas
+# singls
 signal win_hanged_all_bubaba_on_tree
 signal note_that_more_than_three_bubaba_sticker_on_tree
 
@@ -105,7 +105,6 @@ func hang_deco_on_tree(deco: StickerResource, player: Player):
 	if deco.get_sticker_type_is_bubaba(): check_win_condition_hanged_all_bubabas()
 
 
-
 func check_win_condition_hanged_all_bubabas():
 
 	# determine number of bubaba sticker
@@ -122,10 +121,12 @@ func check_win_condition_hanged_all_bubabas():
 
 	# won
 	win_hanged_all_bubaba_on_tree.emit()
-	print("You win the game!!!")
 
 
 func hang_button_update(player: Player):
+
+	# skip player -> debug
+	if player == null: return
 
 	# hang button
 	hang_button.set_texture(hang_button_textures[int(player.get_player_has_sticker())])

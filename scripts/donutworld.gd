@@ -7,20 +7,24 @@ class_name DonutWorld extends Node3D
 signal win_donutworld_collected_all_bubabas
 
 # refs
-var christmas_tree: ChristmasTree
+@export var christmas_tree: ChristmasTree
+
+# # demo
+# @export var demo_sticker_resource: StickerResource
+
+
+# func _input(_event):
+	
+# 	# demo
+# 	if Input.is_action_just_pressed("interact"): christmas_tree.hang_deco_on_tree(demo_sticker_resource, null)
 
 
 func _ready():
 	
-	# set christmas tree
-	christmas_tree = get_tree().get_first_node_in_group(&"christmas_tree")
-
-	# assertion in donutworld
-	assert(christmas_tree != null)
-
 	# connections
 	christmas_tree.win_hanged_all_bubaba_on_tree.connect(self.win_donutworld)
 
 
 func win_donutworld():
+	print("win donutworld!")
 	win_donutworld_collected_all_bubabas.emit()
