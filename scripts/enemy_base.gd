@@ -5,7 +5,8 @@ class_name EnemyBase extends CharacterBody3D
 
 # settings
 @export var speed = 2.0
-@export var target_reach_distance = 5.0
+@export var player_in_reach_range = 5.0
+@export var player_in_sight_range = 10.0
 @export var hit_cooldown_time = 2.0
 @export var full_health = 100
 @export var whip_damage_to_be_taken = 25
@@ -32,12 +33,14 @@ class_name EnemyBase extends CharacterBody3D
 @export var death_screams: AudioStreamRandomizer
 
 # vars
-var player_in_sight = false
-var target_in_reach = false
+var player_object: Player = null
+var is_player_in_sight = false
+var is_player_in_reach = false
 var hit_cooldown_timer: Timer = null
 var is_ko = false
 var home_location: Vector3
 var is_angry := false
+var actual_frame = 0
 
 # animations
 const anim_normal_idle = &"normal_idle"
@@ -48,9 +51,12 @@ const anim_player_death = &"death"
 func _ready():
 
 	# setup
-	target_in_reach = false
-	player_in_sight = false
+	is_player_in_reach = false
+	is_player_in_sight = false
 	is_ko = false
+
+	# performance
+	actual_frame = randi_range(0, 99)
 
 	# set init value
 	health_bar.set_max(full_health)
@@ -58,6 +64,9 @@ func _ready():
 
 	# set home location
 	home_location = self.global_transform.origin
+
+	# set player
+	player_object = get_tree().get_first_node_in_group(&"player")
 
 	# go exploring
 	self.go_on_another_expedition()
@@ -73,6 +82,10 @@ func _ready():
 
 func _physics_process(_delta):
 	
+	# frame update
+	actual_frame += 1
+	if actual_frame > 100: actual_frame = 0
+
 	# k.o.
 	if is_ko:
 
@@ -100,7 +113,6 @@ func take_damage(collision: KinematicCollision3D):
 	elif weapon is WeaponCottonCandy: damage = cotton_candy_damage_to_be_taken
 	elif weapon is WeaponLollipop: damage = lollipop_damage_to_be_taken
 
-	print(weapon)
 	# got hit -> hit cooldown timer
 	if not hit_cooldown_timer == null: return
 
@@ -187,28 +199,32 @@ func go_on_another_expedition():
 
 func _player_interaction():
 
+	# player in sight and reach conditions
+	if player_object != null and not actual_frame % 32:
 
-	# todo:
-	# only if player is in sight -> otherwise exploration
-	if not player_in_sight: return
+		# calculate distance to player
+		var distance_to_player = self.get_global_transform().origin.distance_to(player_object.get_global_transform().origin)
 
-	# player is in reach
-	if target_in_reach:
+		# player in sight
+		var _player_in_sight = true if player_in_sight_range > distance_to_player else false
+		var _player_in_reach = true if player_in_reach_range > distance_to_player else false
 
-		# skip
-		if nav_agent.distance_to_target() < target_reach_distance: return
-		target_in_reach = false
-		anim.set_animation(anim_normal_idle)
-		return
+		# change -> set anims and flags
+		if is_player_in_sight != _player_in_sight:
+			is_player_in_sight = _player_in_sight
+			anim.set_animation(anim_evil_idle if is_player_in_sight else anim_normal_idle)
 
-	# target in reach
-	if nav_agent.distance_to_target() >= target_reach_distance: return
+		# change -> set anims and flags
+		if is_player_in_reach != _player_in_reach:
+			is_player_in_reach = _player_in_reach
+			is_angry = true if is_player_in_reach else false
+			if is_player_in_reach: _play_call(angry_calls)
 
-	# to normal
-	anim.set_animation(anim_evil_idle)
-	is_angry = true
-	_play_call(angry_calls) 
-	target_in_reach = true
+	# player must be in sight for further steps
+	if not is_player_in_sight: return
+
+	# navigate to player
+	update_target_position(player_object.get_global_transform().origin)
 
 
 func _weapon_interaction():
@@ -255,7 +271,7 @@ func _on_hit_cooldown_timer_timeout():
 func _on_navigation_agent_3d_navigation_finished() -> void:
 
 	# this was just some exploration -> set new goal
-	if not player_in_sight: 
+	if not is_player_in_sight: 
 		self.go_on_another_expedition()
 		return
 

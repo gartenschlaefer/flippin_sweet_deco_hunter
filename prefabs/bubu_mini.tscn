@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://c7kbpfu4dyb3s"]
 
-[ext_resource type="Script" path="res://scripts/bubu_mini.gd" id="1_funu2"]
+[ext_resource type="Script" uid="uid://bjja321p3mq8x" path="res://scripts/bubu_mini.gd" id="1_funu2"]
 [ext_resource type="AudioStream" uid="uid://d31b3m3c658ih" path="res://audio/sfx/bubaba/casual/bubaba_casual.tres" id="2_f35sx"]
 [ext_resource type="SpriteFrames" uid="uid://d2splkrp2bkac" path="res://prefabs/resources/sprite_frames_bubu_mini.tres" id="2_funu2"]
 [ext_resource type="AudioStream" uid="uid://fni0dtvhjfqa" path="res://audio/sfx/bubaba/angry/bubaba_angry.tres" id="3_7mvxx"]
@@ -132,7 +132,7 @@ _data = {
 &"death": SubResource("Animation_t54ac")
 }
 
-[node name="bubu_mini" type="CharacterBody3D" node_paths=PackedStringArray("health_bar")]
+[node name="bubu_mini" type="CharacterBody3D" node_paths=PackedStringArray("health_bar") groups=["enemies"]]
 collision_layer = 4
 collision_mask = 23
 script = ExtResource("1_funu2")
