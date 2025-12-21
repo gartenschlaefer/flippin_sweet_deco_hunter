@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://boleh4e6kmmso"]
+[gd_scene load_steps=16 format=3 uid="uid://boleh4e6kmmso"]
 
 [ext_resource type="Texture2D" uid="uid://1oooiuf5iung" path="res://art/sky.exr" id="1_kucp7"]
 [ext_resource type="Script" uid="uid://blyi40oifgho0" path="res://scripts/title_world.gd" id="1_v2r5f"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bnkpm7r6rq7fb" path="res://scenes/candyislands.tscn" id="4_ucwi1"]
 [ext_resource type="PackedScene" uid="uid://1hhjb1caibmp" path="res://prefabs/christmas_tree.tscn" id="5_1d6eo"]
 [ext_resource type="Script" uid="uid://cfwq5ahckyxcu" path="res://scripts/camera_slide.gd" id="6_wh80b"]
+[ext_resource type="PackedScene" uid="uid://buoat1ofeue42" path="res://scenes/gifts.tscn" id="7_ucwi1"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_38idu"]
 panorama = ExtResource("1_kucp7")
@@ -80,9 +81,6 @@ transform = Transform3D(11.7, 0, 0, 0, 11.7, 0, 0, 0, 11.7, 0.044311523, -2.9431
 [node name="candyislands" parent="." instance=ExtResource("4_ucwi1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 492.64862, 0, 668.17944)
 
-[node name="christmas_tree" parent="." instance=ExtResource("5_1d6eo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0842943, 0)
-
 [node name="camera_slide" type="Path3D" parent="." node_paths=PackedStringArray("target_object", "target_anim_player")]
 curve = SubResource("Curve3D_v2r5f")
 script = ExtResource("6_wh80b")
@@ -107,3 +105,9 @@ root_node = NodePath("../target_marker")
 libraries = {
 &"": SubResource("AnimationLibrary_ucwi1")
 }
+
+[node name="gifts" parent="." instance=ExtResource("7_ucwi1")]
+transform = Transform3D(-0.8032958, -0.011838937, -0.5954625, -0.067018785, 0.99524915, 0.07062278, 0.5917975, 0.09663815, -0.80027294, -12.294834, 3.9582129, -1.4004803)
+
+[node name="christmas_tree" parent="." instance=ExtResource("5_1d6eo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.643178, 10.5158825, -10.4754)

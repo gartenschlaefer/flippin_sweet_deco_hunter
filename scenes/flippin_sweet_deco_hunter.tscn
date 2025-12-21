@@ -28,19 +28,46 @@ grow_vertical = 2
 color = Color(1, 0.83137256, 1, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="win_canvas"]
+visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -146.5
-offset_right = 146.5
-offset_bottom = 288.0
+offset_left = -459.0
+offset_right = 459.0
+offset_bottom = 442.0
 grow_horizontal = 2
 theme_override_constants/margin_top = 200
 
-[node name="Label" type="Label" parent="win_canvas/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="win_canvas/MarginContainer"]
 layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="win_canvas/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="win_canvas/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
 text = "You Won!"
 label_settings = ExtResource("3_pkej6")
+
+[node name="MarginContainer2" type="MarginContainer" parent="win_canvas/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 30
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="win_canvas/MarginContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="end_button" type="TextureButton" parent="win_canvas/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.26
+texture_normal = ExtResource("8_fmgb7")
 
 [node name="credits_canvas" type="CanvasLayer" parent="."]
 visible = false
@@ -54,21 +81,46 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 0.83137256, 1, 1)
 
-[node name="MarginContainer" type="MarginContainer" parent="credits_canvas"]
+[node name="MarginContainer2" type="MarginContainer" parent="credits_canvas"]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -109.5
-offset_right = 109.5
-offset_bottom = 379.0
+offset_left = -459.0
+offset_right = 459.0
+offset_bottom = 442.0
 grow_horizontal = 2
 theme_override_constants/margin_top = 200
 
-[node name="Label" type="Label" parent="credits_canvas/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="credits_canvas/MarginContainer2"]
 layout_mode = 2
-text = "Credits
-"
+
+[node name="MarginContainer" type="MarginContainer" parent="credits_canvas/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="credits_canvas/MarginContainer2/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Credits"
 label_settings = ExtResource("3_pkej6")
+
+[node name="MarginContainer2" type="MarginContainer" parent="credits_canvas/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 30
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="credits_canvas/MarginContainer2/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="end_button" type="TextureButton" parent="credits_canvas/MarginContainer2/VBoxContainer/MarginContainer2/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.26
+texture_normal = ExtResource("8_fmgb7")
 
 [node name="title_canvas" type="CanvasLayer" parent="."]
 script = ExtResource("5_0up4q")
@@ -155,6 +207,8 @@ texture_normal = ExtResource("8_fmgb7")
 [node name="MarginContainer" type="MarginContainer" parent="title_canvas/MarginContainer/VBoxContainer/MarginContainer2/HBoxContainer/VBoxContainer3"]
 layout_mode = 2
 
+[connection signal="button_up" from="win_canvas/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer3/end_button" to="win_canvas" method="_on_end_button_button_up"]
+[connection signal="button_up" from="credits_canvas/MarginContainer2/VBoxContainer/MarginContainer2/VBoxContainer3/end_button" to="credits_canvas" method="_on_exit_button_up"]
 [connection signal="button_up" from="title_canvas/MarginContainer/VBoxContainer/MarginContainer2/HBoxContainer/VBoxContainer/start_button" to="title_canvas" method="_on_start_button_up"]
 [connection signal="button_up" from="title_canvas/MarginContainer/VBoxContainer/MarginContainer2/HBoxContainer/VBoxContainer2/credit_button" to="title_canvas" method="_on_credits_button_up"]
 [connection signal="button_up" from="title_canvas/MarginContainer/VBoxContainer/MarginContainer2/HBoxContainer/VBoxContainer3/end_button" to="title_canvas" method="_on_end_button_up"]

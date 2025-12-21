@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StickerResource" load_steps=3 format=3 uid="uid://jbkupm11x1eo"]
+
+[ext_resource type="Script" uid="uid://cuf87m0wc3vuq" path="res://scripts/sticker_resource.gd" id="1_8cul3"]
+[ext_resource type="Texture2D" uid="uid://1onx4bda148v" path="res://art/licorice_whip400px.png" id="2_8cul3"]
+
+[resource]
+script = ExtResource("1_8cul3")
+sticker_type = 1
+uid = 66
+texture = ExtResource("2_8cul3")
+metadata/_custom_type_script = "uid://cuf87m0wc3vuq"
