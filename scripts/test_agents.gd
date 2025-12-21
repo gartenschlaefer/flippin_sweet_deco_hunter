@@ -10,8 +10,7 @@ func _input(event):
 
 	# end game
 	if event.is_action_pressed("escape"): get_tree().quit()
-	if event.is_action_pressed("interact"):
-		hang_a_bubaba_on_tree()
+	#if event.is_action_pressed("interact"): hang_a_bubaba_on_tree()
 
 
 func hang_a_bubaba_on_tree():

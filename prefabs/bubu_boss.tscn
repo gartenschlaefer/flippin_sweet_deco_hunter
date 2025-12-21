@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dxsppsj63dtfa"]
+[gd_scene load_steps=18 format=3 uid="uid://dxsppsj63dtfa"]
 
 [ext_resource type="Script" uid="uid://dj15cotxd0f80" path="res://scripts/bubu_boss.gd" id="1_5txs5"]
 [ext_resource type="SpriteFrames" uid="uid://cd3pwhj0ua4m8" path="res://prefabs/resources/sprite_frame_bubu_boss.tres" id="2_5txs5"]
@@ -35,7 +35,7 @@ expand_margin_bottom = 2.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_itrur"]
 radius = 1.5
-height = 7.0
+height = 5.0
 
 [sub_resource type="Animation" id="Animation_j32dc"]
 length = 0.001
@@ -69,7 +69,7 @@ tracks/2/enabled = true
 tracks/2/path = NodePath("anim")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/keys = PackedFloat32Array(0, 1, 0, 4.2, 0)
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 3, 0)
 
 [sub_resource type="Animation" id="Animation_t54ac"]
 resource_name = "death"
@@ -104,7 +104,7 @@ tracks/2/enabled = true
 tracks/2/path = NodePath("anim")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/keys = PackedFloat32Array(0, 1, 0, 4.2, 0, 0.5, 1, 0, 4.2, 0, 0.96666664, 1, 0, 7.2, 0, 2, 1, 0, 2.6, 0)
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 3, 0, 0.5, 1, 0, 3, 0, 0.96666664, 1, 0, 7.2, 0, 2, 1, 0, 2, 0)
 tracks/3/type = "method"
 tracks/3/imported = false
 tracks/3/enabled = true
@@ -133,10 +133,22 @@ _data = {
 &"death": SubResource("Animation_t54ac")
 }
 
-[node name="bubu_boss" type="CharacterBody3D" node_paths=PackedStringArray("health_bar")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_itrur"]
+depth_draw_mode = 1
+albedo_color = Color(1, 0.72114, 0.98490804, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_iuy41"]
+top_radius = 1.0
+bottom_radius = 1.0
+height = 0.1
+
+[node name="bubu_boss" type="CharacterBody3D" node_paths=PackedStringArray("health_bar") groups=["enemies"]]
 collision_layer = 4
 collision_mask = 23
 script = ExtResource("1_5txs5")
+whip_damage_to_be_taken = 10
+lollipop_damage_to_be_taken = 5
+cotton_candy_damage_to_be_taken = 1
 sticker_resource = ExtResource("2_laa38")
 health_bar = NodePath("anim/healthbar_view/SubViewport/healthbar_panel/healthbar")
 casual_calls = ExtResource("4_cugf8")
@@ -145,13 +157,14 @@ hurt_calls = ExtResource("5_iuy41")
 death_screams = ExtResource("6_j7ijy")
 
 [node name="anim" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2, 0)
-billboard = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+pixel_size = 0.007
+billboard = 2
 sprite_frames = ExtResource("2_5txs5")
 animation = &"collect"
 
 [node name="healthbar_view" type="Sprite3D" parent="anim"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.6418848, 0.1)
 billboard = 1
 texture = SubResource("ViewportTexture_laa38")
 
@@ -184,7 +197,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_2v5fk")
 value = 50.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 shape = SubResource("CapsuleShape3D_itrur")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
@@ -202,3 +215,9 @@ pitch_scale = 0.5
 
 [node name="call_timer" type="Timer" parent="."]
 wait_time = 5.0
+
+[node name="shadow_mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+material_override = SubResource("StandardMaterial3D_itrur")
+mesh = SubResource("CylinderMesh_iuy41")
+skeleton = NodePath("../CollisionShape3D")

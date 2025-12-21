@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dlxk2mjb8m07y"]
+[gd_scene load_steps=15 format=3 uid="uid://dlxk2mjb8m07y"]
 
 [ext_resource type="Script" uid="uid://cdi01uar4a1mt" path="res://scripts/test_agents.gd" id="1_07se8"]
 [ext_resource type="Resource" uid="uid://dotdbourxw403" path="res://prefabs/resources/bubaba0.tres" id="2_pm018"]
@@ -24,41 +24,6 @@ size = Vector2(100, 100)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_pm018"]
 data = PackedVector3Array(50, 0, 50, -50, 0, 50, 50, 0, -50, -50, 0, 50, -50, 0, -50, 50, 0, -50)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ac5ne"]
-albedo_color = Color(0.46666667, 0.41960785, 1, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_5rrt6"]
-
-[sub_resource type="Animation" id="Animation_0ihmi"]
-length = 0.001
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0.5, 0)
-
-[sub_resource type="Animation" id="Animation_5334d"]
-resource_name = "move_cube"
-length = 10.0
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0.5, 0, 1.0333333, 1, 0, 0.5, 4.4346404, 3.0333333, 1, -5.08438, 1.604068, -5.093565, 6.0333333, 1, 5.7379303, 4.095164, -9.601345, 9.5, 1, 0, 0.5, 0)
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_0ihmi"]
-_data = {
-&"RESET": SubResource("Animation_0ihmi"),
-&"move_cube": SubResource("Animation_5334d")
-}
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_wbnfk"]
-data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [node name="test_agents" type="Node3D"]
 script = ExtResource("1_07se8")
@@ -89,22 +54,6 @@ mesh = SubResource("PlaneMesh_1kaft")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/static_objects"]
 shape = SubResource("ConcavePolygonShape3D_pm018")
-
-[node name="moving_cube" type="MeshInstance3D" parent="NavigationRegion3D/static_objects"]
-transform = Transform3D(0.7631084, 0, -0.6462705, 0, 1, 0, 0.6462705, 0, 0.7631084, 0, 0.5, 0)
-material_override = SubResource("StandardMaterial3D_ac5ne")
-mesh = SubResource("BoxMesh_5rrt6")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="NavigationRegion3D/static_objects/moving_cube"]
-libraries = {
-&"": SubResource("AnimationLibrary_0ihmi")
-}
-autoplay = "move_cube"
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/static_objects/moving_cube"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/static_objects/moving_cube/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_wbnfk")
 
 [node name="bubaba" parent="." instance=ExtResource("4_pm018")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.57778, 0.08557606, 0)

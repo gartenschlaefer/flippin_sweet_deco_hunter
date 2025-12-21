@@ -11,7 +11,7 @@ radius = 0.21594085
 
 [node name="WeaponLollipop" type="Node3D" node_paths=PackedStringArray("weapon_model", "weapon_physics", "weapon_collision", "weapon_audio_player")]
 transform = Transform3D(0.86006606, 0, -0.5101827, 0, 1, 0, 0.5101827, 0, 0.86006606, 0, 0, 0)
-script = ExtResource("1_hki12")
+script = ExtResource("1_4v5s8")
 weapon_model = NodePath("Lollipop")
 weapon_physics = NodePath("Physics")
 weapon_collision = NodePath("Physics/RigidBody3D")
@@ -25,10 +25,12 @@ weapon_collision = NodePath("RigidBody3D")
 active_swing_frames = 60
 weapon = NodePath("..")
 
-[node name="RigidBody3D" type="RigidBody3D" parent="Physics"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0977246, 0)
+[node name="RigidBody3D" type="RigidBody3D" parent="Physics" node_paths=PackedStringArray("weapon") groups=["weapon_part"]]
+collision_layer = 16
+collision_mask = 5
 freeze = true
 script = ExtResource("3_4v5s8")
+weapon = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0071338415, 0)
