@@ -78,5 +78,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32.401203, -64.85001)
 [node name="bubaba7" parent="bubabas" instance=ExtResource("8_v17wk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.8525, 37.74959, 81.87077)
 
+[node name="bonus_bubaba" parent="bubabas" instance=ExtResource("8_v17wk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 490.01498, 10.207413, 662.518)
+
 [node name="killzone" parent="." instance=ExtResource("3_g1vmp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.210445, 0)
