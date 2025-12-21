@@ -4,7 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://bgfil1sy75ohg" path="res://audio/sfx/pickup.wav" id="2_3p3cs"]
 [ext_resource type="Script" uid="uid://cer0b371wty2s" path="res://scripts/weapon/weapon_physics_cotton_candy.gd" id="2_8wr3x"]
 [ext_resource type="PackedScene" uid="uid://d2s8gfyqcrpvm" path="res://models/Cotton Candy.glb" id="2_hy2u3"]
-[ext_resource type="Script" uid="uid://rvjrduso0yj5" path="res://scripts/weapon/weapon_collision_cotton_candy.gd" id="3_sc6or"]
+[ext_resource type="Script" uid="uid://kegqfa1fjhmv" path="res://scripts/weapon/weapon_collision_base.gd" id="3_vkjvi"]
 [ext_resource type="AudioStream" uid="uid://oifmg74628ri" path="res://audio/sfx/cotton_candy/cotton_candy_swing.tres" id="4_sc6or"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8wr3x"]
@@ -34,7 +34,7 @@ weapon = NodePath("..")
 [node name="RigidBody3D" type="RigidBody3D" parent="Physics" node_paths=PackedStringArray("weapon") groups=["weapon_part"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.82129264, 0)
 freeze = true
-script = ExtResource("3_sc6or")
+script = ExtResource("3_vkjvi")
 weapon = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D"]
