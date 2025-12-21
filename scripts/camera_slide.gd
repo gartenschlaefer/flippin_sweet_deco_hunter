@@ -8,6 +8,7 @@ extends Path3D
 
 # refs
 @export var target_object: Node
+@export var target_anim_player: AnimationPlayer
 @onready var path_follow = $path_follow
 @onready var camera_stand = $path_follow/camera_stand
 
@@ -16,12 +17,19 @@ func _ready():
 
 	# tween, obj, prop, final, time
 	create_tween().tween_property(path_follow, "progress_ratio", 1.0, slide_time)
+	target_anim_player.play(&"marker_movement")
 
 
 func _process(_delta):
 
 	# skips
-	if path_follow.get_progress_ratio() >= 1.0: return
+	if path_follow.get_progress_ratio() >= 1.0: 
+		
+		# new start
+		path_follow.set_progress_ratio(0.0)
+		create_tween().tween_property(path_follow, "progress_ratio", 1.0, slide_time)
+		target_anim_player.play()
+		return
 
 	# look at target
 	self._look_at_target()
