@@ -179,6 +179,7 @@ func _on_enemy_hit():
 
 func _on_swing_start():
 	if weapon_audio_player:
+		if weapon_audio_player.playing: return
 		weapon_audio_player.stream = weapon_default_audio_stream
 		weapon_audio_player.play()
 

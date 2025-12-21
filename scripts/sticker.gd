@@ -81,7 +81,7 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
 	# only cotton candy can pick it up
 	var cotton_candy = area.get_parent()
 	if cotton_candy is WeaponCottonCandy: 
-		cotton_candy._on_stícker_collected()
+		cotton_candy._on_sticker_collected()
 	else: return
 	
 	# do not add sticker
