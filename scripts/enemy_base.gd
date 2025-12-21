@@ -5,12 +5,15 @@ class_name EnemyBase extends CharacterBody3D
 
 # settings
 @export var speed = 2.0
-@export var evil_to_normal_distance = 5.0
 @export var target_reach_distance = 5.0
 @export var hit_cooldown_time = 2.0
-@export var whip_damage_to_be_taken = 100.0
+@export var full_health = 100
+@export var whip_damage_to_be_taken = 25
+@export var lollipop_damage_to_be_taken = 10
+@export var cotton_candy_damage_to_be_taken = 2
+
 @export var weapon_force = 10.0
-@export var exploration_range_meters = 10.0
+@export var exploration_range_meters = 100.0
 
 # resources
 @export var sticker_resource: StickerResource
@@ -50,6 +53,7 @@ func _ready():
 	is_ko = false
 
 	# set init value
+	health_bar.set_max(full_health)
 	health_bar.set_value(100)
 
 	# set home location
@@ -89,6 +93,14 @@ func _physics_process(_delta):
 
 func take_damage(collision: KinematicCollision3D):
 
+	var weapon = collision.get_collider().get_weapon()
+
+	var damage = 0
+	if weapon is WeaponWhip: damage = whip_damage_to_be_taken
+	elif weapon is WeaponCottonCandy: damage = cotton_candy_damage_to_be_taken
+	elif weapon is WeaponLollipop: damage = lollipop_damage_to_be_taken
+
+	print(weapon)
 	# got hit -> hit cooldown timer
 	if not hit_cooldown_timer == null: return
 
@@ -105,7 +117,7 @@ func take_damage(collision: KinematicCollision3D):
 	velocity = velocity + hit_vector.normalized() * weapon_force
 
 	# decrease health
-	health_bar.set_value(health_bar.get_value() - whip_damage_to_be_taken)
+	health_bar.set_value(health_bar.get_value() - damage)
 
 	# not dead yet
 	if health_bar.get_value(): 

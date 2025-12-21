@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdycnwnqcye7"]
+[gd_scene load_steps=7 format=3 uid="uid://cdycnwnqcye7"]
 
 [ext_resource type="Script" uid="uid://cm4j27gdrqbpy" path="res://scripts/weapon/weapon_cotton_candy.gd" id="1_tw0l1"]
 [ext_resource type="Script" uid="uid://cer0b371wty2s" path="res://scripts/weapon/weapon_physics_cotton_candy.gd" id="2_8wr3x"]
 [ext_resource type="PackedScene" uid="uid://d2s8gfyqcrpvm" path="res://models/Cotton Candy.glb" id="2_hy2u3"]
+[ext_resource type="Script" uid="uid://kegqfa1fjhmv" path="res://scripts/weapon/weapon_collision_base.gd" id="3_vkjvi"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8wr3x"]
 margin = 0.0
@@ -22,8 +23,10 @@ script = ExtResource("2_8wr3x")
 base_wave_speed = 10.0
 physics_root_path = NodePath(".")
 
-[node name="RigidBody3D" type="RigidBody3D" parent="Physics"]
+[node name="RigidBody3D" type="RigidBody3D" parent="Physics" node_paths=PackedStringArray("weapon") groups=["weapon_part"]]
 freeze = true
+script = ExtResource("3_vkjvi")
+weapon = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Physics/RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8914156, 0)
