@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cpodjhjctdgvy"]
 
-[ext_resource type="Script" uid="uid://c7ud4hvi316lo" path="res://scripts/weapon/weapon_base.gd" id="1_hki12"]
-[ext_resource type="Script" uid="uid://v1c6spop1xh4" path="res://scripts/weapon/weapon_physics_lollipop.gd" id="2_1v4d8"]
+[ext_resource type="Script" uid="uid://bjmdy4c77k3ax" path="res://scripts/weapon/weapon_lollipop.gd" id="1_4v5s8"]
+[ext_resource type="Script" path="res://scripts/weapon/weapon_physics_lollipop.gd" id="2_1v4d8"]
 [ext_resource type="Script" uid="uid://kegqfa1fjhmv" path="res://scripts/weapon/weapon_collision_base.gd" id="3_4v5s8"]
 [ext_resource type="PackedScene" uid="uid://d1fdw6hw554n7" path="res://models/Lollipop.glb" id="3_hki12"]
 [ext_resource type="AudioStream" uid="uid://djpd403kgyk8t" path="res://audio/sfx/lollipop_swing/lollipop_swing.tres" id="4_1v4d8"]
@@ -11,7 +11,7 @@ radius = 0.21594085
 
 [node name="WeaponLollipop" type="Node3D" node_paths=PackedStringArray("weapon_model", "weapon_physics", "weapon_collision", "weapon_audio_player")]
 transform = Transform3D(0.86006606, 0, -0.5101827, 0, 1, 0, 0.5101827, 0, 0.86006606, 0, 0, 0)
-script = ExtResource("1_hki12")
+script = ExtResource("1_4v5s8")
 weapon_model = NodePath("Lollipop")
 weapon_physics = NodePath("Physics")
 weapon_collision = NodePath("Physics/RigidBody3D")

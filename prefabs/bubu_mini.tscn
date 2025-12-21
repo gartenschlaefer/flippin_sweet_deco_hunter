@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://c7kbpfu4dyb3s"]
+[gd_scene load_steps=18 format=3 uid="uid://c7kbpfu4dyb3s"]
 
 [ext_resource type="Script" uid="uid://bjja321p3mq8x" path="res://scripts/bubu_mini.gd" id="1_funu2"]
+[ext_resource type="Resource" uid="uid://dh4lrlgji73dr" path="res://prefabs/resources/mini_boss_sticker_resource.tres" id="2_7mvxx"]
 [ext_resource type="AudioStream" uid="uid://d31b3m3c658ih" path="res://audio/sfx/bubaba/casual/bubaba_casual.tres" id="2_f35sx"]
 [ext_resource type="SpriteFrames" uid="uid://d2splkrp2bkac" path="res://prefabs/resources/sprite_frames_bubu_mini.tres" id="2_funu2"]
 [ext_resource type="AudioStream" uid="uid://fni0dtvhjfqa" path="res://audio/sfx/bubaba/angry/bubaba_angry.tres" id="3_7mvxx"]
@@ -145,6 +146,7 @@ height = 0.1
 collision_layer = 4
 collision_mask = 23
 script = ExtResource("1_funu2")
+sticker_resource = ExtResource("2_7mvxx")
 health_bar = NodePath("anim/healthbar_view/SubViewport/healthbar_panel/healthbar")
 casual_calls = ExtResource("2_f35sx")
 angry_calls = ExtResource("3_7mvxx")
@@ -197,7 +199,6 @@ shape = SubResource("CapsuleShape3D_itrur")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 avoidance_enabled = true
-debug_enabled = true
 
 [node name="anim_player" type="AnimationPlayer" parent="."]
 libraries = {

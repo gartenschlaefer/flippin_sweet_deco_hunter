@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StickerResource" load_steps=3 format=3 uid="uid://dh4lrlgji73dr"]
+
+[ext_resource type="Script" uid="uid://cuf87m0wc3vuq" path="res://scripts/sticker_resource.gd" id="1_mfh6e"]
+[ext_resource type="Texture2D" uid="uid://co4pxamr7fjjb" path="res://art/bubu_miniboss600px_noshadow.png" id="2_mfh6e"]
+
+[resource]
+script = ExtResource("1_mfh6e")
+sticker_type = 1
+uid = 6
+texture = ExtResource("2_mfh6e")
+metadata/_custom_type_script = "uid://cuf87m0wc3vuq"
