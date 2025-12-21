@@ -27,6 +27,7 @@ func _ready() -> void:
 	title_canvas.credits.connect(self.title_to_credits)
 	title_canvas.end_game.connect(self.end_game)
 	credits_canvas.end_credits.connect(self.credits_to_title)
+	win_canvas.end_win.connect(self.win_to_title)
 
 	# canvas handling
 	title_canvas.show()
@@ -75,20 +76,18 @@ func start_new_game():
 	# swipe world
 	world.add_child(deco_hunt_world.instantiate())
 
-	# todo:
-	# signal connections to world
-
-	# # get actual world
-	# var actual_world = world.get_child(0)
+	# get actual world
+	var actual_world = world.get_child(0)
 
 	# world setup
-	# if actual_world is DecoHuntWorld:
-	# 	print("DecoHuntWorld loaded!")
-	# 	actual_world.win_the_memory_world.connect(self.win_the_game)
+	if actual_world is DonutWorld:
+		print("DonutWorld loaded!")
+		actual_world.win_donutworld_collected_all_bubabas.connect(self.game_to_win)
 
 	# title
 	title_canvas.hide()
 	credits_canvas.hide()
+	win_canvas.hide()
 
 	# is playing
 	is_playing = true
@@ -106,11 +105,13 @@ func clean_world():
 func title_to_credits():
 	credits_canvas.show()
 	title_canvas.hide()
+	win_canvas.hide()
 
 
 func credits_to_title():
 	title_canvas.show()
 	credits_canvas.hide()
+	win_canvas.hide()
 
 
 func game_to_title():
@@ -126,10 +127,18 @@ func game_to_title():
 	credits_canvas.hide()
 
 
-func win_the_game():
-
+func game_to_win():
+	win_canvas.show()
+	title_canvas.hide()
+	credits_canvas.hide()
 	# message
 	print("You won!")
+
+
+func win_to_title():
+	title_canvas.show()
+	win_canvas.hide()
+	credits_canvas.hide()
 
 
 func end_game():

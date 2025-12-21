@@ -1,14 +1,17 @@
-[gd_scene load_steps=13 format=3 uid="uid://cwg5hosq5uu7g"]
+[gd_scene load_steps=16 format=3 uid="uid://cwg5hosq5uu7g"]
 
 [ext_resource type="PackedScene" uid="uid://cli7h7phc1jqi" path="res://scenes/donut.tscn" id="1_d2h07"]
 [ext_resource type="Texture2D" uid="uid://1oooiuf5iung" path="res://art/sky.exr" id="1_d103j"]
 [ext_resource type="PackedScene" uid="uid://buoat1ofeue42" path="res://scenes/gifts.tscn" id="1_n0uqs"]
+[ext_resource type="Script" uid="uid://beuphnh3mx513" path="res://scripts/donutworld.gd" id="1_s8jsj"]
 [ext_resource type="PackedScene" uid="uid://cs6jw26dvr3ym" path="res://prefabs/fp_player.tscn" id="2_mxov6"]
 [ext_resource type="PackedScene" uid="uid://bq51wb1qevq5r" path="res://scenes/killzone.tscn" id="3_g1vmp"]
 [ext_resource type="PackedScene" uid="uid://cge5ol25fqrex" path="res://scenes/ocean.tscn" id="5_d103j"]
 [ext_resource type="PackedScene" uid="uid://bnkpm7r6rq7fb" path="res://scenes/candyislands.tscn" id="5_mxov6"]
 [ext_resource type="PackedScene" uid="uid://1hhjb1caibmp" path="res://prefabs/christmas_tree.tscn" id="7_64na0"]
 [ext_resource type="PackedScene" uid="uid://w1uqnm545mln" path="res://prefabs/bubaba.tscn" id="8_v17wk"]
+[ext_resource type="PackedScene" uid="uid://dxsppsj63dtfa" path="res://prefabs/bubu_boss.tscn" id="11_68lcm"]
+[ext_resource type="PackedScene" uid="uid://c7kbpfu4dyb3s" path="res://prefabs/bubu_mini.tscn" id="12_vysvs"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_d2h07"]
 panorama = ExtResource("1_d103j")
@@ -25,6 +28,7 @@ reflected_light_source = 2
 tonemap_mode = 2
 
 [node name="donutworld" type="Node3D"]
+script = ExtResource("1_s8jsj")
 
 [node name="gifts" parent="." instance=ExtResource("1_n0uqs")]
 transform = Transform3D(-0.8032958, -0.011838937, -0.5954625, -0.067018785, 0.99524915, 0.07062278, 0.5917975, 0.09663815, -0.80027294, -12.294834, 3.9582129, -1.4004803)
@@ -83,3 +87,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 490.01498, 10.207413, 662.518
 
 [node name="killzone" parent="." instance=ExtResource("3_g1vmp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.210445, 0)
+
+[node name="bubu_boss" parent="." instance=ExtResource("11_68lcm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.089443, 5.3169746, -1.5728073)
+
+[node name="bubu_mini" parent="." instance=ExtResource("12_vysvs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.0487, 31.035439, 23.066143)
