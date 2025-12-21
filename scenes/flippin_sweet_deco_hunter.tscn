@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bbj0651rvyjij"]
+[gd_scene load_steps=12 format=3 uid="uid://bbj0651rvyjij"]
 
 [ext_resource type="Script" uid="uid://dpyn6v0r0se8i" path="res://scripts/flippin_sweet_deco_hunter.gd" id="1_hoy5o"]
 [ext_resource type="Script" uid="uid://do0t8iow283gg" path="res://scripts/win_canvas.gd" id="2_7u0gn"]
@@ -9,9 +9,13 @@
 [ext_resource type="Texture2D" uid="uid://d2lanilenx46g" path="res://art/start_button_256px.png" id="7_mw1u6"]
 [ext_resource type="Texture2D" uid="uid://4l4yr7rd4rfv" path="res://art/hang_button_on.png" id="8_fmgb7"]
 [ext_resource type="LabelSettings" uid="uid://cl1eaqd86qkkj" path="res://prefabs/resources/label_settings_button_text.tres" id="8_plk55"]
+[ext_resource type="AudioStream" uid="uid://fwtwh4ot4iqn" path="res://audio/background.mp3" id="10_7ygto"]
+[ext_resource type="AudioStream" uid="uid://b40l52j7f0yao" path="res://audio/winning.mp3" id="11_c0chh"]
 
-[node name="flippin_sweet_deco_hunter" type="Node"]
+[node name="flippin_sweet_deco_hunter" type="Node" node_paths=PackedStringArray("bgm_music", "bgm_win")]
 script = ExtResource("1_hoy5o")
+bgm_music = NodePath("bgm_music")
+bgm_win = NodePath("bgm_win")
 
 [node name="world" type="Node" parent="."]
 
@@ -205,6 +209,13 @@ texture_normal = ExtResource("8_fmgb7")
 
 [node name="MarginContainer" type="MarginContainer" parent="title_canvas/MarginContainer/VBoxContainer/MarginContainer2/HBoxContainer/VBoxContainer3"]
 layout_mode = 2
+
+[node name="bgm_music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_7ygto")
+autoplay = true
+
+[node name="bgm_win" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_c0chh")
 
 [connection signal="button_up" from="win_canvas/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer3/end_button" to="win_canvas" method="_on_end_button_button_up"]
 [connection signal="button_up" from="credits_canvas/MarginContainer2/VBoxContainer/MarginContainer2/VBoxContainer3/end_button" to="credits_canvas" method="_on_exit_button_up"]

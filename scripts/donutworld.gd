@@ -9,8 +9,8 @@ signal win_donutworld_collected_all_bubabas
 # refs
 @export var christmas_tree: ChristmasTree
 
-# # demo
-# @export var demo_sticker_resource: StickerResource
+# demo
+@export var demo_sticker_resource: StickerResource
 
 
 # func _input(_event):

@@ -8,6 +8,8 @@ extends Node
 @onready var title_canvas = $title_canvas
 @onready var credits_canvas = $credits_canvas
 @onready var win_canvas = $win_canvas
+@export var bgm_music: AudioStreamPlayer 
+@export var bgm_win: AudioStreamPlayer 
 
 # preloads
 var deco_hunt_world: PackedScene = preload("uid://cwg5hosq5uu7g")
@@ -159,6 +161,10 @@ func game_to_win():
 	title_canvas.hide()
 	credits_canvas.hide()
 
+	# music
+	bgm_music.stop()
+	bgm_win.play()
+
 	# message
 	print("You won flippin sweet deco hunter!")
 
@@ -168,6 +174,8 @@ func win_to_title():
 	title_canvas.show()
 	win_canvas.hide()
 	credits_canvas.hide()
+	bgm_win.stop()
+	bgm_music.play()
 
 
 func end_game():

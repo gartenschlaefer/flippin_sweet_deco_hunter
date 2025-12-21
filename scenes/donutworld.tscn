@@ -3,9 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://cli7h7phc1jqi" path="res://scenes/donut.tscn" id="1_d2h07"]
 [ext_resource type="Texture2D" uid="uid://1oooiuf5iung" path="res://art/sky.exr" id="1_d103j"]
 [ext_resource type="PackedScene" uid="uid://buoat1ofeue42" path="res://scenes/gifts.tscn" id="1_n0uqs"]
-[ext_resource type="Script" path="res://scripts/donutworld.gd" id="1_s8jsj"]
+[ext_resource type="Script" uid="uid://beuphnh3mx513" path="res://scripts/donutworld.gd" id="1_s8jsj"]
 [ext_resource type="PackedScene" uid="uid://cs6jw26dvr3ym" path="res://prefabs/fp_player.tscn" id="2_mxov6"]
-[ext_resource type="Resource" uid="uid://dotdbourxw403" path="res://prefabs/resources/bubaba0.tres" id="2_vysvs"]
+[ext_resource type="Resource" uid="uid://dq4wc51u7kgh3" path="res://prefabs/resources/bubaba1.tres" id="2_vysvs"]
 [ext_resource type="PackedScene" uid="uid://bq51wb1qevq5r" path="res://scenes/killzone.tscn" id="3_g1vmp"]
 [ext_resource type="PackedScene" uid="uid://cge5ol25fqrex" path="res://scenes/ocean.tscn" id="5_d103j"]
 [ext_resource type="PackedScene" uid="uid://bnkpm7r6rq7fb" path="res://scenes/candyislands.tscn" id="5_mxov6"]
@@ -13,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://w1uqnm545mln" path="res://prefabs/bubaba.tscn" id="8_v17wk"]
 [ext_resource type="PackedScene" uid="uid://dxsppsj63dtfa" path="res://prefabs/bubu_boss.tscn" id="11_68lcm"]
 [ext_resource type="PackedScene" uid="uid://c7kbpfu4dyb3s" path="res://prefabs/bubu_mini.tscn" id="12_vysvs"]
-[ext_resource type="AudioStream" uid="uid://fwtwh4ot4iqn" path="res://audio/background.mp3" id="13_vysvs"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_d2h07"]
 panorama = ExtResource("1_d103j")
@@ -105,7 +104,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.089443, 5.3169746, -1.5728
 
 [node name="bubu_mini" parent="." instance=ExtResource("12_vysvs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.0487, 31.035439, 23.066143)
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("13_vysvs")
-autoplay = true
