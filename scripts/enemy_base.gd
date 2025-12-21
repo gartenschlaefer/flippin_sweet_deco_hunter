@@ -278,9 +278,9 @@ func _on_navigation_agent_3d_navigation_finished() -> void:
 
 func _play_call(stream: AudioStreamRandomizer):
 	if audio_player and stream:
-		#audio_player.stop()
-		audio_player.stream = stream
-		audio_player.play()
+		if not is_ko or stream == death_screams:
+			audio_player.stream = stream
+			audio_player.play()
 
 
 func _schedule_casual_call():

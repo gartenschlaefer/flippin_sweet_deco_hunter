@@ -16,6 +16,7 @@ signal note_that_more_than_three_bubaba_sticker_on_tree
 @export var hang_button: Sprite3D
 @export var debug_cube: MeshInstance3D = null
 @onready var turnable_hanging_space = $turnable_hanging_space
+@onready var audio_player = $AudioStreamPlayer3D
 
 # vars
 var actual_frame = 0
@@ -104,6 +105,7 @@ func hang_deco_on_tree(deco: StickerResource, player: Player):
 	if deco.get_sticker_type_is_bubaba(): check_win_condition_hanged_all_bubabas()
 
 
+
 func check_win_condition_hanged_all_bubabas():
 
 	# determine number of bubaba sticker
@@ -113,7 +115,10 @@ func check_win_condition_hanged_all_bubabas():
 	if num_bubaba_sticker >= 3: note_that_more_than_three_bubaba_sticker_on_tree.emit()
 
 	# not win skip
-	if num_bubaba_sticker < len(bubaba_sticker_locations.get_children()): return
+	if num_bubaba_sticker < len(bubaba_sticker_locations.get_children()): 
+		if not audio_player.playing:
+			audio_player.play()
+		return
 
 	# won
 	win_hanged_all_bubaba_on_tree.emit()

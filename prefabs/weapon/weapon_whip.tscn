@@ -24,7 +24,7 @@ stream_3/stream = ExtResource("7_lsmc1")
 stream_4/stream = ExtResource("8_s6s37")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_knkmy"]
-radius = 0.2715921
+radius = 0.36604002
 
 [node name="LicoriceWhip" type="Node3D" node_paths=PackedStringArray("whip_tip_audio_player", "weapon_audio_player", "weapon_model", "weapon_physics", "weapon_collision")]
 script = ExtResource("1_ckfqr")

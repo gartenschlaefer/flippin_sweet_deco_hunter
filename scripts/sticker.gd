@@ -79,7 +79,10 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
 	if is_hanging_on_tree: return
 
 	# only cotton candy can pick it up
-	if not area.get_parent() is WeaponCottonCandy: return
+	var cotton_candy = area.get_parent()
+	if cotton_candy is WeaponCottonCandy: 
+		cotton_candy._on_stícker_collected()
+	else: return
 	
 	# do not add sticker
 	if sticker_resource == null: return

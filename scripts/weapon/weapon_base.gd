@@ -24,6 +24,7 @@ const DRAG_ROT_MAX_Z := deg_to_rad(90.0)
 const DRAG_ROT_MAX_X := deg_to_rad(45.0)
 
 var state: State = State.IDLE
+var weapon_default_audio_stream : AudioStream
 
 var idle_pos := Vector3.ZERO
 var idle_rot := Vector3.ZERO
@@ -53,6 +54,7 @@ func _ready():
 	weapon_skeleton= _find_skeleton(weapon_model)
 	weapon_physics.setup(weapon_skeleton,weapon_mesh)
 	init_weapon()
+	weapon_default_audio_stream = weapon_audio_player.stream
 	weapon_collision.enemy_hit.connect(_on_enemy_hit)
 	weapon_collision.swing_start.connect(_on_swing_start)
 
@@ -177,6 +179,7 @@ func _on_enemy_hit():
 
 func _on_swing_start():
 	if weapon_audio_player:
+		weapon_audio_player.stream = weapon_default_audio_stream
 		weapon_audio_player.play()
 
 func on_equip(_player):
