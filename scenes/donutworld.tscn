@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://cwg5hosq5uu7g"]
+[gd_scene load_steps=13 format=3 uid="uid://cwg5hosq5uu7g"]
 
 [ext_resource type="PackedScene" uid="uid://cli7h7phc1jqi" path="res://scenes/donut.tscn" id="1_d2h07"]
 [ext_resource type="Texture2D" uid="uid://1oooiuf5iung" path="res://art/sky.exr" id="1_d103j"]
+[ext_resource type="PackedScene" uid="uid://buoat1ofeue42" path="res://scenes/gifts.tscn" id="1_n0uqs"]
 [ext_resource type="PackedScene" uid="uid://cs6jw26dvr3ym" path="res://prefabs/fp_player.tscn" id="2_mxov6"]
 [ext_resource type="PackedScene" uid="uid://bq51wb1qevq5r" path="res://scenes/killzone.tscn" id="3_g1vmp"]
 [ext_resource type="PackedScene" uid="uid://cge5ol25fqrex" path="res://scenes/ocean.tscn" id="5_d103j"]
@@ -25,8 +26,11 @@ tonemap_mode = 2
 
 [node name="donutworld" type="Node3D"]
 
+[node name="gifts" parent="." instance=ExtResource("1_n0uqs")]
+transform = Transform3D(-0.8032958, -0.011838937, -0.5954625, -0.067018785, 0.99524915, 0.07062278, 0.5917975, 0.09663815, -0.80027294, -12.294834, 3.9582129, -1.4004803)
+
 [node name="fp_player" parent="." instance=ExtResource("2_mxov6")]
-transform = Transform3D(-0.9885467, 0, -0.1509158, 0, 1, 0, 0.1509158, 0, -0.9885467, 0, 42.883034, 98.04491)
+transform = Transform3D(0.15860611, 0, 0.98734206, 0, 1, 0, -0.98734206, 0, 0.15860611, 0, 42.883034, 84.50637)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_g1vmp")
@@ -42,37 +46,37 @@ shadow_opacity = 0.41
 shadow_blur = 1.583
 sky_mode = 1
 
-[node name="Killzone" parent="." instance=ExtResource("3_g1vmp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.648506, 0)
-
 [node name="Ocean" parent="." instance=ExtResource("5_d103j")]
-transform = Transform3D(11.7, 0, 0, 0, 11.7, 0, 0, 0, 11.7, 0.044311523, -2.9431725, -0.01373291)
+transform = Transform3D(11.7, 0, 0, 0, 11.7, 0, 0, 0, 11.7, 0.044311523, -4.081357, -0.01373291)
 
 [node name="candyislands" parent="." instance=ExtResource("5_mxov6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 492.64862, 0, 668.17944)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 492.64862, -1.8773804, 668.17944)
 
 [node name="christmas_tree" parent="." instance=ExtResource("7_64na0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0842943, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0202475, 8.608957, -1.8785381)
 
 [node name="bubabas" type="Node" parent="."]
 
 [node name="bubaba" parent="bubabas" instance=ExtResource("8_v17wk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.982956, 35.07144, 50.83284)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.982956, 35.76446, 50.83284)
 
 [node name="bubaba2" parent="bubabas" instance=ExtResource("8_v17wk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.83231, 24.528502, 0.65104675)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.83231, 25.097155, 0.65104675)
 
 [node name="bubaba3" parent="bubabas" instance=ExtResource("8_v17wk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9208932, 9.933089)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6566248, 9.933089)
 
 [node name="bubaba4" parent="bubabas" instance=ExtResource("8_v17wk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4865685, 36.231888, -81.01402)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4865685, 37.196236, -81.01402)
 
 [node name="bubaba5" parent="bubabas" instance=ExtResource("8_v17wk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88.3373, 31.759651, -19.245884)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88.3373, 32.637955, -19.245884)
 
 [node name="bubaba6" parent="bubabas" instance=ExtResource("8_v17wk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31.588497, -64.85001)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32.401203, -64.85001)
 
 [node name="bubaba7" parent="bubabas" instance=ExtResource("8_v17wk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.8525, 37.1659, 81.87077)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.8525, 37.74959, 81.87077)
+
+[node name="killzone" parent="." instance=ExtResource("3_g1vmp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.210445, 0)

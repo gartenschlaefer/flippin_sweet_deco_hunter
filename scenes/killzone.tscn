@@ -1,13 +1,39 @@
-[gd_scene load_steps=3 format=3 uid="uid://bq51wb1qevq5r"]
+[gd_scene load_steps=4 format=3 uid="uid://bq51wb1qevq5r"]
 
 [ext_resource type="Script" uid="uid://exinvl8nvh1b" path="res://scripts/killzone.gd" id="1_xlapc"]
 
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_csqde"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_j2mit"]
+size = Vector3(4253.0737, 0.001, 4388.84)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mw1oh"]
+size = Vector3(1, 1830.7935, 4869.8574)
 
 [node name="Killzone" type="Area3D"]
+collision_mask = 2
 script = ExtResource("1_xlapc")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("WorldBoundaryShape3D_csqde")
+[node name="unten" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.866943, -0.72923636, -15.388672)
+shape = SubResource("BoxShape3D_j2mit")
+
+[node name="rechts" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2000, 896.089, -0.009)
+shape = SubResource("BoxShape3D_mw1oh")
+
+[node name="links" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2000, 888.397, -0.009)
+shape = SubResource("BoxShape3D_mw1oh")
+
+[node name="hinten" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.146, 890.588, -2000)
+shape = SubResource("BoxShape3D_mw1oh")
+
+[node name="vorn" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -38.018, 889.326, 2000)
+shape = SubResource("BoxShape3D_mw1oh")
+
+[node name="oben" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.415, 1624.4243, -0.63)
+shape = SubResource("BoxShape3D_j2mit")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
